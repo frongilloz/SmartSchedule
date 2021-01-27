@@ -67,9 +67,7 @@ class Header extends Component {
                 (!this.props.email || this.props.isAdmin !== 'true')
               ) {
                 return <div />;
-              } else if (link.text === 'Client Portal' && !this.props.email) {
-                return <div />;
-              } else if (link.text === 'Sign Up' && this.props.email) {
+              } else if (link.text === !this.props.email) {
                 return <div />;
               } else {
                 return (

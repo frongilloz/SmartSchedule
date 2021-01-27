@@ -9,12 +9,11 @@ import About_Us_Content from './Pages/About_Us';
 //import Login_Content from './Pages/Login';
 //import Sign_Up_Content from './Pages/Sign_Up';
 
-//import the data for the videos, users
 import { Redirect } from 'react-router-dom';
 
 //Defines the content that is returned from each page
 //(Which is returned from the individual js files for each page)
-//For dynamic pages, (e.g. Sign up and login) the state functions and returning variables are managed here
+//For dynamic pages, (e.g. w/ forms) the state functions and returning variables are managed here
 
 export const Home = () => (
     <div>

@@ -3,7 +3,7 @@ import React from 'react';
 import { Card } from 'react-bootstrap';
 import './basic.css';
 
-const About_Us= () => (
+const Four_Year= () => (
   <div className='App'>
     <header className='masthead'>
       <div className='container'>
@@ -19,4 +19,4 @@ const About_Us= () => (
   </div>
 );
 
-export default About_Us;
+export default Four_Year;

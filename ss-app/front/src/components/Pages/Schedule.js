@@ -3,7 +3,7 @@ import React from 'react';
 import { Card, Container, Row, Col } from 'react-bootstrap';
 import './basic.css';
 
-const About_Us= () => (
+const Schedule = () => (
   <div className='App'>
     
   
@@ -30,4 +30,4 @@ const About_Us= () => (
   </div>
 );
 
-export default About_Us;
+export default Schedule;

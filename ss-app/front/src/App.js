@@ -12,6 +12,8 @@ import Footer from './components/Footer';
 import './assets/css/bootstrap.min.css';
 //import 'bootstrap/dist/css/bootstrap.min.css';
 
+
+//Purpose: This defines the main structure of the web app (header, content, and footer)
 const App = props => {
   
   return (

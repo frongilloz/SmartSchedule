@@ -11,7 +11,7 @@ import About_Us_Content from './Pages/About_Us';
 
 import { Redirect } from 'react-router-dom';
 
-//Defines the content that is returned from each page
+//Purpose: Defines the content that is returned from each page
 //(Which is returned from the individual js files for each page)
 //For dynamic pages, (e.g. w/ forms) the state functions and returning variables are managed here
 

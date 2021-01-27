@@ -7,6 +7,7 @@ import {
   About_Us
 } from './pages'; // import our pages
 
+//Purpose: This routes the links of our application, and the subsequent pages that will display
 const Main = props => (
   <main>
     <Switch>

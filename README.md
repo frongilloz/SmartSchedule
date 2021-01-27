@@ -1,8 +1,16 @@
 # SmartSchedule
 CEN4914 SmartSchedule Senior Design Project at the University of Florida | Spring 2021
+MERN Stack
 
 ## Developed with
 * Node v15.6.0
+
+## How to Run
+1. Install needed Packages
+2. Navigate to "ss-app\front\" and run 
+```
+npm start
+```
 
 ## Required Packages (installable with npm)
 ```

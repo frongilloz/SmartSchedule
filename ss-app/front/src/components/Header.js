@@ -67,8 +67,10 @@ class Header extends Component {
                 (!this.props.email || this.props.isAdmin !== 'true')
               ) {
                 return <div />;
+
               } else if (link.text === !this.props.email) {
                 return <div />;
+
               } else {
                 return (
                   <NavLink
@@ -89,7 +91,8 @@ class Header extends Component {
                           links: this.state.links,
                           logout: true
                         });
-                      } else {
+                      } 
+                      else {
                         this.handleClick(i);
                       }
                     }}
@@ -105,5 +108,26 @@ class Header extends Component {
     );
   }
 }
+
+
+/*
+const Header_WO = props => {
+  const { location } = props;
+  return (
+
+    <Navbar className='navbar navbar-expand-md navbar-custom' sticky='top'>
+      <Nav activeKey={location.pathname}>
+        <Nav.Link href="/">Home</Nav.Link>
+        
+        <Nav.Link href="/schedule">Course Schedule</Nav.Link>
+        <Nav.Link href="/four-year-plan">Course Schedule</Nav.Link>
+        <Nav.Link href="/about-us">Two</Nav.Link>
+      </Nav>
+    </Navbar>
+  );
+};
+const Header = withRouter(Header_WO);
+*/
+
 
 export default Header;

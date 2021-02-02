@@ -21,11 +21,62 @@ export const Home = () => (
     </div>
   );
 
-export const Schedule = () => (
+export const Schedule = () => {
+  //states for the forms
+  const [CNumAdd, setC_Num] = useState('');
+  const [CL_NumAdd, setCL_Num] = useState('');
+
+
+  //external change functions
+  const C_NumUpdate = value => {
+    setC_Num(value);
+    console.log('CNumUpdate() called, value: ', value);
+  };
+  const CL_NumUpdate = value => {
+    setCL_Num(value);
+    console.log('CL_NumUpdate() called, value: ', value);
+  };
+
+
+  const check = async event => {
+    //prevent the refresh of page on submit
+    event.preventDefault();
+
+    //log
+    console.log('Form Request Received');
+    console.log('CNumAdd: ', CNumAdd);
+    console.log('CL_NumAdd: ', CL_NumAdd);
+
+    
+    // Request send to backend to fetch data
+    let courseRequest = {
+      Course_Num: CNumAdd,
+      CL_Num: CL_NumAdd
+    };
+    
+
+    /*
+    try {
+      //Post to server to get back our database information
+      //await axios.post('/api/course_database/', courseRequest);
+    } catch (err) {
+      // TODO: do something
+    }
+    */
+
+  };
+
+  return (
   <div>
-    <Schedule_Content />
+    <Schedule_Content 
+      C_NumUpdate={C_NumUpdate}
+      CL_NumUpdate={CL_NumUpdate}
+
+    />
+    
   </div>
-);
+  );
+};
 
 export const Four_Year = () => (
   <div>

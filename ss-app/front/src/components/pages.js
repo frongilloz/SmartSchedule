@@ -23,15 +23,37 @@ export const Home = () => (
 
 export const Schedule = () => {
   //states for the forms
-  const [CNumAdd, setC_Num] = useState('');
+  const [SemAdd, setSem] = useState('');
+  const [CNumAdd1, setC_Num1] = useState('');
+  const [CNumAdd2, setC_Num2] = useState('');
+  const [CNumAdd3, setC_Num3] = useState('');
+  const [CNumAdd4, setC_Num4] = useState('');
+
   const [CL_NumAdd, setCL_Num] = useState('');
 
 
   //external change functions
-  const C_NumUpdate = value => {
-    setC_Num(value);
-    console.log('CNumUpdate() called, value: ', value);
+  const SemUpdate = value => {
+    setSem(value);
+    console.log('SemUpdate() called, value: ', value);
   };
+  const C_NumUpdate1 = value => {
+    setC_Num1(value);
+    console.log('CNumUpdate1() called, value: ', value);
+  };
+  const C_NumUpdate2 = value => {
+    setC_Num2(value);
+    console.log('CNumUpdate2() called, value: ', value);
+  };
+  const C_NumUpdate3 = value => {
+    setC_Num3(value);
+    console.log('CNumUpdate3() called, value: ', value);
+  };
+  const C_NumUpdate4 = value => {
+    setC_Num4(value);
+    console.log('CNumUpdate4() called, value: ', value);
+  };
+
   const CL_NumUpdate = value => {
     setCL_Num(value);
     console.log('CL_NumUpdate() called, value: ', value);
@@ -44,21 +66,45 @@ export const Schedule = () => {
 
     //log
     console.log('Form Request Received');
-    console.log('CNumAdd: ', CNumAdd);
+    console.log('SemAdd: ', SemAdd);
+    console.log('CNumAdd1: ', CNumAdd1);
+    console.log('CNumAdd2: ', CNumAdd2);
+    console.log('CNumAdd3: ', CNumAdd3);
+    console.log('CNumAdd4: ', CNumAdd4);
+
     console.log('CL_NumAdd: ', CL_NumAdd);
 
     
     // Request send to backend to fetch data
-    let courseRequest = {
-      Course_Num: CNumAdd,
-      CL_Num: CL_NumAdd
+    let courseRequest1 = {
+      Sem: SemAdd,
+      Course_Num1: CNumAdd1,
+      //CL_Num: CL_NumAdd
     };
+    // To add later once 1 course is working
+    /*
+    let courseRequest2 = {
+      Sem: SemAdd,
+      Course_Num2: CNumAdd2,
+      //CL_Num: CL_NumAdd
+    };
+    let courseRequest3 = {
+      Sem: SemAdd,
+      Course_Num3: CNumAdd3,
+      //CL_Num: CL_NumAdd
+    };
+    let courseRequest4 = {
+      Sem: SemAdd,
+      Course_Num4: CNumAdd4,
+      //CL_Num: CL_NumAdd
+    };
+    */
     
 
     /*
     try {
       //Post to server to get back our database information
-      //await axios.post('/api/course_database/', courseRequest);
+      //await axios.post('/api/course_database/', courseRequest1);
     } catch (err) {
       // TODO: do something
     }
@@ -69,11 +115,15 @@ export const Schedule = () => {
   return (
   <div>
     <Schedule_Content 
-      C_NumUpdate={C_NumUpdate}
+      SemUpdate={SemUpdate}
+      C_NumUpdate1={C_NumUpdate1}
+      C_NumUpdate2={C_NumUpdate2}
+      C_NumUpdate3={C_NumUpdate3}
+      C_NumUpdate4={C_NumUpdate4}
       CL_NumUpdate={CL_NumUpdate}
 
     />
-    
+
   </div>
   );
 };

@@ -1,12 +1,14 @@
 import React from 'react';
 
 const Footer = () => (
+ 
   <footer className='footer'>
     <div className='container'>
       <div className='row align-items-center'>
         <div className='col-md-4'>
           <span className='copyright'>Copyright &copy; SmartSchedule 2021</span>
         </div>
+        
         <div className='col-md-4'>
           <ul className='list-inline social-buttons'>
             <li className='list-inline-item'>

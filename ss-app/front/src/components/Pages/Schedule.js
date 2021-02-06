@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Form, Col, Card, Button, Container, Row } from 'react-bootstrap';
+import { Form, Col, Card, Button, Container, Row , Table} from 'react-bootstrap';
 import './basic.css';
 
 const Schedule = props => {
@@ -64,9 +64,15 @@ const Schedule = props => {
 
     //log
     console.log('ClassNumInt: ', event.target.value);
-  };
+    };
+
+    const periods = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "E1", "E2", "E3"];
 
 
+    // maybe have a 2D array that will contain the in-class potential schedules 
+    // first, fill it with empty space
+    let TestSchdule = Array(14).fill(0).map(row => new Array(6).fill(' '))
+    
   return (
     <div className='App'>
       
@@ -169,10 +175,37 @@ const Schedule = props => {
           </Card>
           </Col>
         
-        <Col sm={8}>Placeholder for Schedule Options
+        <Col sm={8}>
           <Card body>
-
-      
+              <h2>Possible Schedule</h2>
+              <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th scope="col">Period</th>
+                      <th scope="col">Monday</th>
+                      <th scope="col">Tuesday</th>
+                      <th scope="col">Wednesday</th>
+                      <th scope="col">Thursday</th>
+                      <th scope="col">Friday</th>
+                      <th scope="col">Saturday</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      {TestSchdule.slice(0, TestSchdule.length).map((item, index) => {
+                      return (
+                          <tr key={index}>
+                              <td key={item[0]}>{item[0]}</td>
+                              <td key={item[1]}>{item[1]}</td>
+                              <td key={item[2]}>{item[2]}</td>
+                              <td key={item[3]}>{item[3]}</td>
+                              <td key={item[4]}>{item[4]}</td>
+                              <td key={item[5]}>{item[5]}</td>
+                              <td key={item[6]}>{item[6]}</td>
+                          </tr>
+                          );
+                      })}
+                  </tbody>
+              </table>      
           </Card>
         </Col>
         </Row>

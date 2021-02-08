@@ -6,8 +6,8 @@ import HomeContent from './Pages/Home';
 import Schedule_Content from './Pages/Schedule';
 import Four_Year_Content from './Pages/Four_Year';
 import About_Us_Content from './Pages/About_Us';
-//import Login_Content from './Pages/Login';
-//import Sign_Up_Content from './Pages/Sign_Up';
+import Login_Content from './Pages/Login';
+import Sign_Up_Content from './Pages/Sign_Up';
 
 import { Redirect } from 'react-router-dom';
 
@@ -139,3 +139,153 @@ export const About_Us = () => (
     <About_Us_Content />
   </div>
 );
+
+//adding a new user to the database
+export const Sign_Up = () => {
+  //states for the new user
+  const [FNameAdd, setFName] = useState('');
+  const [LNameAdd, setLName] = useState('');
+  const [emailAdd, setEmail] = useState('');
+  const [passAdd, setPass] = useState('');
+  const [passCAdd, setCPass] = useState('');
+  const [reload, setReload] = useState(false);
+
+  //the update functions update the current states
+  const addFNameUpdate = value => {
+    setFName(value);
+    console.log('addFNameUpdate() called, value: ', value);
+  };
+
+  const addLNameUpdate = value => {
+    setLName(value);
+    console.log('addLNameUpdate() called, value: ', value);
+  };
+
+  const addEmailUpdate = value => {
+    setEmail(value);
+    console.log('addEmailUpdate() called, value: ', value);
+  };
+
+  const addPassUpdate = value => {
+    setPass(value);
+    //console.log('addPassUpdate() called, value: ', value);
+  };
+
+  const addPassConfUpdate = value => {
+    setCPass(value);
+    //console.log('addPassConfUpdate() called, value: ', value);
+  };
+
+  //the save function to the database
+  const save = async event => {
+    //prevent the refresh of page on submit
+    event.preventDefault();
+
+    //log
+    console.log('save() Sign Up called');
+    console.log('save() FName: ', FNameAdd);
+    console.log('save() LName: ', LNameAdd);
+    console.log('save() email: ', emailAdd);
+    console.log('save() pass: ', passAdd);
+    console.log('save() passC: ', passCAdd);
+
+    //2) and will need to check is the email already exists in the database
+
+    //create a new user schema
+    let newUser = {
+      FName: FNameAdd,
+      LName: LNameAdd,
+      fullName: FNameAdd + ' ' + LNameAdd,
+      email: emailAdd,
+      password: passAdd
+    };
+
+    try {
+      await axios.post('/api/mail/confirmation/', newUser);
+      const s = await axios.post('/api/users/', newUser);
+      if (s.status == 200) {
+        setReload(true);
+      }
+    } catch (err) {
+      return false;
+    }
+    console.log('trying reload');
+  };
+
+  if (reload) {
+    console.log('caught redirect');
+    setTimeout(() => {
+      setReload(false);
+    }, 10000);
+    return <Redirect to='/login' />;
+  }
+
+  return (
+    <Sign_Up_Content
+      save={save}
+      addFNameUpdate={addFNameUpdate}
+      addLNameUpdate={addLNameUpdate}
+      addEmailUpdate={addEmailUpdate}
+      addPassUpdate={addPassUpdate}
+      addPassConfUpdate={addPassConfUpdate}
+    />
+  );
+};
+
+//checking if the login credentials match the existing users in the database
+export const Login = props => {
+  //states for the login
+  const [emailAdd, setEmail] = useState('');
+  const [passAdd, setPass] = useState('');
+  const [displayMsg, setDisplayMsg] = useState(false);
+
+  //take in the email from the form and check to see if it exists in the database
+  const checkEmail = value => {
+    setEmail(value);
+    console.log('checkEmail() called, value: ', value);
+  };
+
+  const checkPass = value => {
+    setPass(value);
+    //console.log('checkPass() called, value: ', value);
+  };
+
+  //the check function to the database
+  const check = async event => {
+    //prevent the refresh of page on submit
+    event.preventDefault();
+
+    //log
+    console.log('check() called');
+    console.log('check() email: ', emailAdd);
+    //console.log('check() pass: ', passAdd);
+
+    const loginData = { email: emailAdd, password: passAdd };
+
+    try {
+      const response = await axios.post('/api/sessions/', loginData);
+      props.setIsAdmin(String(response.data.isAdmin));
+      props.setEmail(emailAdd);
+      props.setToken(response.data.token);
+      console.log('isadmin: ', response.data.isAdmin);
+      setDisplayMsg(false);
+    } catch (err) {
+      // TODO: do something
+      setDisplayMsg(true);
+      console.log(err);
+    }
+  };
+
+  if (props.email) {
+    return <Redirect to='/client_portal' />;
+  }
+
+  return (
+    <Login_Content
+      check={check}
+      checkEmail={checkEmail}
+      checkPass={checkPass}
+      displayMsg={displayMsg}
+    />
+  );
+};

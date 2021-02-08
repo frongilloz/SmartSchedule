@@ -2,6 +2,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
+//import dotenv from 'dotenv';
+import routes from './config/routes.js';
+
+
 const courses = require('./routes/api/courses');
 
 const app = express();

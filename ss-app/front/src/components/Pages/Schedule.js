@@ -1,7 +1,29 @@
 import React, { Component } from 'react';
 
-import { Form, Col, Card, Button, Container, Row } from 'react-bootstrap';
+import { Form, Col, Card, Button, Container, Row , Table} from 'react-bootstrap';
 import './basic.css';
+
+const periods = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "E1", "E2", "E3"];
+
+const times = [
+    "7:25 AM - 8:15 AM",
+    "8:30 AM - 9:20 AM",
+    "9:35 AM - 10:25 AM",
+    "10:40 AM - 11:30 AM",
+    "11:45 AM - 12:35 PM",
+    "12:50 PM - 1:40 PM",
+    "1:55 PM - 2:45 PM",
+    "3:00 PM - 3:50 PM",
+    "4:05 PM - 4:55 PM",
+    "5:10 PM - 6:00 PM",
+    "6:15 PM - 7:05 PM",
+    "7:20 PM - 8:10 PM",
+    "8:20 PM - 9:10 PM",
+    "9:20 PM - 10:10 PM"];
+
+// maybe have a 2D array that will contain the in-class potential schedules 
+// first, fill it with empty space
+let TestSchdule = Array(14).fill(0).map(row => new Array(6).fill(" "))
 
 const Schedule = props => {
 
@@ -64,15 +86,20 @@ const Schedule = props => {
 
     //log
     console.log('ClassNumInt: ', event.target.value);
-  };
+    };
 
 
+    function generateHeading(props) {
+
+    }
+   
+    
   return (
     <div className='App'>
       
       <Container>
         <Row>
-          <Col sm={4}>
+          <Col sm={3}>
 
             <Card body>
 
@@ -169,10 +196,39 @@ const Schedule = props => {
           </Card>
           </Col>
         
-        <Col sm={8}>Placeholder for Schedule Options
+        <Col sm={9}>
           <Card body>
-
-      
+              <h2>Possible Schedule</h2>
+              <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th scope="col">Period</th>
+                      <th scope="col">Time</th>
+                      <th scope="col">Monday</th>
+                      <th scope="col">Tuesday</th>
+                      <th scope="col">Wednesday</th>
+                      <th scope="col">Thursday</th>
+                      <th scope="col">Friday</th>
+                      <th scope="col">Saturday</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      {TestSchdule.slice(0, TestSchdule.length).map((item, index) => {
+                      return (
+                          <tr key={index}>
+                              <td>{periods[index]}</td>
+                              <td>{times[index]}</td>
+                              <td key={item[1]}>{item[1]}</td>
+                              <td key={item[2]}>{item[2]}</td>
+                              <td key={item[3]}>{item[3]}</td>
+                              <td key={item[4]}>{item[4]}</td>
+                              <td key={item[5]}>{item[5]}</td>
+                              <td key={item[6]}>{item[6]}</td>
+                          </tr>
+                          );
+                      })}
+                  </tbody>
+              </table>      
           </Card>
         </Col>
         </Row>

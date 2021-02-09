@@ -11,6 +11,7 @@ MERN Stack
 npm install
 ```
 in the "ss-app\back\" directory
+
 2. To start back end and front end, navigate to "ss-app\back\" and run 
 ```
 npm run dev

@@ -6,11 +6,11 @@ MERN Stack
 * Node v15.6.0
 
 ## How to Run
-1. Install needed Packages (below); also may need to run 
+1. Install needed packages by running 
 ```
 npm install
 ```
-in the "ss-app\back\" directory
+in the "ss-app\back\" AND "ss-app\front\" directories
 
 2. To start back end and front end, navigate to "ss-app\back\" and run 
 ```

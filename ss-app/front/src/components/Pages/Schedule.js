@@ -69,7 +69,7 @@ const Schedule = props => {
 
   return (
     <div className='App'>
-      
+
       <Container>
         <Row>
           <Col sm={4}>
@@ -80,7 +80,7 @@ const Schedule = props => {
                 <Form onSubmit={props.check}>
                   <h2>Add Courses</h2>
 
-                  
+
                   <div className='h1_p_1'>
                     <Form.Row>
                       <Form.Label>Semester</Form.Label>
@@ -92,7 +92,7 @@ const Schedule = props => {
                       </select>
                     </Form.Row>
                   </div>
-            
+
                   <div className='h1_p_1'>
                     <Form.Row>
                       <Form.Label>Course Number 1</Form.Label>
@@ -155,7 +155,7 @@ const Schedule = props => {
                   </div>
 
 
-          
+
 
                   <div className='h1_p'>
                     <Button variant='primary' type='submit'>
@@ -165,20 +165,20 @@ const Schedule = props => {
                 </Form>
               </div>
 
-            
+
           </Card>
           </Col>
-        
+
         <Col sm={8}>Placeholder for Schedule Options
           <Card body>
 
-      
+
           </Card>
         </Col>
         </Row>
       </Container>
 
-    
+
     </div>
   );
 };

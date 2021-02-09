@@ -55,8 +55,8 @@ const Home = props => {
                 </span>
                 <h4 className='service-heading'>Valid Timing Options</h4>
                 <p className='text-muted'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
-                ut labore et dolore magna aliqua. Ut enim ad minim veniam. 
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                ut labore et dolore magna aliqua. Ut enim ad minim veniam.
                 </p>
               </div>
               <div className='col-md-4'>
@@ -66,8 +66,8 @@ const Home = props => {
                 </span>
                 <h4 className='service-heading'>Map Your Schedule</h4>
                 <p className='text-muted'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
-                ut labore et dolore magna aliqua. Ut enim ad minim veniam. 
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                ut labore et dolore magna aliqua. Ut enim ad minim veniam.
                 </p>
               </div>
               <div className='col-md-4'>
@@ -77,8 +77,8 @@ const Home = props => {
                 </span>
                 <h4 className='service-heading'>Plan for Graduation</h4>
                 <p className='text-muted'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
-                ut labore et dolore magna aliqua. Ut enim ad minim veniam. 
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                ut labore et dolore magna aliqua. Ut enim ad minim veniam.
                 </p>
               </div>
             </div>

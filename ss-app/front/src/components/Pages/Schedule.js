@@ -96,18 +96,18 @@ const Schedule = props => {
     
   return (
     <div className='App'>
+
+<div class="row">
       
-      <Container>
-        <Row>
-          <Col sm={3}>
+  <div class="col-med-6">
+      <div className='sticky-menu'>
 
             <Card body>
 
-            <div className='col-12'>
+            <div className='col-sm'>
                 <Form onSubmit={props.check}>
                   <h2>Add Courses</h2>
 
-                  
                   <div className='h1_p_1'>
                     <Form.Row>
                       <Form.Label>Semester</Form.Label>
@@ -181,7 +181,6 @@ const Schedule = props => {
                     </Form.Row>
                   </div>
 
-
           
 
                   <div className='h1_p'>
@@ -194,9 +193,11 @@ const Schedule = props => {
 
             
           </Card>
-          </Col>
-        
-        <Col sm={9}>
+          
+          </div>
+          </div>
+
+          <div class="col-lg-8">
           <Card body>
               <h2>Possible Schedule</h2>
               <table class="table table-bordered">
@@ -230,10 +231,10 @@ const Schedule = props => {
                   </tbody>
               </table>      
           </Card>
-        </Col>
-        </Row>
-      </Container>
 
+
+          </div>
+        </div>            
     
     </div>
   );

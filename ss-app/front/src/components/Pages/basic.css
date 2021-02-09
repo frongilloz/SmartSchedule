@@ -59,3 +59,9 @@
     margin-bottom: 5rem;
   }
   
+  .sticky-menu {
+    top: 2em;
+    width: 25pc;
+    padding-right: 1rem;
+  }
+  

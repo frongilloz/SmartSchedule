@@ -6,11 +6,18 @@ MERN Stack
 * Node v15.6.0
 
 ## How to Run
-1. Install needed Packages
-2. Navigate to "ss-app\front\" and run 
+1. Install needed Packages (below); also may need to run 
 ```
-npm start
+npm install
 ```
+in the "ss-app\back\" directory
+
+2. To start back end and front end, navigate to "ss-app\back\" and run 
+```
+npm run dev
+```
+
+3. Front end should run on "http://localhost:3000/" (with proxy to access back), Back end should run on "http://localhost:5000/" 
 
 ## Required Packages (installable with npm)
 ```

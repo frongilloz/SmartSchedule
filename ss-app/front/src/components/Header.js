@@ -30,7 +30,9 @@ class Header extends Component {
       links: [
         { path: '/schedule', text: 'Course Schedule', isActive: false },
         { path: '/four-year-plan', text: 'Four Year Plan', isActive: false },
-        { path: '/about-us', text: 'About Us', isActive: false }
+        { path: '/about-us', text: 'About Us', isActive: false },
+        { path: '/login', text: 'Login', isActive: false },
+        { path: '/sign-up', text: 'Sign Up', isActive: false }
       ],
       logout: false
     };

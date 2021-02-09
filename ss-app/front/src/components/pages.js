@@ -77,7 +77,7 @@ export const Schedule = () => {
     
     // Request send to backend to fetch data
     let courseRequest1 = {
-      Sem: SemAdd,
+      //Sem: SemAdd,
       Course_Num1: CNumAdd1,
       //CL_Num: CL_NumAdd
     };
@@ -101,20 +101,30 @@ export const Schedule = () => {
     */
     
 
-    /*
+    ///*
     try {
-      //Post to server to get back our database information
-      //await axios.post('/api/course_database/', courseRequest1);
+      //Get request to servver our database information
+      await axios.get('/api/courses/' + CNumAdd1)
+        .then((response) => {
+          console.log(response.data);
+          console.log(response.status);
+          console.log(response.statusText);
+          console.log(response.headers);
+          console.log(response.config);
+
+        });
+
     } catch (err) {
       // TODO: do something
     }
-    */
+    //*/
 
   };
 
   return (
   <div>
     <Schedule_Content 
+      check={check}
       SemUpdate={SemUpdate}
       C_NumUpdate1={C_NumUpdate1}
       C_NumUpdate2={C_NumUpdate2}

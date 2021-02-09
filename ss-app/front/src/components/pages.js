@@ -72,7 +72,7 @@ export const Schedule = () => {
     console.log('CNumAdd3: ', CNumAdd3);
     console.log('CNumAdd4: ', CNumAdd4);
 
-    console.log('CL_NumAdd: ', CL_NumAdd);
+    //console.log('CL_NumAdd: ', CL_NumAdd);
 
     
     // Request send to backend to fetch data
@@ -108,9 +108,9 @@ export const Schedule = () => {
         .then((response) => {
           console.log(response.data);
           console.log(response.status);
-          console.log(response.statusText);
-          console.log(response.headers);
-          console.log(response.config);
+          //console.log(response.statusText);
+          //console.log(response.headers);
+          //console.log(response.config);
 
         });
 

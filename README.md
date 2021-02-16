@@ -30,4 +30,6 @@ npm run dev
 "react-router-dom": "^5.2.0",
 "react-scripts": "4.0.1",
 "web-vitals": "^0.2.4"
+mongoose-unique-validator
+argon2
 ```

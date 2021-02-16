@@ -211,7 +211,7 @@ export const Sign_Up = () => {
     };
 
     try {
-      await axios.post('/api/mail/confirmation/', newUser);
+      console.log('Post User sent');
       const s = await axios.post('/api/users/', newUser);
       if (s.status == 200) {
         setReload(true);
@@ -274,10 +274,8 @@ export const Login = props => {
 
     try {
       const response = await axios.post('/api/sessions/', loginData);
-      props.setIsAdmin(String(response.data.isAdmin));
-      props.setEmail(emailAdd);
-      props.setToken(response.data.token);
-      console.log('isadmin: ', response.data.isAdmin);
+      //props.setEmail(emailAdd);
+      //props.setToken(response.data.token);
       setDisplayMsg(false);
     } catch (err) {
       // TODO: do something
@@ -287,7 +285,7 @@ export const Login = props => {
   };
 
   if (props.email) {
-    return <Redirect to='/client_portal' />;
+    return <Redirect to='/user-profile' />;
   }
 
   return (

@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+'use strict';
+import mongoose from 'mongoose';
 
 //Create Schema
-const CourseSchema = new Schema({
+const CourseSchema = new mongoose.Schema({
     code: {
         type: String,
         required: true
@@ -142,4 +142,5 @@ const CourseSchema = new Schema({
     }]
 });
 
-module.exports = Course = mongoose.model('course', CourseSchema);
+export default mongoose.model('course', CourseSchema);
+//module.exports = Course = mongoose.model('course', CourseSchema);

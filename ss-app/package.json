@@ -1,7 +1,10 @@
 {
   "dependencies": {
+    "argon2": "^0.27.1",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
+    "crypto": "^1.0.1",
+    "mongoose-unique-validator": "^2.0.3",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.3",
     "react-cookie": "^4.0.3",

@@ -8,12 +8,12 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
     const user = User(req.body);
-    console.log('Is this working')
+    console.log('User post accessed.')
     try {
       user.password = await argon2.hash(req.body.password);
     } catch(err) {
       if(err instanceof TypeError) {
-        return res.status(400).send({error:{password: {message: 'A password is required!'}}});
+        return res.status(400).send({error:{password: {message: 'Password error.'}}});
       } else {
         throw err;
       }
@@ -33,9 +33,9 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/', async(req, res) => {
-    const users = await User.find({isAdmin: false});
+    const users = await User.find();
     res.status(200).send(users);
-  });
+});
 
 
 export default router;

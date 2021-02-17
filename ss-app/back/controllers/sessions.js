@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
   }
 
   if(await argon2.verify(user.password, req.body.password)) {
-    const token = crypto.randomBytes(32).toString('hex');
+    const token = crypto.randomBytes(16).toString('hex');
     const session = Session({user: user, token: token});
     session.save();
     res.status(200).send({token: token});

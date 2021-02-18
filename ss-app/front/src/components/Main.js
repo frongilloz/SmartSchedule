@@ -10,8 +10,6 @@ import {
   Profile
 } from './pages'; // import our pages
 
-import AuthenticatedRoute from './Pages/AuthRoute.js';
-
 //Purpose: This routes the links of our application, and the subsequent pages that will display
 const Main = props => (
   <main>
@@ -21,8 +19,7 @@ const Main = props => (
       <Route exact path='/four-year-plan' component={Four_Year} />
       <Route exact path='/about-us' component={About_Us} />
       <Route
-        exact
-        path='/login'
+        exact path='/login'
         component={() => (
           <Login
             setEmail={props.setEmail}
@@ -32,11 +29,7 @@ const Main = props => (
         )}
       />
       <Route exact path='/sign-up' component={Sign_Up} />
-      <AuthenticatedRoute
-        path='/user-profile'
-        component={Profile}
-        isAuthenticated={props.isAuthenticated}
-      />
+      <Route exact path='/user-profile' component={Profile} />
     </Switch>
   </main>
 );

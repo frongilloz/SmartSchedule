@@ -311,7 +311,7 @@ export const Profile = props => {
 
   // Send GET request to get the current user logged in
   //Get user currently logged in (sessions), then get information from the user db
-  console.log("isAuth: ", props.isAuthenticated)
+  console.log("user logged in email: ", props.email)
 
   
   /*

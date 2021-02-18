@@ -11,7 +11,6 @@ import db from './config/keys.js';
 import routes from './config/routes.js';
 
 //User authentication middleware
-import checkAuth from './middleware/sessions.js';
 
 const main = async () => {
     //OLD DB Config (later may want to change to dotenv)
@@ -28,7 +27,6 @@ const main = async () => {
     
     //Bodyparser Middlewar
     app.use(bodyParser.json());
-    app.use(checkAuth);
 
     //NEW define the api routes in a more dynamic file
     app.use('/api', routes);

@@ -67,8 +67,11 @@ class Header extends Component {
             {this.state.links.map((link, i) => {
                if (link.text === 'Profile' && !this.props.email) {
                 return <div />;
-
-              } else if (link.text === !this.props.email) {
+               }
+                else if (link.text === 'Sign Up' && this.props.email) {
+                  return <div />;  
+              } 
+              else if (link.text === !this.props.email) {
                 return <div />;
 
               } else {

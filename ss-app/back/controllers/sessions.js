@@ -17,7 +17,7 @@ router.post('/', async (req, res) => {
     const token = crypto.randomBytes(32).toString('hex');
     const session = Session({user: user, token: token});
     session.save();
-    res.status(200).send({token: token});
+    res.status(200).send({token: token, userName: user.fullName});
   } else {
     res.status(400).send();
   }

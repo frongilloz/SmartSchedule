@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
     const user = User(req.body);
-    console.log('User post accessed.')
+    console.log('User POST accessed.')
     try {
       user.password = await argon2.hash(req.body.password);
     } catch(err) {
@@ -34,6 +34,7 @@ router.post('/', async (req, res) => {
 
 router.get('/:email', async(req, res) => {
   try {
+    console.log('GET: ', req.params.email)
     const user = await User.findOne({email: req.params.email});
     res.status(200).send(user);
   }

@@ -278,6 +278,8 @@ export const Login = props => {
       const response = await axios.post('/api/sessions/', loginData);
       props.setEmail(emailAdd);
       props.setToken(response.data.token);
+      props.setUserName(response.data.userName);
+
       setDisplayMsg(false);
     } catch (err) {
       // TODO: do something
@@ -286,8 +288,12 @@ export const Login = props => {
     }
   };
 
+  // If the props has 
   if (props.email) {
-    return <Redirect to='/user-profile' />;
+    console.log("Login user email: ", props.email)
+    
+    //navigate( pathname: '/user-profile' , state: {email: props.email}})
+    return <Redirect to={{pathname: '/user-profile' , state: {email: props.email}}}/>;
   }
 
   return (
@@ -301,44 +307,16 @@ export const Login = props => {
 };
 
 export const Profile = props => {
-  //temporary
-  let exampleUser = {
-    FName: 'Allie',
-    LName: 'Gator',
-    email: 'allie@ufl.edu',
-    password: 'passAdd'
-  };
-
   // Send GET request to get the current user logged in
   //Get user currently logged in (sessions), then get information from the user db
-  console.log("user logged in email: ", props.email)
-
-  
-  /*
-  try {
-    //Get request to servver our database information
-    await axios.get('/api/users/' + "z@ufl.edu")
-      .then((response) => {
-        console.log(response.data);
-        console.log(response.status);
-        //console.log(response.statusText);
-        //console.log(response.headers);
-        //console.log(response.config);
-
-      });
-
-  } catch (err) {
-    // TODO: do something
-  }
-  */
-
+  console.log("Profile Email: ", props.email)
+  console.log("Profile Name: ", props.userName)
 
   return (
     <div>
       <Profile_Content
-        FName={exampleUser.FName}
-        LName={exampleUser.LName}
-        email={exampleUser.email}
+        userName={props.userName}
+        email={props.email}
       />
     </div>
   );

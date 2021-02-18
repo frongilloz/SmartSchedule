@@ -17,12 +17,14 @@ import './assets/css/bootstrap.min.css';
 const App = props => {
   const [cookies, setCookie, removeCookie] = useCookies([
       'email',
+      'userName',
       'token'
     ]);
     const [updated, setUpdated] = useState(false);
 
     const logout = async () => {
       removeCookie('email');
+      removeCookie('userName');
       removeCookie('token');
 
       axios.delete('/api/sessions?access_token=' + cookies['token']);
@@ -48,7 +50,11 @@ const App = props => {
             setEmail={email =>
               setCookie('email', email)
             }
+            setUserName={userName =>
+              setCookie('userName', userName)
+            }
             email={cookies['email']}
+            userName={cookies['userName']}
             />
         </div>
 

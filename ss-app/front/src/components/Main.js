@@ -24,12 +24,21 @@ const Main = props => (
           <Login
             setEmail={props.setEmail}
             setToken={props.setToken}
+            setUserName={props.setUserName}
             email={props.email}
           />
         )}
       />
       <Route exact path='/sign-up' component={Sign_Up} />
-      <Route exact path='/user-profile' component={Profile} />
+      <Route 
+        exact path='/user-profile' 
+        component={() => (
+          <Profile
+            setToken={props.setToken}
+            email={props.email}
+            userName={props.userName}
+          />
+        )} />
     </Switch>
   </main>
 );

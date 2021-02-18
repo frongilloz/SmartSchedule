@@ -29,7 +29,7 @@ const Profile = props => {
                 <h3>User Information</h3>
                 <h5>Name: </h5>
                 <p>
-                  {props.FName} {props.LName}
+                  {props.userName} 
                 </p>
                 <h5>Email: </h5>
                 <p>{props.email} </p>

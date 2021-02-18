@@ -32,9 +32,14 @@ router.post('/', async (req, res) => {
 
 });
 
-router.get('/', async(req, res) => {
-    const users = await User.find();
-    res.status(200).send(users);
+router.get('/:email', async(req, res) => {
+  try {
+    const user = await User.findOne({email: req.params.email});
+    res.status(200).send(user);
+  }
+  catch (err) {
+      res.json({message: err});
+  }
 });
 
 

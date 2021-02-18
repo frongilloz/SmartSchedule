@@ -8,6 +8,7 @@ import Four_Year_Content from './Pages/Four_Year';
 import About_Us_Content from './Pages/About_Us';
 import Login_Content from './Pages/Login';
 import Sign_Up_Content from './Pages/Sign_Up';
+import Profile_Content from './Pages/Profile';
 
 import { Redirect } from 'react-router-dom';
 
@@ -270,12 +271,13 @@ export const Login = props => {
     console.log('check() email: ', emailAdd);
     //console.log('check() pass: ', passAdd);
 
+    // data sent in to post request
     const loginData = { email: emailAdd, password: passAdd };
 
     try {
       const response = await axios.post('/api/sessions/', loginData);
-      //props.setEmail(emailAdd);
-      //props.setToken(response.data.token);
+      props.setEmail(emailAdd);
+      props.setToken(response.data.token);
       setDisplayMsg(false);
     } catch (err) {
       // TODO: do something
@@ -295,5 +297,49 @@ export const Login = props => {
       checkPass={checkPass}
       displayMsg={displayMsg}
     />
+  );
+};
+
+export const Profile = props => {
+  //temporary
+  let exampleUser = {
+    FName: 'Allie',
+    LName: 'Gator',
+    email: 'allie@ufl.edu',
+    password: 'passAdd'
+  };
+
+  // Send GET request to get the current user logged in
+  //Get user currently logged in (sessions), then get information from the user db
+  console.log("isAuth: ", props.isAuthenticated)
+
+  
+  /*
+  try {
+    //Get request to servver our database information
+    await axios.get('/api/users/' + "z@ufl.edu")
+      .then((response) => {
+        console.log(response.data);
+        console.log(response.status);
+        //console.log(response.statusText);
+        //console.log(response.headers);
+        //console.log(response.config);
+
+      });
+
+  } catch (err) {
+    // TODO: do something
+  }
+  */
+
+
+  return (
+    <div>
+      <Profile_Content
+        FName={exampleUser.FName}
+        LName={exampleUser.LName}
+        email={exampleUser.email}
+      />
+    </div>
   );
 };

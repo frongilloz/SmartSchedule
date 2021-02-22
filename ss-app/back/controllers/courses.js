@@ -1,37 +1,52 @@
-import express from 'express';
-import mongoose from 'mongoose';
+import express              from 'express';
+import Course               from '../models/Course.js';
+import ConsolidatedCourse   from '../models/ConsolidatedCourse.js';
 
-const router = express.Router();
+const router                = express.Router();
 
-//Course Model
-import Course from '../models/Course.js';
+const condenseCourse = (course) => {
+    let consolidatedCourse;
+    consolidatedCourse = new ConsolidatedCourse(course);
+    consolidatedCourse.courseId = course.courseId;
+    return consolidatedCourse;
+}
+
+const condenseCourses = (courses) => {
+    courses.forEach((course) => {
+        course = condenseCourse(course);
+    })
+}
 
 //@route  GET api/courses
 //@desc   Gets all Courses
 //@access Public
 router.get('/', async(req, res) => {
-    console.log("controller?");
-
-    try {
-       Course.find()
-             .then(courses => res.json(courses))
-    }catch(err) {
-        res.json({message: err});
-    }
+    Course.find((err, courses) => {
+        if (err)
+        {
+            res.json({message: err});
+            return;
+        }
+        courses = condenseCourses(courses);
+        courses => res.json(courses);
+    })
 });
 
 //@route  GET api/courses
 //@desc   Gets a single Course
 //@access Public
 router.get('/:code', async(req, res) => {
-    try {
-        Course.find({code: req.params.code})
-              .then(courses => res.json(courses))
-    }catch (err) {
-        res.json({message: err});
-    }
-});
+    const courseCode = req.params.code.toUpperCase();
 
-//module.exports = router;
+    Course.find({code: courseCode}, (err, course) => {
+        if (err)
+        {
+            res.status(500).send(err);
+            return;
+        }
+        course = condenseCourse(course[0]);
+        res.json(course);
+    })
+});
 
 export default router;

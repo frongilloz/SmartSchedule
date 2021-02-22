@@ -107,12 +107,8 @@ export const Schedule = () => {
       //Get request to servver our database information
       await axios.get('/api/courses/' + CNumAdd1)
         .then((response) => {
+          processCourse(response.data);
           console.log(response.data);
-          console.log(response.status);
-          //console.log(response.statusText);
-          //console.log(response.headers);
-          //console.log(response.config);
-
         });
 
     } catch (err) {

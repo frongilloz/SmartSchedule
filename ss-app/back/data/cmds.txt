@@ -1,0 +1,5 @@
+mongoimport --uri mongodb+srv://admin:admin@cluster0.p6ql4.mongodb.net/Course_Catalog --collection courses --type json --jsonArray --file "/Users/Spencer/Google Drive/spring2021/senior/SmartSchedule/ss-app/back/data/accounting.json"
+
+mongoimport --uri mongodb+srv://admin:admin@cluster0.p6ql4.mongodb.net/Course_Catalog --collection courses --type json --jsonArray --file "/Users/Spencer/Google Drive/spring2021/senior/SmartSchedule/ss-app/back/data/cise.json"
+
+mongoimport --uri mongodb+srv://admin:admin@cluster0.p6ql4.mongodb.net/Course_Catalog --collection courses --type json --jsonArray --file "/Users/Spencer/Google Drive/spring2021/senior/SmartSchedule/ss-app/back/data/ece.json"

@@ -22,6 +22,8 @@ const main = async () => {
         .then(() => console.log('MongoDB Connected...'))
         .catch(err => console.log(err));
 
+    mongoose.set('useCreateIndex', true);
+    
     // declare the express app
     const app = express();
     

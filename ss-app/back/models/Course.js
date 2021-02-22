@@ -7,7 +7,7 @@ const CourseSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    courseID: {
+    courseId: {
         type: String,
         required: true
     },
@@ -143,4 +143,3 @@ const CourseSchema = new mongoose.Schema({
 });
 
 export default mongoose.model('course', CourseSchema);
-//module.exports = Course = mongoose.model('course', CourseSchema);

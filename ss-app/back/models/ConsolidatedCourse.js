@@ -1,13 +1,12 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-//Create Consolid
-const CourseConsolid = new Schema({
+const ConsolidatedCourseSchema = new Schema({
     code: {
         type: String,
         required: true
     },
-    courseID: {
+    courseId: {
         type: String,
         required: true
     },
@@ -74,4 +73,4 @@ const CourseConsolid = new Schema({
     }]
 });
 
-module.exports = Course = mongoose.model('course', CourseSchema);
+export default mongoose.model('consolidatedCourse', ConsolidatedCourseSchema);

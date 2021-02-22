@@ -95,9 +95,9 @@ router.get('/:code', async(req, res) => {
 
 router.get('/:sectionNum', (req, res) => {
     res.send("");
-})
+});
 
-router.get('/:code/:semester/:sectionNum', (req, res) => {
+router.get('/find/:code/:semester/:sectionNum', (req, res) => {
 
     const courseCode = req.params.code.toUpperCase();
 
@@ -110,7 +110,7 @@ router.get('/:code/:semester/:sectionNum', (req, res) => {
     const query = {
         code: courseCode,
         sections: {
-            classNumber: req.params.CL_Num
+            classNumber: req.params.sectionNum
         }
     };
 
@@ -125,7 +125,7 @@ router.get('/:code/:semester/:sectionNum', (req, res) => {
          * the specified semester. if yes, return that result
          **/
         courses.forEach((course) => {
-            if (isSameSemester(req.params.Sem, course))
+            if (isSameSemester(req.params.semester, course))
             {
                 course = condenseCourse(course);
                 res.json(course);

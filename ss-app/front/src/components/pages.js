@@ -78,9 +78,9 @@ export const Schedule = () => {
     
     // Request send to backend to fetch data
     let courseRequest1 = {
-      //Sem: SemAdd,
+      Sem: SemAdd,
       Course_Num1: CNumAdd1,
-      //CL_Num: CL_NumAdd
+      CL_Num: CL_NumAdd
     };
     // To add later once 1 course is working
     /*
@@ -101,13 +101,17 @@ export const Schedule = () => {
     };
     */
     
+    const queryString = '/api/courses/' + courseRequest1.Course_Num1 + '/'
+                                        + courseRequest1.Sem         + '/'
+                                        + courseRequest1.CL_Num;
 
+    console.log("QUERY: %s", queryString);
+    
     ///*
     try {
       //Get request to servver our database information
-      await axios.get('/api/courses/' + CNumAdd1)
+      await axios.get(queryString)
         .then((response) => {
-          processCourse(response.data);
           console.log(response.data);
         });
 

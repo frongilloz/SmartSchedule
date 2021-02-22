@@ -70,6 +70,9 @@ const ConsolidatedCourseSchema = new Schema({
                 type: String
             }
         }],
+        dropaddDeadline: {
+            type: String
+        },
     }]
 });
 

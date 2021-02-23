@@ -8,6 +8,7 @@ import Four_Year_Content from './Pages/Four_Year';
 import About_Us_Content from './Pages/About_Us';
 import Login_Content from './Pages/Login';
 import Sign_Up_Content from './Pages/Sign_Up';
+import Profile_Content from './Pages/Profile';
 
 import { Redirect } from 'react-router-dom';
 
@@ -106,12 +107,8 @@ export const Schedule = () => {
       //Get request to servver our database information
       await axios.get('/api/courses/' + CNumAdd1)
         .then((response) => {
+          processCourse(response.data);
           console.log(response.data);
-          console.log(response.status);
-          //console.log(response.statusText);
-          //console.log(response.headers);
-          //console.log(response.config);
-
         });
 
     } catch (err) {
@@ -211,7 +208,7 @@ export const Sign_Up = () => {
     };
 
     try {
-      await axios.post('/api/mail/confirmation/', newUser);
+      console.log('Post User sent');
       const s = await axios.post('/api/users/', newUser);
       if (s.status == 200) {
         setReload(true);
@@ -270,14 +267,15 @@ export const Login = props => {
     console.log('check() email: ', emailAdd);
     //console.log('check() pass: ', passAdd);
 
+    // data sent in to post request
     const loginData = { email: emailAdd, password: passAdd };
 
     try {
       const response = await axios.post('/api/sessions/', loginData);
-      props.setIsAdmin(String(response.data.isAdmin));
       props.setEmail(emailAdd);
       props.setToken(response.data.token);
-      console.log('isadmin: ', response.data.isAdmin);
+      props.setUserName(response.data.userName);
+
       setDisplayMsg(false);
     } catch (err) {
       // TODO: do something
@@ -286,8 +284,12 @@ export const Login = props => {
     }
   };
 
+  // If the props has 
   if (props.email) {
-    return <Redirect to='/client_portal' />;
+    console.log("Login user email: ", props.email)
+    
+    //navigate( pathname: '/user-profile' , state: {email: props.email}})
+    return <Redirect to={{pathname: '/user-profile' , state: {email: props.email}}}/>;
   }
 
   return (
@@ -297,5 +299,21 @@ export const Login = props => {
       checkPass={checkPass}
       displayMsg={displayMsg}
     />
+  );
+};
+
+export const Profile = props => {
+  // Send GET request to get the current user logged in
+  //Get user currently logged in (sessions), then get information from the user db
+  console.log("Profile Email: ", props.email)
+  console.log("Profile Name: ", props.userName)
+
+  return (
+    <div>
+      <Profile_Content
+        userName={props.userName}
+        email={props.email}
+      />
+    </div>
   );
 };

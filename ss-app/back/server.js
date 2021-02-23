@@ -1,29 +1,52 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-
+'use strict';
+import express from 'express';
 //import dotenv from 'dotenv';
-//import routes from './config/routes.js';
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
 
+//Import config
+import db from './config/keys.js';
 
-const courses = require('./routes/api/courses');
+// Routes for the user db
+import routes from './config/routes.js';
 
-const app = express();
+//User authentication middleware
 
-//Bodyparser Middlewar
-app.use(bodyParser.json());
+const main = async () => {
+    //OLD DB Config (later may want to change to dotenv)
+    //const db = require('./config/keys').mongoURI;
+    //console.log("db: ", db.mongoURI);
 
-//DB Config
-const db = require('./config/keys').mongoURI;
+    //Connect to Mongo
+    mongoose.connect(db.mongoURI, {useNewUrlParser: true, useUnifiedTopology: true})
+        .then(() => console.log('MongoDB Connected...'))
+        .catch(err => console.log(err));
 
-//Connect to Mongo
-mongoose.connect(db, {useNewUrlParser: true, useUnifiedTopology: true})
-    .then(() => console.log('MongoDB Connected...'))
-    .catch(err => console.log(err));
+    mongoose.set('useCreateIndex', true);
+    
+    // declare the express app
+    const app = express();
+    
+    //Bodyparser Middlewar
+    app.use(bodyParser.json());
 
-//Use Routes
-app.use('/api/courses', courses);
+    //NEW define the api routes in a more dynamic file
+    app.use('/api', routes);
 
-const port = process.env.PORT || 5000;
+    app.use((req, res, next) => {
+        res.status(404).send('404 Not Found');
+      });
+      app.use((err, req, res, next) => {
+        if(err.type === "entity.parse.failed") {
+          res.status(400).send({error: 'Invalid JSON'});
+        } else {
+          res.status(500).send('500 Internal Server Error');
+        }
+      });
 
-app.listen(port, () => console.log(`Server started on port ${port}`));
+    const port = process.env.PORT || 5000;
+
+    app.listen(port, () => console.log(`Server started on port ${port}`));
+}
+
+main();

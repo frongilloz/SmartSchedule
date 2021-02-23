@@ -32,7 +32,8 @@ class Header extends Component {
         { path: '/four-year-plan', text: 'Four Year Plan', isActive: false },
         { path: '/about-us', text: 'About Us', isActive: false },
         { path: '/login', text: 'Login', isActive: false },
-        { path: '/sign-up', text: 'Sign Up', isActive: false }
+        { path: '/sign-up', text: 'Sign Up', isActive: false },
+        { path: '/user-profile', text: 'Profile', isActive: false }
       ],
       logout: false
     };
@@ -64,13 +65,13 @@ class Header extends Component {
           </Link>
           <ul className='navbar-nav'>
             {this.state.links.map((link, i) => {
-              if (
-                link.text === 'Admin' &&
-                (!this.props.email || this.props.isAdmin !== 'true')
-              ) {
+               if (link.text === 'Profile' && !this.props.email) {
                 return <div />;
-
-              } else if (link.text === !this.props.email) {
+               }
+                else if (link.text === 'Sign Up' && this.props.email) {
+                  return <div />;  
+              } 
+              else if (link.text === !this.props.email) {
                 return <div />;
 
               } else {

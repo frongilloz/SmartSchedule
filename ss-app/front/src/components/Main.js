@@ -6,7 +6,8 @@ import {
   Four_Year,
   About_Us,
   Login,
-  Sign_Up
+  Sign_Up,
+  Profile
 } from './pages'; // import our pages
 
 //Purpose: This routes the links of our application, and the subsequent pages that will display
@@ -17,8 +18,27 @@ const Main = props => (
       <Route exact path='/schedule' component={Schedule} />
       <Route exact path='/four-year-plan' component={Four_Year} />
       <Route exact path='/about-us' component={About_Us} />
-      <Route exact path='/login' component={Login} />
+      <Route
+        exact path='/login'
+        component={() => (
+          <Login
+            setEmail={props.setEmail}
+            setToken={props.setToken}
+            setUserName={props.setUserName}
+            email={props.email}
+          />
+        )}
+      />
       <Route exact path='/sign-up' component={Sign_Up} />
+      <Route 
+        exact path='/user-profile' 
+        component={() => (
+          <Profile
+            setToken={props.setToken}
+            email={props.email}
+            userName={props.userName}
+          />
+        )} />
     </Switch>
   </main>
 );

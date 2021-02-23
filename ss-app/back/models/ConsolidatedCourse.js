@@ -32,7 +32,7 @@ const ConsolidatedCourseSchema = new Schema({
         classNumber:{
             type: Number,
             required: true
-        },
+        },      
         credits: {
             type: Number
         },
@@ -70,6 +70,9 @@ const ConsolidatedCourseSchema = new Schema({
                 type: String
             }
         }],
+        dropaddDeadline: {
+            type: String
+        },
     }]
 });
 

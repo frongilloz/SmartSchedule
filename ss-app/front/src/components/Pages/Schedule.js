@@ -113,9 +113,9 @@ const Schedule = props => {
                       <Form.Label>Semester</Form.Label>
                       <select className="form-control" name="Semester" onChange={SemInt} required="true">
                           <option selected>Semester - Required</option>
-                          <option value="f21">Fall 2021</option>
-                          <option value="s21">Spring 2021</option>
-                          <option value="f20">Fall 2020</option>
+                          <option value="fall2021">Fall 2021</option>
+                          <option value="spring2021">Spring 2021</option>
+                          <option value="fall2020">Fall 2020</option>
                       </select>
                     </Form.Row>
                   </div>

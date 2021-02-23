@@ -102,10 +102,7 @@ export const Schedule = () => {
     */
     
     const queryString = '/api/courses/find/'  + courseRequest1.Course_Num1 + '/'
-                                              + courseRequest1.Sem         + '/'
-                                              + courseRequest1.CL_Num;
-
-    console.log("QUERY: %s", queryString);
+                                              + courseRequest1.Sem;
 
     ///*
     try {

@@ -22,21 +22,21 @@ class SemesterInfo {
         this.endDate = endDate;
     }
 
-    getStartAsDateTime() {
+    getStartAsDateTime = function() {
         return new Date(this.startDate);
     }
 
-    getEndAsDateTime() {
+    getEndAsDateTime = function() {
         return new Date(this.endDate);
     }
 };
 
 const SemesterLut = [
     {
-        "s21": new SemesterInfo("01/14/2021", "05/02/2021")
+        "spring2021": new SemesterInfo("01/14/2021", "05/02/2021")
     },
     {
-        "f20": new SemesterInfo("01/14/2021", "05/02/2021")
+        "fall2020": new SemesterInfo("01/14/2021", "05/02/2021")
     }
 ];
 
@@ -46,8 +46,9 @@ const SemesterLut = [
  * @param {*} course 
  */
 const isSameSemester = (semester, course) => {
-    const relevantSemester = SemesterLut[semester];
-    const dropAddDeadline = new Date(course.dropaddDeadline);
+    let relevantSemester = SemesterLut.find(semesterElement => (Object.   keys(semesterElement)[0] === semester));
+    relevantSemester = relevantSemester[Object.keys(relevantSemester)];
+    const dropAddDeadline = new Date(course.sections[0].dropaddDeadline);
     let laterThanStart = false;
     let earlierThanEnd = false;
     
@@ -67,8 +68,7 @@ const isSameSemester = (semester, course) => {
 //@access Public
 router.get('/', async(req, res) => {
     Course.find((err, courses) => {
-        if (err)
-        {
+        if (err) {
             res.json({message: err});
             return;
         }
@@ -97,7 +97,7 @@ router.get('/:sectionNum', (req, res) => {
     res.send("");
 });
 
-router.get('/find/:code/:semester/:sectionNum', (req, res) => {
+router.get('/find/:code/:semester', (req, res) => {
 
     const courseCode = req.params.code.toUpperCase();
 
@@ -108,10 +108,7 @@ router.get('/find/:code/:semester/:sectionNum', (req, res) => {
      **/
 
     const query = {
-        code: courseCode,
-        sections: {
-            classNumber: req.params.sectionNum
-        }
+        code: courseCode
     };
 
     Course.find(query, (err, courses) => {
@@ -125,8 +122,7 @@ router.get('/find/:code/:semester/:sectionNum', (req, res) => {
          * the specified semester. if yes, return that result
          **/
         courses.forEach((course) => {
-            if (isSameSemester(req.params.semester, course))
-            {
+            if (isSameSemester(req.params.semester, course)) {
                 course = condenseCourse(course);
                 res.json(course);
                 return;

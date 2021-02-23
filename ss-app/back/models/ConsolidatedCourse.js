@@ -32,7 +32,7 @@ const ConsolidatedCourseSchema = new Schema({
         classNumber:{
             type: Number,
             required: true
-        },
+        },      
         credits: {
             type: Number
         },

@@ -1,13 +1,18 @@
 import React , { Component } from 'react';
-
 import { Form, Col, Card, Button, Row, Container } from 'react-bootstrap';
 import './basic.css';
-
+import ReactDOM from "react-dom";
+import Pdf from "react-to-pdf";
+const ref = React.createRef();
+const options = {
+  unit: "in",
+  format: [580, 1300]
+}
 //form
 //submitted form is exported into an organized pdf; maybe use (table) to organize semester elements
 
 const Four_Year= (props) => (
-  <div className='App'>
+  <div className="App">
     <header className='masthead'>
       <div className='container'>
         <div className='intro-text'>
@@ -15,8 +20,11 @@ const Four_Year= (props) => (
         </div>
       </div>
     </header>
+    <Pdf targetRef={ref} filename="four_year_plan.pdf" options={options} scale = {.5}>
+        {({ toPdf }) => <button onClick={toPdf}>Generate Four Year Plan</button>}
+    </Pdf>
 
-    <Card body>
+    <Card body ref={ref}>
 
     <div className='row text-center'>
     <div className='col-md-7'>
@@ -1076,5 +1084,6 @@ courses until you graduate</h6>
     </Card>
   </div>
 );
-
+const rootElement = document.getElementById("root");
+ReactDOM.render(<Four_Year />, rootElement);
 export default Four_Year;

@@ -29,9 +29,7 @@ export const Schedule = () => {
   const [CNumAdd2, setC_Num2] = useState('');
   const [CNumAdd3, setC_Num3] = useState('');
   const [CNumAdd4, setC_Num4] = useState('');
-
   const [CL_NumAdd, setCL_Num] = useState('');
-
 
   //external change functions
   const SemUpdate = value => {
@@ -54,68 +52,41 @@ export const Schedule = () => {
     setC_Num4(value);
     console.log('CNumUpdate4() called, value: ', value);
   };
-
   const CL_NumUpdate = value => {
     setCL_Num(value);
     console.log('CL_NumUpdate() called, value: ', value);
   };
 
-
   const check = async event => {
-    //prevent the refresh of page on submit
+    // prevent the refresh of page on submit
     event.preventDefault();
 
-    //log
-    console.log('Form Request Received');
-    console.log('SemAdd: ', SemAdd);
-    console.log('CNumAdd1: ', CNumAdd1);
-    console.log('CNumAdd2: ', CNumAdd2);
-    console.log('CNumAdd3: ', CNumAdd3);
-    console.log('CNumAdd4: ', CNumAdd4);
+    const courseNums = [CNumAdd1, CNumAdd2, CNumAdd3, CNumAdd4];
+    let courseData = [];
 
-    //console.log('CL_NumAdd: ', CL_NumAdd);
-
+    courseNums.forEach(async courseNum => {
+      /* if this field was filled in by the user */
+      if (courseNum)
+      {
+        const queryString = '/api/courses/find/'  + courseNum + '/'
+                                                  + SemAdd;
+        /* make a backend request for this course data */
+        try {
+          await axios.get(queryString)
+            .then((response) => {
+              console.log(response.data);
+              courseData.push(response.data);
+            });
     
-    // Request send to backend to fetch data
-    let courseRequest1 = {
-      Sem: SemAdd,
-      Course_Num1: CNumAdd1,
-      CL_Num: CL_NumAdd
-    };
-    // To add later once 1 course is working
-    /*
-    let courseRequest2 = {
-      Sem: SemAdd,
-      Course_Num2: CNumAdd2,
-      //CL_Num: CL_NumAdd
-    };
-    let courseRequest3 = {
-      Sem: SemAdd,
-      Course_Num3: CNumAdd3,
-      //CL_Num: CL_NumAdd
-    };
-    let courseRequest4 = {
-      Sem: SemAdd,
-      Course_Num4: CNumAdd4,
-      //CL_Num: CL_NumAdd
-    };
-    */
-    
-    const queryString = '/api/courses/find/'  + courseRequest1.Course_Num1 + '/'
-                                              + courseRequest1.Sem;
+        } catch (err) {
+          // TODO: do something
+        }
+      }
+    })
 
-    ///*
-    try {
-      //Get request to servver our database information
-      await axios.get(queryString)
-        .then((response) => {
-          console.log(response.data);
-        });
-
-    } catch (err) {
-      // TODO: do something
-    }
-    //*/
+    courseData.forEach(course => {
+      console.log(course);
+    })
 
   };
 
@@ -129,9 +100,7 @@ export const Schedule = () => {
       C_NumUpdate3={C_NumUpdate3}
       C_NumUpdate4={C_NumUpdate4}
       CL_NumUpdate={CL_NumUpdate}
-
     />
-
   </div>
   );
 };

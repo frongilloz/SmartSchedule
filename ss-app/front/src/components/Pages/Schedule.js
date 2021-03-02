@@ -142,6 +142,15 @@ const Schedule = props => {
       //console.log('Is there really nothing here?...', props.responseData[0].code)
     }
 
+    //for (let i = 0; oldSchedule.length; i++) {
+    //  for (let l = 0; oldSchedule[i].length; l++) {
+    //    if (oldSchedule[i][l] === newSchedule[i][l])
+    //      TestSchdule[i][l] = oldSchedule[i][l]
+    //    else
+    //      TestSchdule[i][l] = newSchedule[i][l]
+    //  }
+    //}
+
     console.log('After: ', TestSchdule)
 
     }

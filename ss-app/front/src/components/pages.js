@@ -31,6 +31,10 @@ export const Schedule = () => {
   const [CNumAdd4, setC_Num4] = useState('');
   const [CL_NumAdd, setCL_Num] = useState('');
 
+  //state for schedule generation
+  let [responseData, setResponseData] = useState('')
+
+
   //external change functions
   const SemUpdate = value => {
     setSem(value);
@@ -68,14 +72,33 @@ export const Schedule = () => {
       /* if this field was filled in by the user */
       if (courseNum)
       {
-        const queryString = '/api/courses/find/'  + courseNum + '/'
+        const queryString = '/api/courses/'  + courseNum + '/'
                                                   + SemAdd;
         /* make a backend request for this course data */
         try {
           await axios.get(queryString)
             .then((response) => {
-              console.log(response.data);
+              //console.log(response.data);
               courseData.push(response.data);
+
+              //let sectionsArray = response.data.sections
+
+              //// Each course has multiple sections
+              //for (let i = 0; i < sectionsArray.length; i++) {
+
+              //  //Each section has multiple meet Times arrays (i.e. Tues/Thurs, or MWF)
+              //  let meetTArray = sectionsArray[i].meetTimes
+              //  console.log(meetTArray)
+
+              //  for (let j = 0; j < meetTArray.length; j++) {
+              //    console.log(meetTArray[j].meetDays)
+
+              //    console.log(meetTArray[j].meetPeriodBegin)
+
+              //    console.log(meetTArray[j].meetPeriodEnd)
+              //  }
+              //}
+
             });
     
         } catch (err) {
@@ -84,9 +107,12 @@ export const Schedule = () => {
       }
     })
 
-    courseData.forEach(course => {
-      console.log(course);
-    })
+    setResponseData(courseData)
+    console.log('ResponseData is: ', responseData)
+
+    //courseData.forEach(course => {
+    //  console.log(course);
+    //})
 
   };
 
@@ -100,6 +126,7 @@ export const Schedule = () => {
       C_NumUpdate3={C_NumUpdate3}
       C_NumUpdate4={C_NumUpdate4}
       CL_NumUpdate={CL_NumUpdate}
+      responseData={responseData}
     />
   </div>
   );

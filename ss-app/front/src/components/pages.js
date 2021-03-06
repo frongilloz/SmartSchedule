@@ -10,6 +10,9 @@ import Login_Content from './Pages/Login';
 import Sign_Up_Content from './Pages/Sign_Up';
 import Profile_Content from './Pages/Profile';
 
+// import the generate schedule function
+import { generateSchedule } from './generate_schedule.js';
+
 import { Redirect } from 'react-router-dom';
 
 //Purpose: Defines the content that is returned from each page
@@ -61,25 +64,28 @@ export const Schedule = () => {
     console.log('CL_NumUpdate() called, value: ', value);
   };
 
+  let courseData = [];
+
   const check = async event => {
     // prevent the refresh of page on submit
     event.preventDefault();
 
     const courseNums = [CNumAdd1, CNumAdd2, CNumAdd3, CNumAdd4];
-    let courseData = [];
 
     courseNums.forEach(async courseNum => {
       /* if this field was filled in by the user */
       if (courseNum)
       {
-        const queryString = '/api/courses/'  + courseNum + '/'
+        const queryString = '/api/courses/find/'  + courseNum + '/'
                                                   + SemAdd;
         /* make a backend request for this course data */
         try {
           await axios.get(queryString)
             .then((response) => {
-              //console.log(response.data);
+              console.log(response.data);
               courseData.push(response.data);
+
+              console.log("Log pages.js")
 
               //let sectionsArray = response.data.sections
 
@@ -94,10 +100,27 @@ export const Schedule = () => {
               //    console.log(meetTArray[j].meetDays)
 
               //    console.log(meetTArray[j].meetPeriodBegin)
-
               //    console.log(meetTArray[j].meetPeriodEnd)
               //  }
               //}
+              
+              //
+              setResponseData(courseData)
+              
+               // Return the update content
+              return (
+                <Schedule_Content 
+                  check={check}
+                  SemUpdate={SemUpdate}
+                  C_NumUpdate1={C_NumUpdate1}
+                  C_NumUpdate2={C_NumUpdate2}
+                  C_NumUpdate3={C_NumUpdate3}
+                  C_NumUpdate4={C_NumUpdate4}
+                  CL_NumUpdate={CL_NumUpdate}
+                  responseData={responseData}
+                />)
+
+
 
             });
     
@@ -115,6 +138,17 @@ export const Schedule = () => {
     //})
 
   };
+
+  console.log("st")
+  //responseData
+  console.log(responseData)
+
+  let testSc = generateSchedule(responseData)
+  console.log("Test Schedule")
+  console.log(testSc)
+  
+  console.log("fin")
+
 
   return (
   <div>

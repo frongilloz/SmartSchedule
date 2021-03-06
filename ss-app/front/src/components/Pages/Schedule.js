@@ -88,9 +88,11 @@ const Schedule = props => {
     let oldSchedule = Array(14).fill(0).map(row => new Array(6).fill(" "))
     let newSchedule = Array(14).fill(0).map(row => new Array(6).fill(" "))
     oldSchedule = TestSchdule;
+    /*
     console.log('Before: ', TestSchdule)
     console.log('oldSchedule is : ', oldSchedule)
     console.log('newSchedule is : ', newSchedule)
+    */
     //console.log(checkArray.length)
 
     let day_index = 0;
@@ -98,12 +100,12 @@ const Schedule = props => {
     let period_index2 = 0;
 
     if (Array.isArray(props.responseData) && checkArray.length && props.responseData[0]) {
-      console.log("Wow, something's here")
-      console.log('ResponseData (from schedule.js) is: ', props.responseData)
+      //console.log("Wow, something's here")
+      //console.log('ResponseData (from schedule.js) is: ', props.responseData)
 
       let responseDataLength = [];
       responseDataLength = props.responseData
-      console.log('length of resposneData is: ', responseDataLength.length)
+      //console.log('length of resposneData is: ', responseDataLength.length)
 
 
       for (let k = 0; k < responseDataLength.length; k++) {

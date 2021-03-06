@@ -72,7 +72,7 @@ export const Schedule = () => {
       /* if this field was filled in by the user */
       if (courseNum)
       {
-        const queryString = '/api/courses/'  + courseNum + '/'
+        const queryString = '/api/courses/find/'  + courseNum + '/'
                                                   + SemAdd;
         /* make a backend request for this course data */
         try {
@@ -314,3 +314,4 @@ export const Profile = props => {
     </div>
   );
 };
+

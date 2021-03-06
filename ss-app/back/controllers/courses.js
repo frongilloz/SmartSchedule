@@ -37,6 +37,9 @@ const SemesterLut = [
     },
     {
         "fall2020": new SemesterInfo("01/14/2021", "05/02/2021")
+    },
+    {
+        "fall2021": new SemesterInfo("08/14/2021", "12/20/2021")
     }
 ];
 

@@ -81,7 +81,7 @@ const Schedule = props => {
     console.log('ClassNumInt: ', event.target.value);
     };
 
-
+/*
   function generateSchedule() {
 
     let checkArray = [1] 
@@ -92,7 +92,7 @@ const Schedule = props => {
     console.log('Before: ', TestSchdule)
     console.log('oldSchedule is : ', oldSchedule)
     console.log('newSchedule is : ', newSchedule)
-    */
+    
     //console.log(checkArray.length)
 
     let day_index = 0;
@@ -147,7 +147,7 @@ const Schedule = props => {
     console.log('After: ', TestSchdule)
 
     }
-   
+   */
 
   return (
     <div className='App'>
@@ -236,10 +236,9 @@ const Schedule = props => {
                     </Form.Row>
                   </div>
 
-          
 
                   <div className='h1_p'>
-                    <Button variant='primary' type='submit' onClick={generateSchedule}>
+                    <Button variant='primary' type='submit' > {/* onClick={generateSchedule} */}
                       Submit
                     </Button>
                   </div>
@@ -269,7 +268,7 @@ const Schedule = props => {
                     </tr>
                   </thead>
                   <tbody>
-                      {TestSchdule.slice(0, TestSchdule.length).map((item, index) => {
+                      {props.testSc.slice(0, props.testSc.length).map((item, index) => {
                       return (
                           <tr key={index}>
                               <td>{periods[index]}</td>
@@ -285,6 +284,11 @@ const Schedule = props => {
                       })}
                   </tbody>
               </table>      
+
+              <Button variant='secondary' onClick={props.clear}> 
+                      Clear
+              </Button>
+
           </Card>
 
 

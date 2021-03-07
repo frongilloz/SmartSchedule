@@ -65,6 +65,9 @@ export const Schedule = () => {
   };
 
   let courseData = [];
+  let get_count = 0;
+  let courses_count = 0; 
+  let testSc;
 
   const check = async event => {
     // prevent the refresh of page on submit
@@ -74,40 +77,28 @@ export const Schedule = () => {
 
     courseNums.forEach(async courseNum => {
       /* if this field was filled in by the user */
-      if (courseNum)
-      {
+      if (courseNum){
+        courses_count++;
+
         const queryString = '/api/courses/find/'  + courseNum + '/'
                                                   + SemAdd;
         /* make a backend request for this course data */
         try {
           await axios.get(queryString)
             .then((response) => {
-              console.log(response.data);
+              console.log("GET axios called")
+              console.log("GET resp data", response.data);
               courseData.push(response.data);
-
-              console.log("Log pages.js")
-
-              //let sectionsArray = response.data.sections
-
-              //// Each course has multiple sections
-              //for (let i = 0; i < sectionsArray.length; i++) {
-
-              //  //Each section has multiple meet Times arrays (i.e. Tues/Thurs, or MWF)
-              //  let meetTArray = sectionsArray[i].meetTimes
-              //  console.log(meetTArray)
-
-              //  for (let j = 0; j < meetTArray.length; j++) {
-              //    console.log(meetTArray[j].meetDays)
-
-              //    console.log(meetTArray[j].meetPeriodBegin)
-              //    console.log(meetTArray[j].meetPeriodEnd)
-              //  }
-              //}
               
-              //
+
               setResponseData(courseData)
+
+              // count the number of get
+              get_count++;
+              console.log('gt:', get_count)
               
                // Return the update content
+              /*
               return (
                 <Schedule_Content 
                   check={check}
@@ -118,9 +109,7 @@ export const Schedule = () => {
                   C_NumUpdate4={C_NumUpdate4}
                   CL_NumUpdate={CL_NumUpdate}
                   responseData={responseData}
-                />)
-
-
+                />) */
 
             });
     
@@ -128,27 +117,38 @@ export const Schedule = () => {
           // TODO: do something
         }
       }
-    })
 
-    setResponseData(courseData)
-    console.log('ResponseData is: ', responseData)
+      //
+      //setResponseData(courseData)
+
+    }) // end for each
+
 
     //courseData.forEach(course => {
     //  console.log(course);
     //})
 
-  };
+  }; // end of async
 
   console.log("st")
-  //responseData
-  console.log(responseData)
+  console.log('ResponseData is: ', responseData)
 
-  let testSc = generateSchedule(responseData)
-  console.log("Test Schedule")
-  console.log(testSc)
+  // only generate the new schedule once all the course requests have been completed
+  if (get_count === courses_count){
+    console.log("g: ", get_count)
+    console.log("c: ", courses_count)
+
+    // Run the generate schedule function
+    testSc = generateSchedule(responseData)
+    console.log("Test Schedule")
+    console.log(testSc)
+  }
   
   console.log("fin")
 
+  const clear = async event => {
+    testSc = Array(14).fill(0).map(row => new Array(6).fill(" "));
+  }
 
   return (
   <div>
@@ -161,6 +161,8 @@ export const Schedule = () => {
       C_NumUpdate4={C_NumUpdate4}
       CL_NumUpdate={CL_NumUpdate}
       responseData={responseData}
+      clear={clear}
+      testSc={testSc}
     />
   </div>
   );

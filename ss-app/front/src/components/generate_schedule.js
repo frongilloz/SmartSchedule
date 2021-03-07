@@ -25,16 +25,15 @@ export function generateSchedule(responseData) {
     console.log("Resp data in gen_schedule")
     console.log(responseData)
 
-
     let day_index = 0;
     let period_index1 = 0;
     let period_index2 = 0;
 
-    console.log('1) length of resposneData is: ', Array.length(responseData) )
+    console.log('1) length of resposneData is: ', (responseData.length) )
 
     if (Array.isArray(responseData) && checkArray.length && responseData[0]) {
       console.log("Wow, something's here")
-      console.log('ResponseData (from schedule.js) is: ', responseData)
+      console.log('ResponseData (from pages.js) is: ', responseData)
 
       let responseDataLength = [];
       responseDataLength = responseData

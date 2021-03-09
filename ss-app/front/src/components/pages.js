@@ -17,10 +17,10 @@ import { Redirect } from 'react-router-dom';
 //For dynamic pages, (e.g. w/ forms) the state functions and returning variables are managed here
 
 export const Home = () => (
-    <div>
-      <HomeContent />
-    </div>
-  );
+  <div>
+    <HomeContent />
+  </div>
+);
 
 export const Schedule = () => {
   //states for the forms
@@ -33,6 +33,7 @@ export const Schedule = () => {
 
   //state for schedule generation
   let [responseData, setResponseData] = useState('')
+  let [scheduleArray, setScheduleArray] = useState('')
 
 
   //external change functions
@@ -70,37 +71,17 @@ export const Schedule = () => {
 
     courseNums.forEach(async courseNum => {
       /* if this field was filled in by the user */
-      if (courseNum)
-      {
-        const queryString = '/api/courses/find/'  + courseNum + '/'
-                                                  + SemAdd;
+      if (courseNum) {
+        const queryString = '/api/courses/find/' + courseNum + '/'
+          + SemAdd;
         /* make a backend request for this course data */
         try {
           await axios.get(queryString)
             .then((response) => {
               //console.log(response.data);
               courseData.push(response.data);
-
-              //let sectionsArray = response.data.sections
-
-              //// Each course has multiple sections
-              //for (let i = 0; i < sectionsArray.length; i++) {
-
-              //  //Each section has multiple meet Times arrays (i.e. Tues/Thurs, or MWF)
-              //  let meetTArray = sectionsArray[i].meetTimes
-              //  console.log(meetTArray)
-
-              //  for (let j = 0; j < meetTArray.length; j++) {
-              //    console.log(meetTArray[j].meetDays)
-
-              //    console.log(meetTArray[j].meetPeriodBegin)
-
-              //    console.log(meetTArray[j].meetPeriodEnd)
-              //  }
-              //}
-
             });
-    
+
         } catch (err) {
           // TODO: do something
         }
@@ -109,26 +90,97 @@ export const Schedule = () => {
 
     setResponseData(courseData)
     console.log('ResponseData is: ', responseData)
-
+    generateSchedule(responseData)
     //courseData.forEach(course => {
     //  console.log(course);
     //})
 
   };
 
+  const generateSchedule = props => {
+
+    const periods = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "E1", "E2", "E3"];
+    const daysShort = ["M", "T", "W", "R", "F"]
+    const finalSchedules = []
+    let checkArray = [1]
+    console.log('Before: ', scheduleArray)
+    //console.log(checkArray.length)
+
+    let day_index = 0;
+    let period_index1 = 0;
+    let period_index2 = 0;
+
+    if (Array.isArray(responseData) && checkArray.length && responseData[0]) {  //check if responseData array exists and if something exists in it (try taking out the checkArray thing)
+      console.log("Wow, something's here")
+      console.log('ResponseData (from schedule.js) is: ', responseData)
+
+      let responseDataLength = [];
+      responseDataLength = responseData
+      console.log('length of responseData is: ', responseDataLength.length)
+
+
+      for (let k = 0; k < responseDataLength.length; k++) {
+
+      let sectionsArray = responseData[k].sections
+      console.log('sectionsArray is: ', sectionsArray)
+
+      for (let i = 0; i < sectionsArray.length; i++) {
+        let meetTArray = sectionsArray[i].meetTimes
+        console.log('meetTArray is: ', meetTArray)
+        let newSchedule = Array(14).fill(0).map(row => new Array(6).fill(" "))
+
+        for (let j = 0; j < meetTArray.length; j++) {
+          //console.log('meetTDay is: ', meetTArray[j].meetDays[0])
+          //console.log(meetTArray[j].meetPeriodBegin)
+          //console.log(meetTArray[j].meetPeriodEnd)
+
+          day_index = daysShort.indexOf(meetTArray[j].meetDays[0])
+          console.log('day_index is: ', day_index)
+
+          period_index1 = periods.indexOf(meetTArray[j].meetPeriodBegin)
+          console.log('period_index1 is: ', period_index1)
+
+          period_index2 = periods.indexOf(meetTArray[j].meetPeriodEnd)
+          console.log('period_index2 is: ', period_index2)
+
+          if (period_index1 === period_index2)
+            newSchedule[period_index1][day_index] = responseData[k].code
+          else {
+            newSchedule[period_index1][day_index] = responseData[k].code
+            newSchedule[period_index2][day_index] = responseData[k].code
+          }        
+
+        }
+
+        console.log('newSchedule is : ', newSchedule)
+        finalSchedules.push(newSchedule) 
+      }
+      }
+    }
+    else {
+      console.log("I guess there's nothing here")
+      console.log(responseData)
+      //console.log('Is there really nothing here?...', props.responseData[0].code)
+    }
+
+    setScheduleArray(finalSchedules)
+    console.log('After: ', finalSchedules)
+
+  };
+
   return (
-  <div>
-    <Schedule_Content 
-      check={check}
-      SemUpdate={SemUpdate}
-      C_NumUpdate1={C_NumUpdate1}
-      C_NumUpdate2={C_NumUpdate2}
-      C_NumUpdate3={C_NumUpdate3}
-      C_NumUpdate4={C_NumUpdate4}
-      CL_NumUpdate={CL_NumUpdate}
-      responseData={responseData}
-    />
-  </div>
+    <div>
+      <Schedule_Content
+        check={check}
+        SemUpdate={SemUpdate}
+        C_NumUpdate1={C_NumUpdate1}
+        C_NumUpdate2={C_NumUpdate2}
+        C_NumUpdate3={C_NumUpdate3}
+        C_NumUpdate4={C_NumUpdate4}
+        CL_NumUpdate={CL_NumUpdate}
+        scheduleArray={scheduleArray}
+      />
+    </div>
   );
 };
 
@@ -284,9 +336,9 @@ export const Login = props => {
   // If the props has 
   if (props.email) {
     console.log("Login user email: ", props.email)
-    
+
     //navigate( pathname: '/user-profile' , state: {email: props.email}})
-    return <Redirect to={{pathname: '/user-profile' , state: {email: props.email}}}/>;
+    return <Redirect to={{ pathname: '/user-profile', state: { email: props.email } }} />;
   }
 
   return (

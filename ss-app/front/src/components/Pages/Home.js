@@ -1,4 +1,5 @@
 import React from 'react';
+import KommunicateChat from '../chat';
 
 import { Form, Button, Card } from 'react-bootstrap';
 import './basic.css';
@@ -85,6 +86,7 @@ const Home = props => {
           </div>
         </section>
       </Card>
+      <KommunicateChat/>
     </div>
   );
 };

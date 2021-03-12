@@ -148,7 +148,7 @@ const Schedule = props => {
 
     }
    */
-
+    
   return (
     <div className='App'>
 
@@ -238,7 +238,7 @@ const Schedule = props => {
 
 
                   <div className='h1_p'>
-                    <Button variant='primary' type='submit' > {/* onClick={generateSchedule} */}
+                    <Button variant='primary' type='submit'  > {/* onClick={generateSchedule} */}
                       Submit
                     </Button>
                   </div>
@@ -285,9 +285,6 @@ const Schedule = props => {
                   </tbody>
               </table>      
 
-              <Button variant='secondary' onClick={props.clear}> 
-                      Clear
-              </Button>
 
           </Card>
 

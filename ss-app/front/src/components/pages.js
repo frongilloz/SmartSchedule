@@ -33,6 +33,8 @@ export const Schedule = () => {
   const [CNumAdd3, setC_Num3] = useState('');
   const [CNumAdd4, setC_Num4] = useState('');
   const [CL_NumAdd, setCL_Num] = useState('');
+  
+  const [test_sc, set_test_sc] = useState('');
 
   //state for schedule generation
   let [responseData, setResponseData] = useState('')
@@ -63,22 +65,22 @@ export const Schedule = () => {
     setCL_Num(value);
     console.log('CL_NumUpdate() called, value: ', value);
   };
+  
 
+  // Relevant initializations
   let courseData = [];
-  let get_count = 0;
-  let courses_count = 0; 
-  let testSc;
+  let testSc = Array(14).fill(0).map(row => new Array(6).fill(" "))
+  let num_courses_sub = 0;
+  const courseNums = [CNumAdd1, CNumAdd2, CNumAdd3, CNumAdd4]; 
 
   const check = async event => {
     // prevent the refresh of page on submit
     event.preventDefault();
 
-    const courseNums = [CNumAdd1, CNumAdd2, CNumAdd3, CNumAdd4];
 
     courseNums.forEach(async courseNum => {
       /* if this field was filled in by the user */
       if (courseNum){
-        courses_count++;
 
         const queryString = '/api/courses/find/'  + courseNum + '/'
                                                   + SemAdd;
@@ -89,28 +91,11 @@ export const Schedule = () => {
               console.log("GET axios called")
               console.log("GET resp data", response.data);
               courseData.push(response.data);
-              
 
+              // Prev
               setResponseData(courseData)
 
-              // count the number of get
-              get_count++;
-              console.log('gt:', get_count)
               
-               // Return the update content
-              /*
-              return (
-                <Schedule_Content 
-                  check={check}
-                  SemUpdate={SemUpdate}
-                  C_NumUpdate1={C_NumUpdate1}
-                  C_NumUpdate2={C_NumUpdate2}
-                  C_NumUpdate3={C_NumUpdate3}
-                  C_NumUpdate4={C_NumUpdate4}
-                  CL_NumUpdate={CL_NumUpdate}
-                  responseData={responseData}
-                />) */
-
             });
     
         } catch (err) {
@@ -118,10 +103,15 @@ export const Schedule = () => {
         }
       }
 
-      //
+      
+
+
+      
       //setResponseData(courseData)
 
     }) // end for each
+
+   
 
 
     //courseData.forEach(course => {
@@ -129,26 +119,53 @@ export const Schedule = () => {
     //})
 
   }; // end of async
-
-  console.log("st")
-  console.log('ResponseData is: ', responseData)
-
-  // only generate the new schedule once all the course requests have been completed
-  if (get_count === courses_count){
-    console.log("g: ", get_count)
-    console.log("c: ", courses_count)
-
-    // Run the generate schedule function
-    testSc = generateSchedule(responseData)
-    console.log("Test Schedule")
-    console.log(testSc)
-  }
   
-  console.log("fin")
 
-  const clear = async event => {
-    testSc = Array(14).fill(0).map(row => new Array(6).fill(" "));
-  }
+   // Set the response data at the end of the for each
+    //setResponseData(courseData)
+    console.log("reached")
+
+    console.log("st")
+    console.log('Pages.js length of resposneData is: ', responseData.length)
+    
+    // Get the number of courses submitted
+    for (let i = 0; i < courseNums.length; i++) {
+      if(courseNums[i]){
+        num_courses_sub++
+      }
+    }
+
+    console.log('Pages.js num_courses_sub is: ', num_courses_sub)
+  
+    // only generate the new schedule once all the course requests have been completed
+    if(responseData.length == num_courses_sub){
+      // Run the generate schedule function
+      testSc = generateSchedule(responseData)
+
+      console.log("Test Schedule")
+      console.log(testSc)
+      console.log(test_sc)
+
+      return (
+        <div>
+          <Schedule_Content 
+            check={check}
+            SemUpdate={SemUpdate}
+            C_NumUpdate1={C_NumUpdate1}
+            C_NumUpdate2={C_NumUpdate2}
+            C_NumUpdate3={C_NumUpdate3}
+            C_NumUpdate4={C_NumUpdate4}
+            CL_NumUpdate={CL_NumUpdate}
+            responseData={responseData}
+            testSc={testSc}
+          />
+        </div>
+        );
+    } 
+    
+    console.log("fin")
+
+  
 
   return (
   <div>
@@ -161,7 +178,6 @@ export const Schedule = () => {
       C_NumUpdate4={C_NumUpdate4}
       CL_NumUpdate={CL_NumUpdate}
       responseData={responseData}
-      clear={clear}
       testSc={testSc}
     />
   </div>

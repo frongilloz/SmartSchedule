@@ -43,9 +43,9 @@ export function generateSchedule(responseData) {
       for (let k = 0; k < responseDataLength.length; k++) {
 
         let sectionsArray = responseData[k].sections
-        console.log('sectionsArray is: ', sectionsArray)
+        //console.log('sectionsArray is: ', sectionsArray)
         let meetTArray = sectionsArray[0].meetTimes
-        console.log('meetTArray is: ', meetTArray)
+        //console.log('meetTArray is: ', meetTArray)
 
         for (let j = 0; j < meetTArray.length; j++) {
           //console.log('meetTDay is: ', meetTArray[j].meetDays[0])
@@ -53,13 +53,13 @@ export function generateSchedule(responseData) {
           //console.log(meetTArray[j].meetPeriodEnd)
 
           day_index = daysShort.indexOf(meetTArray[j].meetDays[0])
-          console.log('day_index is: ', day_index)
+          //console.log('day_index is: ', day_index)
 
           period_index1 = periods.indexOf(meetTArray[j].meetPeriodBegin)
-          console.log('period_index1 is: ', period_index1)
+          //console.log('period_index1 is: ', period_index1)
 
           period_index2 = periods.indexOf(meetTArray[j].meetPeriodEnd)
-          console.log('period_index2 is: ', period_index2)
+          //console.log('period_index2 is: ', period_index2)
 
           if (period_index1 === period_index2)
             TestSchdule[period_index1][day_index] = responseData[k].code

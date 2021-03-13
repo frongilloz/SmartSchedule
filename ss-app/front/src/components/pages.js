@@ -66,10 +66,10 @@ export const Schedule = () => {
     console.log('CL_NumUpdate() called, value: ', value);
   };
   
-
   // Relevant initializations
   let courseData = [];
   let testSc = Array(14).fill(0).map(row => new Array(6).fill(" "))
+  let emptyArray = Array(14).fill(0).map(row => new Array(6).fill(" "))
   let num_courses_sub = 0;
   const courseNums = [CNumAdd1, CNumAdd2, CNumAdd3, CNumAdd4]; 
 
@@ -140,45 +140,51 @@ export const Schedule = () => {
     // only generate the new schedule once all the course requests have been completed
     if(responseData.length == num_courses_sub){
       // Run the generate schedule function
-      testSc = generateSchedule(responseData)
-
+      testSc = generateSchedule(responseData)  
       console.log("Test Schedule")
       console.log(testSc)
+
+      if (testSc === emptyArray) { console.log("nothing has happened here. testSc is: ", testSc) }
+      else if (testSc === test_sc) { console.log("testSc and test_sc are the same") }
+      else set_test_sc(testSc)
+
       console.log(test_sc)
 
-      return (
-        <div>
-          <Schedule_Content 
-            check={check}
-            SemUpdate={SemUpdate}
-            C_NumUpdate1={C_NumUpdate1}
-            C_NumUpdate2={C_NumUpdate2}
-            C_NumUpdate3={C_NumUpdate3}
-            C_NumUpdate4={C_NumUpdate4}
-            CL_NumUpdate={CL_NumUpdate}
-            responseData={responseData}
-            testSc={testSc}
-          />
-        </div>
-        );
+      //return (
+      //  <div>
+      //    <Schedule_Content 
+      //      check={check}
+      //      SemUpdate={SemUpdate}
+      //      C_NumUpdate1={C_NumUpdate1}
+      //      C_NumUpdate2={C_NumUpdate2}
+      //      C_NumUpdate3={C_NumUpdate3}
+      //      C_NumUpdate4={C_NumUpdate4}
+      //      CL_NumUpdate={CL_NumUpdate}
+      //      responseData={responseData}
+      //      testSc={testSc}
+      //    />
+      //  </div>
+      //  );
     } 
-    
+
     console.log("fin")
 
   
+  
+
 
   return (
   <div>
     <Schedule_Content 
-      check={check}
-      SemUpdate={SemUpdate}
-      C_NumUpdate1={C_NumUpdate1}
-      C_NumUpdate2={C_NumUpdate2}
-      C_NumUpdate3={C_NumUpdate3}
-      C_NumUpdate4={C_NumUpdate4}
-      CL_NumUpdate={CL_NumUpdate}
-      responseData={responseData}
-      testSc={testSc}
+        check={check}
+        SemUpdate={SemUpdate}
+        C_NumUpdate1={C_NumUpdate1}
+        C_NumUpdate2={C_NumUpdate2}
+        C_NumUpdate3={C_NumUpdate3}
+        C_NumUpdate4={C_NumUpdate4}
+        CL_NumUpdate={CL_NumUpdate}
+        responseData={responseData}
+        test_sc={test_sc}
     />
   </div>
   );

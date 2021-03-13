@@ -70,9 +70,9 @@ export function generateSchedule(responseData) {
           }
         }
 
-        console.log('Before: ', TestSchdule)
-        console.log('oldSchedule is : ', oldSchedule)
-        console.log('newSchedule is : ', newSchedule)
+        //console.log('Before: ', TestSchdule)
+        //console.log('oldSchedule is : ', oldSchedule)
+        //console.log('newSchedule is : ', newSchedule)
         
       }
     else {

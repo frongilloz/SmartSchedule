@@ -268,19 +268,19 @@ const Schedule = props => {
                     </tr>
                   </thead>
                   <tbody>
-                      {props.testSc.slice(0, props.testSc.length).map((item, index) => {
-                      return (
+                  {props.test_sc.slice(0, props.test_sc.length).map((item, index) => {
+                        return (
                           <tr key={index}>
-                              <td>{periods[index]}</td>
-                              <td>{times[index]}</td>
-                              <td>{item[0]}</td>
-                              <td>{item[1]}</td>
-                              <td>{item[2]}</td>
-                              <td>{item[3]}</td>
-                              <td>{item[4]}</td>
-                              <td>{item[5]}</td>
+                            <td>{periods[index]}</td>
+                            <td>{times[index]}</td>
+                            <td>{item[0]}</td>
+                            <td>{item[1]}</td>
+                            <td>{item[2]}</td>
+                            <td>{item[3]}</td>
+                            <td>{item[4]}</td>
+                            <td>{item[5]}</td>
                           </tr>
-                          );
+                        );
                       })}
                   </tbody>
               </table>      

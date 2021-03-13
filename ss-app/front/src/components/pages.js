@@ -35,6 +35,7 @@ export const Schedule = () => {
   const [CL_NumAdd, setCL_Num] = useState('');
   
   const [test_sc, set_test_sc] = useState('');
+  const [update_sc, set_update_sc] = useState('');
 
   //state for schedule generation
   let [responseData, setResponseData] = useState('')
@@ -68,10 +69,13 @@ export const Schedule = () => {
   
   // Relevant initializations
   let courseData = [];
-  let testSc = Array(14).fill(0).map(row => new Array(6).fill(" "))
   let emptyArray = Array(14).fill(0).map(row => new Array(6).fill(" "))
+
+  let emptyArrays = [emptyArray, emptyArray];
+  let testSc = emptyArrays;
   let num_courses_sub = 0;
   const courseNums = [CNumAdd1, CNumAdd2, CNumAdd3, CNumAdd4]; 
+  let sameArray = true;
 
   const check = async event => {
     // prevent the refresh of page on submit
@@ -81,6 +85,7 @@ export const Schedule = () => {
     courseNums.forEach(async courseNum => {
       /* if this field was filled in by the user */
       if (courseNum){
+        set_update_sc(false);
 
         const queryString = '/api/courses/find/'  + courseNum + '/'
                                                   + SemAdd;
@@ -138,25 +143,37 @@ export const Schedule = () => {
     console.log('Pages.js num_courses_sub is: ', num_courses_sub)
   
     // only generate the new schedule once all the course requests have been completed
-    if(responseData.length == num_courses_sub){
-      // Run the generate schedule function
-      testSc = generateSchedule(responseData)  
-      console.log("Test Schedule(s)",testSc)
+    if(responseData.length !== 0){
+      if(responseData.length === num_courses_sub){
+        // Run the generate schedule function
+        testSc = generateSchedule(responseData)  
+        console.log("Test Schedule(s)",testSc)
 
-      //If the testSc has not been changed, don't do anything
-      if (testSc === emptyArray) { console.log("nothing has happened here. testSc is: ", testSc) }
-      // Else when the 
-      else if (testSc === test_sc) { console.log("testSc and test_sc are the same") }
-      // Set the update state for test_Sch
-      //else set_test_sc(testSc)
+        //If the testSc has not been changed, don't do anything
+        if (testSc === emptyArrays) { console.log("nothing has happened here. testSc is: ", testSc) }
+        // Else when the 
+        else if (update_sc === false){
+          // Update the state if they are NOT the same
+          set_test_sc(testSc)
+          console.log("UPDATE", update_sc)
+          set_update_sc(true);
+        }
+        else{
+          console.log("testSc and test_sc are the same")
+        }
 
-      console.log("test_sc", test_sc)
 
-    } 
+        }// end of outer else
+
+
+        console.log("bool", update_sc)
+        console.log("testSc", testSc)
+        console.log("test_sc", test_sc)
+
+      } 
+
 
     console.log("fin")
-
-
 
   return (
   <div>

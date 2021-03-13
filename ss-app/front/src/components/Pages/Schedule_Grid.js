@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
 
-import Grid from '@material-ui/core/Grid';
-import Table_M from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-
 import { Form, Col, Card, Button, Container, Row , Table} from 'react-bootstrap';
 import './basic.css';
 
@@ -25,7 +18,7 @@ const times = [
 // first, fill it with empty space
 var TestSchdule = Array(14).fill(0).map(row => new Array(6).fill(" "))
 
-const Schedule = props => {
+const Schedule_Grid = props => {
 
   //internal change functions
   const SemInt = event => {
@@ -87,60 +80,11 @@ const Schedule = props => {
     //log
     console.log('ClassNumInt: ', event.target.value);
     };
-    
-  //create a number of schedules based on the number submitted
-  // RN: "test_sc" in only returning 1 schedule.
-  // Future: will return multiple schedules to map through
-
-  // const scheduleGrids = props.test_sc.map(temp => {
-  //{props.test_sc.slice(0, props.test_sc.length).map((item, index) => {
-    
-  
-const scheduleGrids = props.test_sc.map(temp => {
-    //console.log("temp: ", temp)
-
-    return (
-
-      <div>
-          <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th scope="col">Period</th>
-                  <th scope="col">Time</th>
-                  <th scope="col">Monday</th>
-                  <th scope="col">Tuesday</th>
-                  <th scope="col">Wednesday</th>
-                  <th scope="col">Thursday</th>
-                  <th scope="col">Friday</th>
-                  <th scope="col">Saturday</th>
-                </tr>
-              </thead>
-              <tbody>
-              {temp.slice(0, temp.length).map((item, index) => {
-                    return (
-                      <tr key={index}>
-                        <td>{periods[index]}</td>
-                        <td>{times[index]}</td>
-                        <td>{item[0]}</td>
-                        <td>{item[1]}</td>
-                        <td>{item[2]}</td>
-                        <td>{item[3]}</td>
-                        <td>{item[4]}</td>
-                        <td>{item[5]}</td>
-                      </tr>
-                    );
-                  })}
-              </tbody>
-          </table>     
-
-      </div>
-    );
-  });
-
 
 
 /*
   function generateSchedule() {
+
     let checkArray = [1] 
     let oldSchedule = Array(14).fill(0).map(row => new Array(6).fill(" "))
     let newSchedule = Array(14).fill(0).map(row => new Array(6).fill(" "))
@@ -151,30 +95,41 @@ const scheduleGrids = props.test_sc.map(temp => {
     console.log('newSchedule is : ', newSchedule)
     
     //console.log(checkArray.length)
+
     let day_index = 0;
     let period_index1 = 0;
     let period_index2 = 0;
+
     if (Array.isArray(props.responseData) && checkArray.length && props.responseData[0]) {
       //console.log("Wow, something's here")
       //console.log('ResponseData (from schedule.js) is: ', props.responseData)
+
       let responseDataLength = [];
       responseDataLength = props.responseData
       //console.log('length of resposneData is: ', responseDataLength.length)
+
+
       for (let k = 0; k < responseDataLength.length; k++) {
+
         let sectionsArray = props.responseData[k].sections
         console.log('sectionsArray is: ', sectionsArray)
         let meetTArray = sectionsArray[0].meetTimes
         console.log('meetTArray is: ', meetTArray)
+
         for (let j = 0; j < meetTArray.length; j++) {
           //console.log('meetTDay is: ', meetTArray[j].meetDays[0])
           //console.log(meetTArray[j].meetPeriodBegin)
           //console.log(meetTArray[j].meetPeriodEnd)
+
           day_index = daysShort.indexOf(meetTArray[j].meetDays[0])
           console.log('day_index is: ', day_index)
+
           period_index1 = periods.indexOf(meetTArray[j].meetPeriodBegin)
           console.log('period_index1 is: ', period_index1)
+
           period_index2 = periods.indexOf(meetTArray[j].meetPeriodEnd)
           console.log('period_index2 is: ', period_index2)
+
           if (period_index1 === period_index2)
             TestSchdule[period_index1][day_index] = props.responseData[k].code
           else {
@@ -189,14 +144,14 @@ const scheduleGrids = props.test_sc.map(temp => {
       console.log(props.responseData)
       //console.log('Is there really nothing here?...', props.responseData[0].code)
     }
+
     console.log('After: ', TestSchdule)
+
     }
-   */
-
-
+   //*/
     
   return (
-    <div className='App'>
+    <div className='App' >
 
 <div class="row">
       
@@ -207,7 +162,7 @@ const scheduleGrids = props.test_sc.map(temp => {
 
             <div className='col-sm'>
                 <Form onSubmit={props.check}>
-                  <h2>Add Courses</h2>
+                  <h2>Add Courses GRID</h2>
 
                   <div className='h1_p_1'>
                     <Form.Row>
@@ -297,21 +252,50 @@ const scheduleGrids = props.test_sc.map(temp => {
           </div>
           </div>
 
-        
-        <div class="col-lg-8">
+          <div class="col-lg-8" >
           <Card body>
-              <h2>Possible Schedules</h2>
-              {/* {scheduleGrids}*/}
-              {scheduleGrids}
+              <h2>Possible Schedule</h2>
+              <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th scope="col">Period</th>
+                      <th scope="col">Time</th>
+                      <th scope="col">Monday</th>
+                      <th scope="col">Tuesday</th>
+                      <th scope="col">Wednesday</th>
+                      <th scope="col">Thursday</th>
+                      <th scope="col">Friday</th>
+                      <th scope="col">Saturday</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      {props.testSc.slice(0, props.testSc.length).map((item, index) => {
+                      return (
+                          <tr key={index}>
+                              <td>{periods[index]}</td>
+                              <td>{times[index]}</td>
+                              <td>{item[0]}</td>
+                              <td>{item[1]}</td>
+                              <td>{item[2]}</td>
+                              <td>{item[3]}</td>
+                              <td>{item[4]}</td>
+                              <td>{item[5]}</td>
+                          </tr>
+                          );
+                      })}
+                  </tbody>
+              </table>      
+
+
 
           </Card>
-        </div>
 
 
+          </div>
         </div>            
     
     </div>
   );
 };
 
-export default Schedule;
+export default Schedule_Grid;

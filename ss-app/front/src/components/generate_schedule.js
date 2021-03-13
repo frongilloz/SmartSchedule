@@ -21,6 +21,8 @@ export function generateSchedule(responseData) {
     let newSchedule = Array(14).fill(0).map(row => new Array(6).fill(" "))
     oldSchedule = TestSchdule;
 
+    let listSchedules  = [oldSchedule, oldSchedule]
+
     //console.log(checkArray.length)
     console.log("Resp data in gen_schedule")
     console.log(responseData)
@@ -73,6 +75,12 @@ export function generateSchedule(responseData) {
         console.log('Before: ', TestSchdule)
         console.log('oldSchedule is : ', oldSchedule)
         console.log('newSchedule is : ', newSchedule)
+
+
+        // To be changed: placeholder for returning multiple schedules
+        // List of schedules
+        listSchedules  = [TestSchdule, oldSchedule]
+        console.log('listSchedules: ', listSchedules)
         
       }
     else {
@@ -81,8 +89,10 @@ export function generateSchedule(responseData) {
       //console.log('Is there really nothing here?...', responseData[0].code)
     }
 
-    console.log('After: ', TestSchdule)
+    console.log('After TestSchdule: ', TestSchdule)
+    console.log('After listSchedules: ', listSchedules)
 
-    return TestSchdule
+    // Return the multiple schedules
+    return listSchedules
 
 }

@@ -112,6 +112,9 @@ export const Schedule = () => {
     let period_index2 = 0;
     let totalScheduleCount = 1;
 
+    let newSchedule = []
+    let dummySchedule = Array(14).fill(0).map(row => new Array(6).fill(" "))
+
     if (Array.isArray(responseData) && checkArray.length && responseData[0]) {  //check if responseData array exists and if something exists in it (try taking out the checkArray thing)
       console.log("Wow, something's here")
       console.log('ResponseData (from schedule.js) is: ', responseData)
@@ -136,51 +139,61 @@ export const Schedule = () => {
         finalSchedules.push(emptySchedule)
       }
 
-      console.log('finalSchedules initial status: ', finalSchedules)
+      //console.log('finalSchedules initial status: ', finalSchedules)
 
       let count = 0
       for (let k = 0; k < responseDataLength.length; k++) {
 
       let sectionsArray = responseData[k].sections
       console.log('sectionsArray is: ', sectionsArray)
-
-        //while (count != totalScheduleCount) {
+        for (let b = 0; b < totalScheduleCount / sectionsArray.length; b++) {
+   
           for (let i = 0; i < sectionsArray.length; i++) {
             let meetTArray = sectionsArray[i].meetTimes
             //console.log('meetTArray is: ', meetTArray)
             for (let j = 0; j < meetTArray.length; j++) {
-
               day_index = daysShort.indexOf(meetTArray[j].meetDays[0])
-              console.log('day_index is: ', day_index)
+              //console.log('day_index is: ', day_index)
 
               period_index1 = periods.indexOf(meetTArray[j].meetPeriodBegin)
-              console.log('period_index1 is: ', period_index1)
+              //console.log('period_index1 is: ', period_index1)
 
               period_index2 = periods.indexOf(meetTArray[j].meetPeriodEnd)
-              console.log('period_index2 is: ', period_index2)
+              //console.log('period_index2 is: ', period_index2)
 
-              let newSchedule = finalSchedules[count]
+              newSchedule = finalSchedules[count]
+              dummySchedule = Array(14).fill(0).map(row => new Array(6).fill(" "))
+
               console.log('newSchedule is: ', newSchedule)
 
-              if (period_index1 === period_index2)
+              if (period_index1 === period_index2) {
+                if (newSchedule[period_index1][day_index] != " ")
+                  console.log("uh oh, there are two classes that could be here")
                 newSchedule[period_index1][day_index] = responseData[k].code
+                dummySchedule[period_index1][day_index] = responseData[k].code
+              }
               else {
+                if (newSchedule[period_index1][day_index] != " " || newSchedule[period_index2][day_index] != " " )
+                  console.log("uh oh, there are two classes that could be here")
                 newSchedule[period_index1][day_index] = responseData[k].code
                 newSchedule[period_index2][day_index] = responseData[k].code
+                dummySchedule[period_index1][day_index] = responseData[k].code
+                dummySchedule[period_index2][day_index] = responseData[k].code
               }
-              
+
             }
 
-            console.log('what should new schedule look like: ', newSchedule)
+            console.log('what should be added in this itteration: ', dummySchedule)
+            console.log('what does new schedule look like: ', newSchedule)
 
-            for (let b = 0; b < totalScheduleCount / sectionsArray.length; b++) {
-              finalSchedules[count] = newSchedule
-              count++
-              if (count === totalScheduleCount) count = 0
-            }
-            console.log('finalSchedules is : ', finalSchedules)
+            finalSchedules[count] = newSchedule
+            count++
+
           }
-        //}
+          if (count === totalScheduleCount) count = 0 
+          console.log('finalSchedules is : ', finalSchedules)
+          }
+
       }
     }
     else {

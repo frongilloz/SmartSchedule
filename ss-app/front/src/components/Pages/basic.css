@@ -65,3 +65,22 @@
     padding-right: 1rem;
   }
   
+  .color_table_hd_row{
+    background-color:#c0c4cf;
+    color:#4a4e67;
+  }
+
+  .color_table_bd_row{
+    background-color:#e8e8e8;
+  }
+
+  .color_table_bd_cell{
+    background-color:#347aa6;
+    color:white;
+  }
+
+
+  .table_custom{
+    
+    border: 1px #737d96;
+  }

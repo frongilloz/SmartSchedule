@@ -75,7 +75,6 @@ export const Schedule = () => {
   let testSc = emptyArrays;
   let num_courses_sub = 0;
   const courseNums = [CNumAdd1, CNumAdd2, CNumAdd3, CNumAdd4]; 
-  let sameArray = true;
 
   const check = async event => {
     // prevent the refresh of page on submit
@@ -110,10 +109,6 @@ export const Schedule = () => {
 
       
 
-
-      
-      //setResponseData(courseData)
-
     }) // end for each
 
    
@@ -125,10 +120,6 @@ export const Schedule = () => {
 
   }; // end of async
   
-
-   // Set the response data at the end of the for each
-    //setResponseData(courseData)
-    console.log("reached")
 
     console.log("st")
     console.log('Pages.js length of resposneData is: ', responseData.length)
@@ -151,26 +142,26 @@ export const Schedule = () => {
 
         //If the testSc has not been changed, don't do anything
         if (testSc === emptyArrays) { console.log("nothing has happened here. testSc is: ", testSc) }
-        // Else when the 
+        // Based on if the update state is T/F
         else if (update_sc === false){
-          // Update the state if they are NOT the same
+          // Update the schedule state variable w/ the generate Scheudle if they are NOT the same
           set_test_sc(testSc)
           console.log("UPDATE", update_sc)
+          // Set the flag that this has been updated so it doesn't re-render
           set_update_sc(true);
         }
         else{
-          console.log("testSc and test_sc are the same")
+          console.log("testSc and test_sc are the same, no update performed")
         }
 
 
-        }// end of outer else
-
+      }
 
         console.log("bool", update_sc)
         console.log("testSc", testSc)
         console.log("test_sc", test_sc)
 
-      } 
+    } // end of outer else
 
 
     console.log("fin")

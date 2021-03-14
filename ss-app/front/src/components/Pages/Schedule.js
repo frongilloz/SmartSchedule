@@ -89,53 +89,80 @@ const Schedule = props => {
     };
     
   //create a number of schedules based on the number submitted
-  // RN: "test_sc" in only returning 1 schedule.
   // Future: will return multiple schedules to map through
+  const scheduleGrids = props.test_sc.map(curr_schedule => {
+      console.log("curr_schedule: ", curr_schedule)
 
-  // const scheduleGrids = props.test_sc.map(temp => {
-  //{props.test_sc.slice(0, props.test_sc.length).map((item, index) => {
-    
+      let temp_r1;
+
+      // iterate through each schedule to look for cells with values
+      curr_schedule.slice(0, curr_schedule.length).map((row, col) => {
+        // Each item corresponds to a "row" of the table
+        console.log("row ", row)
+        console.log("col ", col)
+
+        // Can access 0-5 indices within rows
+        console.log("row[1] ", row[1])
+
+        // To iterate through all 6 days in a school week (row)
+        for (let i = 0; i < curr_schedule.length; i++) {
+          if (row[i] === ""){
+            temp_r1 = (<td>{row[i]}</td>)
+          }
+          else{
+            temp_r1 = (<td class="color_table_bd_cell">{row[i]}</td>)
+          }
+
+        }
+
+      })
+
+      console.log("temp_r1", temp_r1)
+
   
-const scheduleGrids = props.test_sc.map(temp => {
-    //console.log("temp: ", temp)
 
-    return (
 
-      <div>
-          <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th scope="col">Period</th>
-                  <th scope="col">Time</th>
-                  <th scope="col">Monday</th>
-                  <th scope="col">Tuesday</th>
-                  <th scope="col">Wednesday</th>
-                  <th scope="col">Thursday</th>
-                  <th scope="col">Friday</th>
-                  <th scope="col">Saturday</th>
-                </tr>
-              </thead>
-              <tbody>
-              {temp.slice(0, temp.length).map((item, index) => {
-                    return (
-                      <tr key={index}>
-                        <td>{periods[index]}</td>
-                        <td>{times[index]}</td>
-                        <td>{item[0]}</td>
-                        <td>{item[1]}</td>
-                        <td>{item[2]}</td>
-                        <td>{item[3]}</td>
-                        <td>{item[4]}</td>
-                        <td>{item[5]}</td>
-                      </tr>
-                    );
-                  })}
-              </tbody>
-          </table>     
+      return (
 
-      </div>
-    );
-  });
+        <div>
+            <table class="table table-bordered" >
+                <thead>
+                  <tr class="color_table_hd_row">
+                    <th scope="col">Period</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Monday</th>
+                    <th scope="col">Tuesday</th>
+                    <th scope="col">Wednesday</th>
+                    <th scope="col">Thursday</th>
+                    <th scope="col">Friday</th>
+                    <th scope="col">Saturday</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {curr_schedule.slice(0, curr_schedule.length).map((row, index) => {
+                      return (
+                        <tr key={index} >
+                          <td>{periods[index]}</td>
+                          <td>{times[index]}</td>
+                          
+                          
+                          <td>{row[0]}</td>
+
+
+                          <td>{row[1]}</td>
+                          <td>{row[2]}</td>
+                          <td>{row[3]}</td>
+                          <td>{row[4]}</td>
+                          <td>{row[5]}</td>
+                        </tr>
+                      );
+                    })}
+                </tbody>
+            </table>     
+
+        </div>
+      );
+    });
 
 
 

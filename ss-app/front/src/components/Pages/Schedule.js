@@ -78,15 +78,34 @@ const Schedule = props => {
     console.log('C_Num4: ', event.target.value);
   };
 
-  const ClassNumInt = event => {
-    console.log('ClassNumIntTriggered');
-
+  const ClassNumInt1 = event => {
     //change by calling App external function
-    props.CL_NumUpdate(event.target.value);
-
-    //log
-    console.log('ClassNumInt: ', event.target.value);
+    props.CL_NumUpdate1(event.target.value);
+    console.log('ClassNumInt1: ', event.target.value);
     };
+
+  const ClassNumInt2 = event => {
+    //change by calling App external function
+    props.CL_NumUpdate2(event.target.value);
+    console.log('ClassNumInt2: ', event.target.value);
+    };
+
+  const ClassNumInt3 = event => {
+    //change by calling App external function
+    props.CL_NumUpdate3(event.target.value);
+    console.log('ClassNumInt3: ', event.target.value);
+    };
+
+  const ClassNumInt4 = event => {
+    //change by calling App external function
+    props.CL_NumUpdate4(event.target.value);
+    console.log('ClassNumInt4: ', event.target.value);
+    };
+
+  const check_cell_val = row => {
+    console.log("WOWWOW", row)
+  
+  };
     
   //create a number of schedules based on the number submitted
   // Future: will return multiple schedules to map through
@@ -98,11 +117,11 @@ const Schedule = props => {
       // iterate through each schedule to look for cells with values
       curr_schedule.slice(0, curr_schedule.length).map((row, col) => {
         // Each item corresponds to a "row" of the table
-        console.log("row ", row)
-        console.log("col ", col)
+        //console.log("row ", row)
+        //console.log("col ", col)
 
         // Can access 0-5 indices within rows
-        console.log("row[1] ", row[1])
+        //console.log("row[1] ", row[1])
 
         // To iterate through all 6 days in a school week (row)
         for (let i = 0; i < curr_schedule.length; i++) {
@@ -117,7 +136,7 @@ const Schedule = props => {
 
       })
 
-      console.log("temp_r1", temp_r1)
+      //console.log("temp_r1", temp_r1)
 
   
 
@@ -146,6 +165,9 @@ const Schedule = props => {
                           <td>{times[index]}</td>
                           
                           
+                          
+                          {() => check_cell_val( row[0] )}
+
                           <td>{row[0]}</td>
 
 
@@ -238,7 +260,7 @@ const Schedule = props => {
 
                   <div className='h1_p_1'>
                     <Form.Row>
-                      <Form.Label>Semester</Form.Label>
+                      <Form.Label><b>Semester</b></Form.Label>
                       <select className="form-control" name="Semester" onChange={SemInt} required="true">
                           <option selected>Semester - Required</option>
                           <option value="fall2021">Fall 2021</option>
@@ -250,19 +272,33 @@ const Schedule = props => {
             
                   <div className='h1_p_1'>
                     <Form.Row>
-                      <Form.Label>Course Number 1</Form.Label>
+                      <Form.Label><b>Course Number 1</b></Form.Label>
                       <Form.Control
                         input
                         placeholder='ex. ACG2021'
                         id='CourseNum1'
                         onChange={CourseNumInt1}
                       />
+                      
                     </Form.Row>
                   </div>
 
+                  <div className='h_cl_num'>
+                  <Form.Row>
+                      <Form.Label>Class Number</Form.Label>
+                      <Form.Control
+                        input
+                        placeholder='(Optional) ex. 15110'
+                        id='ClassNum1'
+                        onChange={ClassNumInt1}
+                      />
+                    </Form.Row>
+                  </div>
+
+
                   <div className='h1_p_1'>
                     <Form.Row>
-                      <Form.Label>Course Number 2</Form.Label>
+                      <Form.Label><b>Course Number 2</b></Form.Label>
                       <Form.Control
                         input
                         placeholder='ex. ACG2021'
@@ -272,9 +308,22 @@ const Schedule = props => {
                     </Form.Row>
                   </div>
 
+                  <div className='h_cl_num'>
+                  <Form.Row>
+                      <Form.Label>Class Number</Form.Label>
+                      <Form.Control
+                        input
+                        placeholder='(Optional) ex. 15110'
+                        id='ClassNum2'
+                        onChange={ClassNumInt2}
+                      />
+                    </Form.Row>
+                  </div>
+
+
                   <div className='h1_p_1'>
                     <Form.Row>
-                      <Form.Label>Course Number 3</Form.Label>
+                      <Form.Label><b>Course Number 3</b></Form.Label>
                       <Form.Control
                         input
                         placeholder='ex. ACG2021'
@@ -284,9 +333,21 @@ const Schedule = props => {
                     </Form.Row>
                   </div>
 
+                  <div className='h_cl_num'>
+                  <Form.Row>
+                      <Form.Label>Class Number</Form.Label>
+                      <Form.Control
+                        input
+                        placeholder='(Optional) ex. 15110'
+                        id='ClassNum3'
+                        onChange={ClassNumInt3}
+                      />
+                    </Form.Row>
+                  </div>
+
                   <div className='h1_p_1'>
                     <Form.Row>
-                      <Form.Label>Course Number 4</Form.Label>
+                      <Form.Label><b>Course Number 4</b></Form.Label>
                       <Form.Control
                         input
                         placeholder='ex. ACG2021'
@@ -296,15 +357,14 @@ const Schedule = props => {
                     </Form.Row>
                   </div>
 
-
-                  <div className='h1_p_1'>
-                    <Form.Row>
-                      <Form.Label>Class # </Form.Label>
+                  <div className='h_cl_num'>
+                  <Form.Row>
+                      <Form.Label>Class Number</Form.Label>
                       <Form.Control
                         input
-                        placeholder='ex. 15110'
-                        id='ClassNum'
-                        onChange={ClassNumInt}
+                        placeholder='(Optional) ex. 15110'
+                        id='ClassNum4'
+                        onChange={ClassNumInt4}
                       />
                     </Form.Row>
                   </div>

@@ -32,7 +32,10 @@ export const Schedule = () => {
   const [CNumAdd2, setC_Num2] = useState('');
   const [CNumAdd3, setC_Num3] = useState('');
   const [CNumAdd4, setC_Num4] = useState('');
-  const [CL_NumAdd, setCL_Num] = useState('');
+  const [CL_NumAdd1, setCL_Num1] = useState('');
+  const [CL_NumAdd2, setCL_Num2] = useState('');
+  const [CL_NumAdd3, setCL_Num3] = useState('');
+  const [CL_NumAdd4, setCL_Num4] = useState('');
   
   const [test_sc, set_test_sc] = useState('');
   const [update_sc, set_update_sc] = useState('');
@@ -62,9 +65,21 @@ export const Schedule = () => {
     setC_Num4(value);
     console.log('CNumUpdate4() called, value: ', value);
   };
-  const CL_NumUpdate = value => {
-    setCL_Num(value);
-    console.log('CL_NumUpdate() called, value: ', value);
+  const CL_NumUpdate1 = value => {
+    setCL_Num1(value);
+    console.log('CL_NumUpdate1() called, value: ', value);
+  };
+  const CL_NumUpdate2 = value => {
+    setCL_Num2(value);
+    console.log('CL_NumUpdate2() called, value: ', value);
+  };
+  const CL_NumUpdate3 = value => {
+    setCL_Num3(value);
+    console.log('CL_NumUpdate3() called, value: ', value);
+  };
+  const CL_NumUpdate4 = value => {
+    setCL_Num4(value);
+    console.log('CL_NumUpdate4() called, value: ', value);
   };
   
   // Relevant initializations
@@ -175,7 +190,10 @@ export const Schedule = () => {
         C_NumUpdate2={C_NumUpdate2}
         C_NumUpdate3={C_NumUpdate3}
         C_NumUpdate4={C_NumUpdate4}
-        CL_NumUpdate={CL_NumUpdate}
+        CL_NumUpdate1={CL_NumUpdate1}
+        CL_NumUpdate2={CL_NumUpdate2}
+        CL_NumUpdate3={CL_NumUpdate3}
+        CL_NumUpdate4={CL_NumUpdate4}
         responseData={responseData}
         test_sc={testSc}
     />

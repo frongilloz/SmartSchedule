@@ -25,185 +25,181 @@ export const Home = () => (
     </div>
   );
 
-export const Schedule = () => {
-  //states for the forms
-  const [SemAdd, setSem] = useState('');
-  const [CNumAdd1, setC_Num1] = useState('');
-  const [CNumAdd2, setC_Num2] = useState('');
-  const [CNumAdd3, setC_Num3] = useState('');
-  const [CNumAdd4, setC_Num4] = useState('');
-  const [CL_NumAdd1, setCL_Num1] = useState('');
-  const [CL_NumAdd2, setCL_Num2] = useState('');
-  const [CL_NumAdd3, setCL_Num3] = useState('');
-  const [CL_NumAdd4, setCL_Num4] = useState('');
-
-  const [test_sc, set_test_sc] = useState('');
-  const [update_sc, set_update_sc] = useState('');
-
-  //state for schedule generation
-  let [responseData, setResponseData] = useState('')
-
-
-  //external change functions
-  const SemUpdate = value => {
-    setSem(value);
-    console.log('SemUpdate() called, value: ', value);
-  };
-  const C_NumUpdate1 = value => {
-    setC_Num1(value);
-    console.log('CNumUpdate1() called, value: ', value);
-  };
-  const C_NumUpdate2 = value => {
-    setC_Num2(value);
-    console.log('CNumUpdate2() called, value: ', value);
-  };
-  const C_NumUpdate3 = value => {
-    setC_Num3(value);
-    console.log('CNumUpdate3() called, value: ', value);
-  };
-  const C_NumUpdate4 = value => {
-    setC_Num4(value);
-    console.log('CNumUpdate4() called, value: ', value);
-  };
-  const CL_NumUpdate1 = value => {
-    setCL_Num1(value);
-    console.log('CL_NumUpdate1() called, value: ', value);
-  };
-  const CL_NumUpdate2 = value => {
-    setCL_Num2(value);
-    console.log('CL_NumUpdate2() called, value: ', value);
-  };
-  const CL_NumUpdate3 = value => {
-    setCL_Num3(value);
-    console.log('CL_NumUpdate3() called, value: ', value);
-  };
-  const CL_NumUpdate4 = value => {
-    setCL_Num4(value);
-    console.log('CL_NumUpdate4() called, value: ', value);
-  };
-
-  // Relevant initializations
-  let courseData = [];
-  let emptyArray = Array(14).fill(0).map(row => new Array(6).fill(" "))
-
-  let emptyArrays = [emptyArray, emptyArray];
-  let testSc = emptyArrays;
-  let num_courses_sub = 0;
-  const courseNums = [CNumAdd1, CNumAdd2, CNumAdd3, CNumAdd4];
-
-  const check = async event => {
-    // prevent the refresh of page on submit
-    event.preventDefault();
-
-    const courseNums = [CNumAdd1, CNumAdd2, CNumAdd3, CNumAdd4];
-    let courseData = [];
-
-    courseNums.forEach(async courseNum => {
-      /* if this field was filled in by the user */
-      if (courseNum){
-        set_update_sc(false);
-
-        const queryString = '/api/courses/find/'  + courseNum + '/'
-                                                  + SemAdd;
-        /* make a backend request for this course data */
-        try {
-          await axios.get(queryString)
-            .then((response) => {
-              console.log("GET axios called")
-              console.log("GET resp data", response.data);
-              courseData.push(response.data);
-
-              // Prev
-              setResponseData(courseData)
-
-
-            });
+  export const Schedule = () => {
+    //states for the forms
+    const [SemAdd, setSem] = useState('');
+    const [CNumAdd1, setC_Num1] = useState('');
+    const [CNumAdd2, setC_Num2] = useState('');
+    const [CNumAdd3, setC_Num3] = useState('');
+    const [CNumAdd4, setC_Num4] = useState('');
+    const [CL_NumAdd1, setCL_Num1] = useState('');
+    const [CL_NumAdd2, setCL_Num2] = useState('');
+    const [CL_NumAdd3, setCL_Num3] = useState('');
+    const [CL_NumAdd4, setCL_Num4] = useState('');
     
-        } catch (err) {
-          // TODO: do something
+    const [test_sc, set_test_sc] = useState('');
+    const [update_sc, set_update_sc] = useState('');
+  
+    //state for schedule generation
+    let [responseData, setResponseData] = useState('')
+  
+  
+    //external change functions
+    const SemUpdate = value => {
+      setSem(value);
+      console.log('SemUpdate() called, value: ', value);
+    };
+    const C_NumUpdate1 = value => {
+      setC_Num1(value);
+      console.log('CNumUpdate1() called, value: ', value);
+    };
+    const C_NumUpdate2 = value => {
+      setC_Num2(value);
+      console.log('CNumUpdate2() called, value: ', value);
+    };
+    const C_NumUpdate3 = value => {
+      setC_Num3(value);
+      console.log('CNumUpdate3() called, value: ', value);
+    };
+    const C_NumUpdate4 = value => {
+      setC_Num4(value);
+      console.log('CNumUpdate4() called, value: ', value);
+    };
+    const CL_NumUpdate1 = value => {
+      setCL_Num1(value);
+      console.log('CL_NumUpdate1() called, value: ', value);
+    };
+    const CL_NumUpdate2 = value => {
+      setCL_Num2(value);
+      console.log('CL_NumUpdate2() called, value: ', value);
+    };
+    const CL_NumUpdate3 = value => {
+      setCL_Num3(value);
+      console.log('CL_NumUpdate3() called, value: ', value);
+    };
+    const CL_NumUpdate4 = value => {
+      setCL_Num4(value);
+      console.log('CL_NumUpdate4() called, value: ', value);
+    };
+    
+    // Relevant initializations
+    let courseData = [];
+    let emptyArray = Array(14).fill(0).map(row => new Array(6).fill(" "))
+  
+    let emptyArrays = [emptyArray, emptyArray];
+    let testSc = emptyArrays;
+    let num_courses_sub = 0;
+    const courseNums = [CNumAdd1, CNumAdd2, CNumAdd3, CNumAdd4]; 
+  
+    const check = async event => {
+      // prevent the refresh of page on submit
+      event.preventDefault();
+  
+  
+      courseNums.forEach(async courseNum => {
+        /* if this field was filled in by the user */
+        if (courseNum){
+          set_update_sc(false);
+  
+          const queryString = '/api/courses/find/'  + courseNum + '/'
+                                                    + SemAdd;
+          /* make a backend request for this course data */
+          try {
+            await axios.get(queryString)
+              .then((response) => {
+                console.log("GET axios called")
+                console.log("GET resp data", response.data);
+                courseData.push(response.data);
+  
+                // Prev
+                setResponseData(courseData)
+  
+                
+              });
+      
+          } catch (err) {
+            // TODO: do something
+          }
+        }
+  
+        
+  
+      }) // end for each
+  
+     
+  
+  
+      //courseData.forEach(course => {
+      //  console.log(course);
+      //})
+  
+    }; // end of async
+    
+  
+      console.log("st")
+      console.log('Pages.js length of resposneData is: ', responseData.length)
+      
+      // Get the number of courses submitted
+      for (let i = 0; i < courseNums.length; i++) {
+        if(courseNums[i]){
+          num_courses_sub++
         }
       }
-    })
-
-
-
-    }) // end for each
-
-
-
-
-    //courseData.forEach(course => {
-    //  console.log(course);
-    //})
-
-  }; // end of async
-
-
-    console.log("st")
-    console.log('Pages.js length of resposneData is: ', responseData.length)
-
-    // Get the number of courses submitted
-    for (let i = 0; i < courseNums.length; i++) {
-      if(courseNums[i]){
-        num_courses_sub++
-      }
-    }
-
-    console.log('Pages.js num_courses_sub is: ', num_courses_sub)
-
-    // only generate the new schedule once all the course requests have been completed
-    if(responseData.length !== 0){
-      if(responseData.length === num_courses_sub){
-        // Run the generate schedule function
-        testSc = generateSchedule(responseData)
-        console.log("Test Schedule(s)",testSc)
-
-        //If the testSc has not been changed, don't do anything
-        if (testSc === emptyArrays) { console.log("nothing has happened here. testSc is: ", testSc) }
-        // Based on if the update state is T/F
-        else if (update_sc === false){
-          // Update the schedule state variable w/ the generate Scheudle if they are NOT the same
-          set_test_sc(testSc)
-          console.log("UPDATE", update_sc)
-          // Set the flag that this has been updated so it doesn't re-render
-          set_update_sc(true);
+  
+      console.log('Pages.js num_courses_sub is: ', num_courses_sub)
+    
+      // only generate the new schedule once all the course requests have been completed
+      if(responseData.length !== 0){
+        if(responseData.length === num_courses_sub){
+          // Run the generate schedule function
+          testSc = generateSchedule(responseData)  
+          console.log("Test Schedule(s)",testSc)
+  
+          //If the testSc has not been changed, don't do anything
+          if (testSc === emptyArrays) { console.log("nothing has happened here. testSc is: ", testSc) }
+          // Based on if the update state is T/F
+          else if (update_sc === false){
+            // Update the schedule state variable w/ the generate Scheudle if they are NOT the same
+            set_test_sc(testSc)
+            console.log("UPDATE", update_sc)
+            // Set the flag that this has been updated so it doesn't re-render
+            set_update_sc(true);
+          }
+          else{
+            console.log("testSc and test_sc are the same, no update performed")
+          }
+  
+  
         }
-        else{
-          console.log("testSc and test_sc are the same, no update performed")
-        }
-
-
-      }
-
-        console.log("bool", update_sc)
-        console.log("testSc", testSc)
-        console.log("test_sc", test_sc)
-
-    } // end of outer else
-
-
-    console.log("fin")
-
-  return (
-  <div>
-    <Schedule_Content 
-        check={check}
-        SemUpdate={SemUpdate}
-        C_NumUpdate1={C_NumUpdate1}
-        C_NumUpdate2={C_NumUpdate2}
-        C_NumUpdate3={C_NumUpdate3}
-        C_NumUpdate4={C_NumUpdate4}
-        CL_NumUpdate1={CL_NumUpdate1}
-        CL_NumUpdate2={CL_NumUpdate2}
-        CL_NumUpdate3={CL_NumUpdate3}
-        CL_NumUpdate4={CL_NumUpdate4}
-        responseData={responseData}
-        test_sc={testSc}
-    />
-  </div>
-  );
-};
-
+  
+          console.log("bool", update_sc)
+          console.log("testSc", testSc)
+          console.log("test_sc", test_sc)
+  
+      } // end of outer else
+  
+  
+      console.log("fin")
+  
+    return (
+    <div>
+      <Schedule_Content 
+          check={check}
+          SemUpdate={SemUpdate}
+          C_NumUpdate1={C_NumUpdate1}
+          C_NumUpdate2={C_NumUpdate2}
+          C_NumUpdate3={C_NumUpdate3}
+          C_NumUpdate4={C_NumUpdate4}
+          CL_NumUpdate1={CL_NumUpdate1}
+          CL_NumUpdate2={CL_NumUpdate2}
+          CL_NumUpdate3={CL_NumUpdate3}
+          CL_NumUpdate4={CL_NumUpdate4}
+          responseData={responseData}
+          test_sc={testSc}
+      />
+    </div>
+    );
+  };
 export const Four_Year = () => (
   <div>
     <Four_Year_Content />

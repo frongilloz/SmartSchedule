@@ -32,4 +32,5 @@ npm run dev
 "web-vitals": "^0.2.4"
 mongoose-unique-validator
 argon2
+@material-ui/core
 ```

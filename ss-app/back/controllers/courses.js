@@ -101,6 +101,8 @@ router.get('/:sectionNum', (req, res) => {
 });
 
 router.get('/find/:code/:semester', (req, res) => {
+    console.log(req)
+    console.log("be courses")
 
     const courseCode = req.params.code.toUpperCase();
 

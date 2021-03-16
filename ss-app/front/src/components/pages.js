@@ -10,6 +10,9 @@ import Login_Content from './Pages/Login';
 import Sign_Up_Content from './Pages/Sign_Up';
 import Profile_Content from './Pages/Profile';
 
+// import the generate schedule function
+import { generateSchedule } from './generate_schedule.js';
+
 import { Redirect } from 'react-router-dom';
 
 //Purpose: Defines the content that is returned from each page
@@ -29,7 +32,13 @@ export const Schedule = () => {
   const [CNumAdd2, setC_Num2] = useState('');
   const [CNumAdd3, setC_Num3] = useState('');
   const [CNumAdd4, setC_Num4] = useState('');
-  const [CL_NumAdd, setCL_Num] = useState('');
+  const [CL_NumAdd1, setCL_Num1] = useState('');
+  const [CL_NumAdd2, setCL_Num2] = useState('');
+  const [CL_NumAdd3, setCL_Num3] = useState('');
+  const [CL_NumAdd4, setCL_Num4] = useState('');
+
+  const [test_sc, set_test_sc] = useState('');
+  const [update_sc, set_update_sc] = useState('');
 
   //state for schedule generation
   let [responseData, setResponseData] = useState('')
@@ -56,10 +65,31 @@ export const Schedule = () => {
     setC_Num4(value);
     console.log('CNumUpdate4() called, value: ', value);
   };
-  const CL_NumUpdate = value => {
-    setCL_Num(value);
-    console.log('CL_NumUpdate() called, value: ', value);
+  const CL_NumUpdate1 = value => {
+    setCL_Num1(value);
+    console.log('CL_NumUpdate1() called, value: ', value);
   };
+  const CL_NumUpdate2 = value => {
+    setCL_Num2(value);
+    console.log('CL_NumUpdate2() called, value: ', value);
+  };
+  const CL_NumUpdate3 = value => {
+    setCL_Num3(value);
+    console.log('CL_NumUpdate3() called, value: ', value);
+  };
+  const CL_NumUpdate4 = value => {
+    setCL_Num4(value);
+    console.log('CL_NumUpdate4() called, value: ', value);
+  };
+
+  // Relevant initializations
+  let courseData = [];
+  let emptyArray = Array(14).fill(0).map(row => new Array(6).fill(" "))
+
+  let emptyArrays = [emptyArray, emptyArray];
+  let testSc = emptyArrays;
+  let num_courses_sub = 0;
+  const courseNums = [CNumAdd1, CNumAdd2, CNumAdd3, CNumAdd4];
 
   const check = async event => {
     // prevent the refresh of page on submit
@@ -70,34 +100,22 @@ export const Schedule = () => {
 
     courseNums.forEach(async courseNum => {
       /* if this field was filled in by the user */
-      if (courseNum)
-      {
+      if (courseNum){
+        set_update_sc(false);
+
         const queryString = '/api/courses/find/'  + courseNum + '/'
                                                   + SemAdd;
         /* make a backend request for this course data */
         try {
           await axios.get(queryString)
             .then((response) => {
-              //console.log(response.data);
+              console.log("GET axios called")
+              console.log("GET resp data", response.data);
               courseData.push(response.data);
 
-              //let sectionsArray = response.data.sections
+              // Prev
+              setResponseData(courseData)
 
-              //// Each course has multiple sections
-              //for (let i = 0; i < sectionsArray.length; i++) {
-
-              //  //Each section has multiple meet Times arrays (i.e. Tues/Thurs, or MWF)
-              //  let meetTArray = sectionsArray[i].meetTimes
-              //  console.log(meetTArray)
-
-              //  for (let j = 0; j < meetTArray.length; j++) {
-              //    console.log(meetTArray[j].meetDays)
-
-              //    console.log(meetTArray[j].meetPeriodBegin)
-
-              //    console.log(meetTArray[j].meetPeriodEnd)
-              //  }
-              //}
 
             });
     
@@ -107,26 +125,80 @@ export const Schedule = () => {
       }
     })
 
-    setResponseData(courseData)
-    console.log('ResponseData is: ', responseData)
+
+
+    }) // end for each
+
+
+
 
     //courseData.forEach(course => {
     //  console.log(course);
     //})
 
-  };
+  }; // end of async
+
+
+    console.log("st")
+    console.log('Pages.js length of resposneData is: ', responseData.length)
+
+    // Get the number of courses submitted
+    for (let i = 0; i < courseNums.length; i++) {
+      if(courseNums[i]){
+        num_courses_sub++
+      }
+    }
+
+    console.log('Pages.js num_courses_sub is: ', num_courses_sub)
+
+    // only generate the new schedule once all the course requests have been completed
+    if(responseData.length !== 0){
+      if(responseData.length === num_courses_sub){
+        // Run the generate schedule function
+        testSc = generateSchedule(responseData)
+        console.log("Test Schedule(s)",testSc)
+
+        //If the testSc has not been changed, don't do anything
+        if (testSc === emptyArrays) { console.log("nothing has happened here. testSc is: ", testSc) }
+        // Based on if the update state is T/F
+        else if (update_sc === false){
+          // Update the schedule state variable w/ the generate Scheudle if they are NOT the same
+          set_test_sc(testSc)
+          console.log("UPDATE", update_sc)
+          // Set the flag that this has been updated so it doesn't re-render
+          set_update_sc(true);
+        }
+        else{
+          console.log("testSc and test_sc are the same, no update performed")
+        }
+
+
+      }
+
+        console.log("bool", update_sc)
+        console.log("testSc", testSc)
+        console.log("test_sc", test_sc)
+
+    } // end of outer else
+
+
+    console.log("fin")
 
   return (
   <div>
     <Schedule_Content 
-      check={check}
-      SemUpdate={SemUpdate}
-      C_NumUpdate1={C_NumUpdate1}
-      C_NumUpdate2={C_NumUpdate2}
-      C_NumUpdate3={C_NumUpdate3}
-      C_NumUpdate4={C_NumUpdate4}
-      CL_NumUpdate={CL_NumUpdate}
-      responseData={responseData}
+        check={check}
+        SemUpdate={SemUpdate}
+        C_NumUpdate1={C_NumUpdate1}
+        C_NumUpdate2={C_NumUpdate2}
+        C_NumUpdate3={C_NumUpdate3}
+        C_NumUpdate4={C_NumUpdate4}
+        CL_NumUpdate1={CL_NumUpdate1}
+        CL_NumUpdate2={CL_NumUpdate2}
+        CL_NumUpdate3={CL_NumUpdate3}
+        CL_NumUpdate4={CL_NumUpdate4}
+        responseData={responseData}
+        test_sc={testSc}
     />
   </div>
   );
@@ -314,4 +386,3 @@ export const Profile = props => {
     </div>
   );
 };
-

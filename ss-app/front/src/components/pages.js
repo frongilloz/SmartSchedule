@@ -196,10 +196,11 @@ export const Home = () => (
   
   
         }
-  
-          console.log("bool", update_sc)
-          console.log("testSc", testSc)
-          console.log("test_sc", test_sc)
+
+        // Delay on submit error checks
+          //console.log("bool", update_sc)
+          //console.log("testSc", testSc)
+          //console.log("test_sc", test_sc)
   
       } // end of outer else
   

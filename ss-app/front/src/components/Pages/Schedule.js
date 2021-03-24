@@ -14,6 +14,7 @@ const periods = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "E1", 
 const daysShort = ["M", "T", "W", "R", "F"]
 
 let ctr_classes = 0;
+let schedule_Exist = false;
 
 
 const times = [
@@ -109,72 +110,32 @@ const Schedule = props => {
   
   };
 
-  
-  const print_schedule_info = props.final_schedule_info.map(curr_sched_info => {
-    // For each schedule, need to parse through to get the mapping index for the course's info
-    // Ex) 2 courses will return an array of size 2. 
-    // If there are 12 schedules, each index will have an object array of size 12
-    // [0], [1] ... [12] => each index corresponds to the index of schedules
-
-    // So would need to print 
-    // 1st Loop: [0]
-    // 1st Course: final_schedule_info[0][0-12]
-    // 2nd Course: final_schedule_info[1][0-12]
-
-    //2nd
-    // 1st Course: final_schedule_info[0][1]
-    // 2nd Course: final_schedule_info[1][1]
-
-    // Instead of printing out ALL the info, per index, needs to print the [index]'s course info
-
-
-    // For 2 classes, this function only gets called 2x
-    // All the section permutations are displayed here
-    return (
-      <div>
-
-      {curr_sched_info.slice(0, curr_sched_info.length).map((course_sect, curr_idx) => {
-        //iterate through each schedule to look for cells with values
-        console.log("course_sect,",course_sect)
-
-        
-
-        return(
-          <div>
-            <p>Section Number: {course_sect.section_c_num}</p>
-          </div>
-        );
-      })}
-    </div>
-    )
-  });
-
-  const print_schedule_info_temp = props.final_schedule_info.map(curr_sched_info => {
-    return (
-      <div class='left_align'>
-        <div class='center_align'>
-        <p><b>Course Name:</b> {curr_sched_info[0].course_name}</p>
+  const print_conflicts = props => {
+    // "Props" is the props.conflicts
+    
+    // Only print the conflict warnings if there are conflicts present
+    if(props.length != 0){
+      return(
+        <div className='alert alert-danger' id='conflicts_div'>
+            <strong>There are conflicts at schedules: {props}</strong>
         </div>
-        <p><b>Section Number:</b> {curr_sched_info[0].section_c_num}</p>
-        <p><b>Course Instructor:</b> {curr_sched_info[0].section_inst[0].name}</p>
-        <p><b>Course Description:</b> {curr_sched_info[0].course_desc}</p>
-        <p><b>Course Credits:</b> {curr_sched_info[0].section_credits}</p>
-    </div>
-    )
-  });
-
+      )
+    }
+    else{
+      return(<p>Please enter your courses on the left menu to get started.</p>)
+    }
+  };
 
     
   //create a number of schedules based on the number submitted
-  const scheduleGrids = props.test_sc.map(curr_schedule => {
-
+  const scheduleGrids = props.test_sc.map((curr_schedule, curr_sc_index)  => {
       //console.log("curr_schedule: ", curr_schedule)
 
       let temp_r1;
 
       // WIP color stuff
       // iterate through each schedule to look for cells with values
-      curr_schedule.slice(0, curr_schedule.length).map((row, col) => {
+      curr_schedule.slice(0, curr_schedule.length).map((row, indx) => {
         // Each item corresponds to a "row" of the table
         //console.log("row ", row)
         //console.log("col ", col)
@@ -196,23 +157,37 @@ const Schedule = props => {
       })
       
       //console.log("temp_r1", temp_r1)
-
       // End of WIP color stuff
 
 
-      
-
-
+      // if schedule does not exist, do not render table and just return nothing
+      if(!props.final_schedule_info[0]){
+        return(
+          <div></div>
+        );
+      }
 
       // For EACH schedule, render the schedule table (test_sc => curr_schedule)
-
-      // {print_schedule_info}
 
       return (
         <div>
 
             <Card>
-              {print_schedule_info_temp}
+              
+            {props.final_schedule_info.slice(0, props.final_schedule_info.length).map((curr_class_obj, curr_idx) => {
+              return (
+              <div class='left_align'>
+              <div class='center_align'>
+                <p><b>Course Name:</b> {curr_class_obj[curr_sc_index].course_name}</p>
+              </div>
+                <p><b>Section Number:</b> {curr_class_obj[curr_sc_index].section_c_num}</p>
+                <p><b>Course Instructor:</b> {curr_class_obj[curr_sc_index].section_inst[0].name}</p>
+                <p><b>Course Description:</b> {curr_class_obj[curr_sc_index].course_desc}</p>
+                <p><b>Course Credits:</b> {curr_class_obj[curr_sc_index].section_credits}</p>
+              </div>
+              );
+            })}
+
             </Card>
 
           
@@ -234,7 +209,6 @@ const Schedule = props => {
 
                       return (
                         <tr key={index} >
-                          
 
                           <td>{periods[index]}</td>
                           <td>{times[index]}</td>
@@ -465,9 +439,7 @@ const Schedule = props => {
               {/* {scheduleGrids}*/}
               {scheduleGrids}
 
-              <div className='alert alert-danger' id='conflicts_div'>
-                  <strong>There are conflicts at schedules: {props.conflicts}</strong>
-              </div>
+              {print_conflicts(props.conflicts)}
 
           </Card>
         </div>

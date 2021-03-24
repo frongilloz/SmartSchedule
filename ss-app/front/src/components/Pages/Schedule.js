@@ -13,6 +13,8 @@ import './basic.css';
 const periods = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "E1", "E2", "E3"];
 const daysShort = ["M", "T", "W", "R", "F"]
 
+let ctr_classes = 0;
+
 
 const times = [
     "7:25 AM - 8:15 AM", "8:30 AM - 9:20 AM", "9:35 AM - 10:25 AM",
@@ -106,14 +108,71 @@ const Schedule = props => {
     console.log("WOWWOW", row)
   
   };
+
+  
+  const print_schedule_info = props.final_schedule_info.map(curr_sched_info => {
+    // For each schedule, need to parse through to get the mapping index for the course's info
+    // Ex) 2 courses will return an array of size 2. 
+    // If there are 12 schedules, each index will have an object array of size 12
+    // [0], [1] ... [12] => each index corresponds to the index of schedules
+
+    // So would need to print 
+    // 1st Loop: [0]
+    // 1st Course: final_schedule_info[0][0-12]
+    // 2nd Course: final_schedule_info[1][0-12]
+
+    //2nd
+    // 1st Course: final_schedule_info[0][1]
+    // 2nd Course: final_schedule_info[1][1]
+
+    // Instead of printing out ALL the info, per index, needs to print the [index]'s course info
+
+
+    // For 2 classes, this function only gets called 2x
+    // All the section permutations are displayed here
+    return (
+      <div>
+
+      {curr_sched_info.slice(0, curr_sched_info.length).map((course_sect, curr_idx) => {
+        //iterate through each schedule to look for cells with values
+        console.log("course_sect,",course_sect)
+
+        
+
+        return(
+          <div>
+            <p>Section Number: {course_sect.section_c_num}</p>
+          </div>
+        );
+      })}
+    </div>
+    )
+  });
+
+  const print_schedule_info_temp = props.final_schedule_info.map(curr_sched_info => {
+    return (
+      <div class='left_align'>
+        <div class='center_align'>
+        <p><b>Course Name:</b> {curr_sched_info[0].course_name}</p>
+        </div>
+        <p><b>Section Number:</b> {curr_sched_info[0].section_c_num}</p>
+        <p><b>Course Instructor:</b> {curr_sched_info[0].section_inst[0].name}</p>
+        <p><b>Course Description:</b> {curr_sched_info[0].course_desc}</p>
+        <p><b>Course Credits:</b> {curr_sched_info[0].section_credits}</p>
+    </div>
+    )
+  });
+
+
     
   //create a number of schedules based on the number submitted
-  // Future: will return multiple schedules to map through
   const scheduleGrids = props.test_sc.map(curr_schedule => {
-      console.log("curr_schedule: ", curr_schedule)
+
+      //console.log("curr_schedule: ", curr_schedule)
 
       let temp_r1;
 
+      // WIP color stuff
       // iterate through each schedule to look for cells with values
       curr_schedule.slice(0, curr_schedule.length).map((row, col) => {
         // Each item corresponds to a "row" of the table
@@ -135,15 +194,28 @@ const Schedule = props => {
         }
 
       })
-
+      
       //console.log("temp_r1", temp_r1)
 
-  
+      // End of WIP color stuff
 
+
+      
+
+
+
+      // For EACH schedule, render the schedule table (test_sc => curr_schedule)
+
+      // {print_schedule_info}
 
       return (
-
         <div>
+
+            <Card>
+              {print_schedule_info_temp}
+            </Card>
+
+          
             <table class="table table-bordered" >
                 <thead>
                   <tr class="color_table_hd_row">
@@ -159,18 +231,17 @@ const Schedule = props => {
                 </thead>
                 <tbody>
                 {curr_schedule.slice(0, curr_schedule.length).map((row, index) => {
+
                       return (
                         <tr key={index} >
+                          
+
                           <td>{periods[index]}</td>
                           <td>{times[index]}</td>
-                          
-                          
                           
                           {() => check_cell_val( row[0] )}
 
                           <td>{row[0]}</td>
-
-
                           <td>{row[1]}</td>
                           <td>{row[2]}</td>
                           <td>{row[3]}</td>
@@ -178,11 +249,13 @@ const Schedule = props => {
                           <td>{row[5]}</td>
                         </tr>
                       );
-                    })}
+                })}
                 </tbody>
             </table>     
 
+            
         </div>
+
       );
     });
 
@@ -388,8 +461,13 @@ const Schedule = props => {
         <div class="col-lg-8">
           <Card body>
               <h2>Possible Schedules</h2>
+
               {/* {scheduleGrids}*/}
               {scheduleGrids}
+
+              <div className='alert alert-danger' id='conflicts_div'>
+                  <strong>There are conflicts at schedules: {props.conflicts}</strong>
+              </div>
 
           </Card>
         </div>

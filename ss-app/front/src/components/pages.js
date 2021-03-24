@@ -40,10 +40,13 @@ export const Home = () => (
     const [test_sc, set_test_sc] = useState('');
     const [update_sc, set_update_sc] = useState('');
   
+  
     //state for schedule generation
     let [responseData, setResponseData] = useState('')
   
   
+    let ctr =0;
+
     //external change functions
     const SemUpdate = value => {
       setSem(value);
@@ -84,6 +87,9 @@ export const Home = () => (
     
     // Relevant initializations
     let courseData = [];
+    let conflicts = [];
+    let conflicts_print = [];
+    let final_schedule_info = [];
     let emptyArray = Array(14).fill(0).map(row => new Array(6).fill(" "))
   
     let emptyArrays = [emptyArray, emptyArray];
@@ -152,8 +158,27 @@ export const Home = () => (
       if(responseData.length !== 0){
         if(responseData.length === num_courses_sub){
           // Run the generate schedule function
-          testSc = generateSchedule(responseData)  
-          console.log("Test Schedule(s)",testSc)
+          let gen_schedule_return = generateSchedule(responseData)  
+
+          //deconstruct returned object into the components we need to use
+          testSc = gen_schedule_return.finalSchedules;
+          conflicts = gen_schedule_return.conflicts;
+          final_schedule_info = gen_schedule_return.finalSchedule_Info;
+
+          console.log("Test Schedule(s) Received, ",testSc)
+          console.log("Conflict(s) Received, ",conflicts)
+          console.log("final_schedule_info(s) Received, ",final_schedule_info)
+
+          // Parse out the confilcts
+          for (let i = 0; i < conflicts.length; i++) {
+            //console.log("conflicts[i],",conflicts[i])
+            let temp_st = conflicts[i].toString()
+            conflicts_print.push(temp_st)
+            conflicts_print.push(',')
+          }
+          console.log("conflicts_print ",conflicts_print)
+          
+          //Parse out the info based on length of responsData (# of courses)
   
           //If the testSc has not been changed, don't do anything
           if (testSc === emptyArrays) { console.log("nothing has happened here. testSc is: ", testSc) }
@@ -178,7 +203,8 @@ export const Home = () => (
   
       } // end of outer else
   
-  
+
+      console.log("conflicts_print", conflicts_print)
       console.log("fin")
   
     return (
@@ -196,6 +222,8 @@ export const Home = () => (
           CL_NumUpdate4={CL_NumUpdate4}
           responseData={responseData}
           test_sc={testSc}
+          conflicts={conflicts_print}
+          final_schedule_info={final_schedule_info}
       />
     </div>
     );

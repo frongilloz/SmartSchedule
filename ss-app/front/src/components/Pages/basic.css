@@ -89,3 +89,11 @@
     
     border: 1px #737d96;
   }
+
+  .left_align{
+      text-align: left;
+  }
+
+  .center_align{
+    text-align: center;
+}

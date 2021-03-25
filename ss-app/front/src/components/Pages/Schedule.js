@@ -116,7 +116,7 @@ const Schedule = props => {
     // Iterate through the row, and check the 6 values of the string array
     for (let i = 0; i < curr_row.length; i++) {
       if(curr_row[i] == ' '){
-        array_ret.push(<td>{curr_row[i]}</td>)
+        array_ret.push(<td class='def_color_table'>{curr_row[i]}</td>)
       }
       else{
         // Go through the courseNums submitted, and match to print the color
@@ -133,7 +133,7 @@ const Schedule = props => {
           array_ret.push(<td class='color_class_4'>{curr_row[i]}</td>)
         }
         else{
-          array_ret.push(<td>{curr_row[i]}</td>)
+          array_ret.push(<td class='def_color_table'>{curr_row[i]}</td>)
         }
         
       }
@@ -179,13 +179,12 @@ const Schedule = props => {
       return (
         <div>
 
-          <div class='simple_border' id='sched_detail'>
-          <Card class='card_blue'>
+          <div class='card_blue' id='sched_detail'>
             {props.final_schedule_info.slice(0, props.final_schedule_info.length).map((curr_class_obj, curr_idx) => {
               return (
               <div class='left_align'>
               <div class='center_align'>
-                <p><b>Course Name:</b> {curr_class_obj[curr_sc_index].course_name}</p>
+                <p><b>Course Name:</b> {curr_class_obj[curr_sc_index].course_code} | {curr_class_obj[curr_sc_index].course_name}</p>
               </div>
                 <p><b>Section Number:</b> {curr_class_obj[curr_sc_index].section_c_num}</p>
                 <p><b>Course Instructor:</b> {curr_class_obj[curr_sc_index].section_inst[0].name}</p>
@@ -195,7 +194,6 @@ const Schedule = props => {
               );
             })}
 
-          </Card>
           </div>
 
           
@@ -218,8 +216,8 @@ const Schedule = props => {
                       return (
                         <tr key={index} >
 
-                          <td>{periods[index]}</td>
-                          <td>{times[index]}</td>
+                          <td class='def_color_table'>{periods[index]}</td>
+                          <td class='def_color_table'>{times[index]}</td>
                           
                           
                           {check_cells(row)}

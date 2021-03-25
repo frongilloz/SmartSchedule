@@ -71,8 +71,8 @@
   }
   
   .color_table_hd_row{
-    background-color:#c0c4cf;
-    color:#4a4e67;
+    background-color:#646d85;
+    color:white;
   }
 
   .color_table_bd_row{
@@ -103,12 +103,26 @@
 }
 
 .card_blue {
-  background-color: #e8e8e8;
-  border: 4px #737d96;
+  background-color: #c0c4cf;
+  border:3px solid rgb(115, 125, 150);
 }
 
 .simple_border{
   border: 4px #737d96;
+}
+
+.def_color_table{
+  background-color: #e8e8e8;
+}
+
+table.table-bordered{
+  border:3px solid rgb(115, 125, 150);
+}
+table.table-bordered > thead > tr > th{
+  border:3px solid rgb(115, 125, 150);
+}
+table.table-bordered > tbody > tr > td{
+  border:3px solid rgb(115, 125, 150);
 }
 
 

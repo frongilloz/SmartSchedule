@@ -50,6 +50,7 @@ export function generateSchedule(responseData) {
 
     let count = 0
     for (let k = 0; k < responseDataLength.length; k++) {
+
       //reset sect_objects array for each new course
       let sect_objects = []
 

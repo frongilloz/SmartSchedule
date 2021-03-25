@@ -7,7 +7,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-import { Form, Col, Card, Button, Container, Row , Table} from 'react-bootstrap';
+import { Form, Col, Card, Button, Container, Row , Table, Alert} from 'react-bootstrap';
 import './basic.css';
 
 const periods = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "E1", "E2", "E3"];
@@ -158,7 +158,13 @@ const Schedule = props => {
       )
     }
     else{
-      return(<p>Please enter your courses on the left menu to get started.</p>)
+      return(
+        <div>
+        <Alert variant='primary'>
+          Please enter your courses on the left menu to get started.
+        </Alert>
+      </div>
+      )
     }
   };
     
@@ -184,12 +190,15 @@ const Schedule = props => {
               return (
               <div class='left_align'>
               <div class='center_align'>
-                <p><b>Course Name:</b> {curr_class_obj[curr_sc_index].course_code} | {curr_class_obj[curr_sc_index].course_name}</p>
+                <p><b>Course Name:</b> {curr_class_obj[curr_sc_index].course_code} - {curr_class_obj[curr_sc_index].course_name}</p>
               </div>
-                <p><b>Section Number:</b> {curr_class_obj[curr_sc_index].section_c_num}</p>
+                <p><b>Class Number:</b> {curr_class_obj[curr_sc_index].section_c_num}</p>
                 <p><b>Course Instructor:</b> {curr_class_obj[curr_sc_index].section_inst[0].name}</p>
                 <p><b>Course Description:</b> {curr_class_obj[curr_sc_index].course_desc}</p>
                 <p><b>Course Credits:</b> {curr_class_obj[curr_sc_index].section_credits}</p>
+                <p><b>Location:</b> Building, room # and then link to UF's map after Spencer's changes are integrated</p>
+
+                <p>TBD: Add a "Route" button that routes the walk to front end</p>
               </div>
               );
             })}
@@ -226,6 +235,13 @@ const Schedule = props => {
                         </tr>
                       );
                 })}
+
+
+            <tr>
+              <td class='def_color_table' colSpan="2">Online (100%)</td>
+              <td class='def_color_table' colSpan="6">TBD</td>
+            </tr>
+
                 </tbody>
             </table>     
 
@@ -318,10 +334,10 @@ const Schedule = props => {
                 <Form onSubmit={props.check}>
                   <h2>Add Courses</h2>
 
-                  <div className='h1_p_1'>
-                    <Form.Row>
+                  <div className='required'>
+                    <Form.Row >
                       <Form.Label><b>Semester</b></Form.Label>
-                      <select className="form-control" name="Semester" onChange={SemInt} required="true">
+                      <select className="form-control" name="Semester" onChange={SemInt} required="required">
                           <option selected>Semester - Required</option>
                           <option value="fall2021">Fall 2021</option>
                           <option value="spring2021">Spring 2021</option>
@@ -332,6 +348,7 @@ const Schedule = props => {
             
                   <div className='h1_p_1'>
                     <Form.Row>
+                      <Col>
                       <Form.Label><b>Course Number 1</b></Form.Label>
                       <Form.Control
                         input
@@ -339,25 +356,24 @@ const Schedule = props => {
                         id='CourseNum1'
                         onChange={CourseNumInt1}
                       />
-                      
-                    </Form.Row>
-                  </div>
+                      </Col>
 
-                  <div className='h_cl_num'>
-                  <Form.Row>
-                      <Form.Label>Class Number</Form.Label>
+                      <Col>
+                    <Form.Label><b>Class #</b></Form.Label>
                       <Form.Control
                         input
                         placeholder='(Optional) ex. 15110'
                         id='ClassNum1'
                         onChange={ClassNumInt1}
                       />
+                      </Col>
+                      
                     </Form.Row>
                   </div>
 
-
                   <div className='h1_p_1'>
                     <Form.Row>
+                      <Col>
                       <Form.Label><b>Course Number 2</b></Form.Label>
                       <Form.Control
                         input
@@ -365,24 +381,25 @@ const Schedule = props => {
                         id='CourseNum2'
                         onChange={CourseNumInt2}
                       />
-                    </Form.Row>
-                  </div>
+                      </Col>
 
-                  <div className='h_cl_num'>
-                  <Form.Row>
-                      <Form.Label>Class Number</Form.Label>
+                      <Col>
+                    <Form.Label><b>Class #</b></Form.Label>
                       <Form.Control
                         input
                         placeholder='(Optional) ex. 15110'
                         id='ClassNum2'
                         onChange={ClassNumInt2}
                       />
+                      </Col>
+                      
                     </Form.Row>
                   </div>
 
 
                   <div className='h1_p_1'>
                     <Form.Row>
+                      <Col>
                       <Form.Label><b>Course Number 3</b></Form.Label>
                       <Form.Control
                         input
@@ -390,23 +407,23 @@ const Schedule = props => {
                         id='CourseNum3'
                         onChange={CourseNumInt3}
                       />
-                    </Form.Row>
-                  </div>
+                      </Col>
 
-                  <div className='h_cl_num'>
-                  <Form.Row>
-                      <Form.Label>Class Number</Form.Label>
+                      <Col>
+                    <Form.Label><b>Class #</b></Form.Label>
                       <Form.Control
                         input
                         placeholder='(Optional) ex. 15110'
                         id='ClassNum3'
                         onChange={ClassNumInt3}
                       />
+                      </Col>
+                      
                     </Form.Row>
                   </div>
-
                   <div className='h1_p_1'>
                     <Form.Row>
+                      <Col>
                       <Form.Label><b>Course Number 4</b></Form.Label>
                       <Form.Control
                         input
@@ -414,18 +431,18 @@ const Schedule = props => {
                         id='CourseNum4'
                         onChange={CourseNumInt4}
                       />
-                    </Form.Row>
-                  </div>
+                      </Col>
 
-                  <div className='h_cl_num'>
-                  <Form.Row>
-                      <Form.Label>Class Number</Form.Label>
+                      <Col>
+                    <Form.Label><b>Class #</b></Form.Label>
                       <Form.Control
                         input
                         placeholder='(Optional) ex. 15110'
                         id='ClassNum4'
                         onChange={ClassNumInt4}
                       />
+                      </Col>
+                      
                     </Form.Row>
                   </div>
 

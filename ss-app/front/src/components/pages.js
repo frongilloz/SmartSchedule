@@ -225,6 +225,7 @@ export const Home = () => (
           test_sc={testSc}
           conflicts={conflicts_print}
           final_schedule_info={final_schedule_info}
+          courseNums={courseNums}
       />
     </div>
     );

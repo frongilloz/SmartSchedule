@@ -92,8 +92,46 @@
 
   .left_align{
       text-align: left;
+      padding-left: 2%;
+      padding-right: 2%;
+      padding-bottom: 1%;
+      padding-top: 1%;
   }
 
   .center_align{
     text-align: center;
+}
+
+.card_blue {
+  background-color: #e8e8e8;
+  border: 4px #737d96;
+}
+
+.simple_border{
+  border: 4px #737d96;
+}
+
+
+.color_class_1 {
+  background-color: #2a75a9;
+  color: white;
+  font-weight: bold;
+}
+
+.color_class_2 {
+  background-color: #896723; 
+  color: white;
+  font-weight: bold;
+}
+
+.color_class_3 {
+  background-color: #bc3062;
+  color: white;
+  font-weight: bold;
+}
+
+.color_class_4 {
+  background-color: #274257;
+  color: white;
+  font-weight: bold;
 }

@@ -105,14 +105,50 @@ const Schedule = props => {
     console.log('ClassNumInt4: ', event.target.value);
     };
 
-  const check_cell_val = row => {
-    console.log("WOWWOW", row)
-  
-  };
 
+  // Color classes
+  const check_cells = curr_row => {
+    //console.log("curr_row", curr_row)
+
+    // init
+    let array_ret = [];
+
+    // Iterate through the row, and check the 6 values of the string array
+    for (let i = 0; i < curr_row.length; i++) {
+      if(curr_row[i] == ' '){
+        array_ret.push(<td>{curr_row[i]}</td>)
+      }
+      else{
+        // Go through the courseNums submitted, and match to print the color
+        if(curr_row[i] == props.courseNums[0]){
+          array_ret.push(<td class='color_class_1'>{curr_row[i]}</td>)
+        }
+        else if(curr_row[i] == props.courseNums[1]){
+          array_ret.push(<td class='color_class_2'>{curr_row[i]}</td>)
+        }
+        else if(curr_row[i] == props.courseNums[2]){
+          array_ret.push(<td class='color_class_3'>{curr_row[i]}</td>)
+        }
+        else if(curr_row[i] == props.courseNums[3]){
+          array_ret.push(<td class='color_class_4'>{curr_row[i]}</td>)
+        }
+        else{
+          array_ret.push(<td>{curr_row[i]}</td>)
+        }
+        
+      }
+    }
+
+    // At the end, return compiled table elements with styled cells
+    return(array_ret)
+    
+  }
+  
+
+  // Print a warning of the conflict indices
   const print_conflicts = props => {
     // "Props" is the props.conflicts
-    
+
     // Only print the conflict warnings if there are conflicts present
     if(props.length != 0){
       return(
@@ -125,40 +161,12 @@ const Schedule = props => {
       return(<p>Please enter your courses on the left menu to get started.</p>)
     }
   };
-
     
   //create a number of schedules based on the number submitted
   const scheduleGrids = props.test_sc.map((curr_schedule, curr_sc_index)  => {
       //console.log("curr_schedule: ", curr_schedule)
 
       let temp_r1;
-
-      // WIP color stuff
-      // iterate through each schedule to look for cells with values
-      curr_schedule.slice(0, curr_schedule.length).map((row, indx) => {
-        // Each item corresponds to a "row" of the table
-        //console.log("row ", row)
-        //console.log("col ", col)
-
-        // Can access 0-5 indices within rows
-        //console.log("row[1] ", row[1])
-
-        // To iterate through all 6 days in a school week (row)
-        for (let i = 0; i < curr_schedule.length; i++) {
-          if (row[i] === ""){
-            temp_r1 = (<td>{row[i]}</td>)
-          }
-          else{
-            temp_r1 = (<td class="color_table_bd_cell">{row[i]}</td>)
-          }
-
-        }
-
-      })
-      
-      //console.log("temp_r1", temp_r1)
-      // End of WIP color stuff
-
 
       // if schedule does not exist, do not render table and just return nothing
       if(!props.final_schedule_info[0]){
@@ -167,13 +175,12 @@ const Schedule = props => {
         );
       }
 
-      // For EACH schedule, render the schedule table (test_sc => curr_schedule)
-
+      // Else, For EACH schedule, render the schedule table (test_sc => curr_schedule)
       return (
         <div>
 
-            <Card>
-              
+          <div class='simple_border' id='sched_detail'>
+          <Card class='card_blue'>
             {props.final_schedule_info.slice(0, props.final_schedule_info.length).map((curr_class_obj, curr_idx) => {
               return (
               <div class='left_align'>
@@ -188,7 +195,8 @@ const Schedule = props => {
               );
             })}
 
-            </Card>
+          </Card>
+          </div>
 
           
             <table class="table table-bordered" >
@@ -213,14 +221,10 @@ const Schedule = props => {
                           <td>{periods[index]}</td>
                           <td>{times[index]}</td>
                           
-                          {() => check_cell_val( row[0] )}
+                          
+                          {check_cells(row)}
 
-                          <td>{row[0]}</td>
-                          <td>{row[1]}</td>
-                          <td>{row[2]}</td>
-                          <td>{row[3]}</td>
-                          <td>{row[4]}</td>
-                          <td>{row[5]}</td>
+                          
                         </tr>
                       );
                 })}
@@ -233,6 +237,17 @@ const Schedule = props => {
       );
     });
 
+
+/*
+// Orig way to render table
+<td>{row[0]}</td>
+<td>{row[1]}</td>
+<td>{row[2]}</td>
+<td>{row[3]}</td>
+<td>{row[4]}</td>
+<td>{row[5]}</td>
+
+*/
 
 
 /*

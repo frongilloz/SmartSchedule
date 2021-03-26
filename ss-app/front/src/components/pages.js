@@ -96,10 +96,14 @@ export const Home = () => (
     let testSc = emptyArrays;
     let num_courses_sub = 0;
     const courseNums = [CNumAdd1, CNumAdd2, CNumAdd3, CNumAdd4]; 
+    const classNums = [CL_NumAdd1, CL_NumAdd2, CL_NumAdd3, CL_NumAdd4]; 
   
     const check = async event => {
       // prevent the refresh of page on submit
       event.preventDefault();
+
+      // Reset
+      let courseNumCounter = -1;
   
       // For each course submitted
       courseNums.forEach(async courseNum => {
@@ -107,9 +111,25 @@ export const Home = () => (
         if (courseNum){
           //Reset
           set_update_sc(false);
-  
-          const queryString = '/api/courses/find/'  + courseNum + '/'
+
+          // update counter
+          courseNumCounter++;
+
+          let queryString; // was const
+
+
+          // Create a query string based on if a class Number was submitted or not
+          //Check to see if the course had a corresponding class number submitted
+          if(classNums[courseNumCounter] != ''){
+            console.log("TRUE")
+            queryString = '/api/courses/find/'  + courseNum + '/' + classNums[courseNumCounter] + '/' + SemAdd;
+          }else{
+            queryString = '/api/courses/find/'  + courseNum + '/'
                                                     + SemAdd;
+          }
+
+          console.log("QUERY CALLED: ", queryString)
+          
           /* make a backend request for this course data */
           try {
             await axios.get(queryString)
@@ -177,7 +197,7 @@ export const Home = () => (
             conflicts_print.push(temp_st)
             conflicts_print.push(',')
           }
-          console.log("conflicts_print ",conflicts_print)
+          //console.log("conflicts_print ",conflicts_print)
           
           //Parse out the info based on length of responsData (# of courses)
   

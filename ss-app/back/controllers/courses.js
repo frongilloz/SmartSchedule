@@ -66,6 +66,32 @@ const isSameSemester = (semester, course) => {
     return laterThanStart && earlierThanEnd;
 }
 
+// Find the course section with the class number queried for, and return the reduced object
+const find_section = (course, query_class_num) => {
+    let ret_Course;
+
+    //For the sections array, go through each section in the array
+    for (let i = 0; i < course.sections.length; i++) {  
+        //If the class number is found
+        if(course.sections[i].classNumber == query_class_num){
+            // Make a copy of orig courses to ret_courses 
+            ret_Course = course;
+
+            //Only keep the section that is relevant, remove the others
+            ret_Course.sections = course.sections[i];
+
+            console.log("RET_COURSE: ", ret_Course)
+
+            // Return 
+            return ret_Course;
+        }
+
+    }
+
+    // If no match found, return an error 
+    return res.status(500).send(err);
+}
+
 //@route  GET api/courses
 //@desc   Gets all Courses
 //@access Public
@@ -99,6 +125,54 @@ router.get('/:code', async(req, res) => {
 router.get('/:sectionNum', (req, res) => {
     res.send("");
 });
+
+
+router.get('/find/:code/:classNum/:semester', (req, res) => {
+    console.log(req)
+    console.log("be courses")
+
+    const courseCode = req.params.code.toUpperCase();
+
+    /**
+     * query DB for each course with code and section number.   
+     * for each of these results, check if drop deadline is within 
+     * the specified semester. if yes, return that result
+     **/
+
+    const query = {
+        code: courseCode
+    };
+
+    Course.find(query, (err, courses) => {
+        if (err) {
+            res.status(500).send(err);
+            return;
+        }
+
+        /** 
+         * 1) for each of these results, check if drop deadline is within 
+         * the specified semester. if yes, return that result
+         * 
+         * 2) for each of these results, check for the section #. if found, return that result
+         **/
+        courses.forEach((course) => {
+            if (isSameSemester(req.params.semester, course)) {
+                // 1) Check section BEFORE returning; Will keep only the relevant section of the class queried
+                course = find_section(course, req.params.classNum)
+
+                // 2) Condense
+                course = condenseCourse(course);
+
+                // 3) Return
+                res.json(course);
+                return;
+            }
+            res.status(500).send(err);
+        })
+
+    })
+});
+
 
 router.get('/find/:code/:semester', (req, res) => {
     console.log(req)

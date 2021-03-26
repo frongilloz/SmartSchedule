@@ -27,7 +27,7 @@ const Schedule = props => {
     props.SemUpdate(event.target.value);
 
     //log
-    console.log('SemInt: ', event.target.value);
+    //console.log('SemInt: ', event.target.value);
   };
 
   const CourseNumInt1 = event => {
@@ -37,7 +37,7 @@ const Schedule = props => {
     props.C_NumUpdate1(event.target.value);
 
     //log
-    console.log('C_Num1: ', event.target.value);
+    //console.log('C_Num1: ', event.target.value);
   };
 
   const CourseNumInt2 = event => {
@@ -47,7 +47,7 @@ const Schedule = props => {
     props.C_NumUpdate2(event.target.value);
 
     //log
-    console.log('C_Num2: ', event.target.value);
+    //console.log('C_Num2: ', event.target.value);
   };
 
   const CourseNumInt3 = event => {
@@ -57,7 +57,7 @@ const Schedule = props => {
     props.C_NumUpdate3(event.target.value);
 
     //log
-    console.log('C_Num3: ', event.target.value);
+    //console.log('C_Num3: ', event.target.value);
   };
 
   const CourseNumInt4 = event => {
@@ -67,31 +67,31 @@ const Schedule = props => {
     props.C_NumUpdate4(event.target.value);
 
     //log
-    console.log('C_Num4: ', event.target.value);
+    //console.log('C_Num4: ', event.target.value);
   };
 
   const ClassNumInt1 = event => {
     //change by calling App external function
     props.CL_NumUpdate1(event.target.value);
-    console.log('ClassNumInt1: ', event.target.value);
+    //console.log('ClassNumInt1: ', event.target.value);
     };
 
   const ClassNumInt2 = event => {
     //change by calling App external function
     props.CL_NumUpdate2(event.target.value);
-    console.log('ClassNumInt2: ', event.target.value);
+    //console.log('ClassNumInt2: ', event.target.value);
     };
 
   const ClassNumInt3 = event => {
     //change by calling App external function
     props.CL_NumUpdate3(event.target.value);
-    console.log('ClassNumInt3: ', event.target.value);
+    //console.log('ClassNumInt3: ', event.target.value);
     };
 
   const ClassNumInt4 = event => {
     //change by calling App external function
     props.CL_NumUpdate4(event.target.value);
-    console.log('ClassNumInt4: ', event.target.value);
+    //console.log('ClassNumInt4: ', event.target.value);
     };
 
 

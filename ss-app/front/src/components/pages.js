@@ -101,10 +101,11 @@ export const Home = () => (
       // prevent the refresh of page on submit
       event.preventDefault();
   
-  
+      // For each course submitted
       courseNums.forEach(async courseNum => {
         /* if this field was filled in by the user */
         if (courseNum){
+          //Reset
           set_update_sc(false);
   
           const queryString = '/api/courses/find/'  + courseNum + '/'
@@ -223,7 +224,8 @@ export const Home = () => (
           CL_NumUpdate4={CL_NumUpdate4}
           responseData={responseData}
           test_sc={testSc}
-          conflicts={conflicts_print}
+          conflicts={conflicts}
+          conflicts_print={conflicts_print}
           final_schedule_info={final_schedule_info}
           courseNums={courseNums}
       />

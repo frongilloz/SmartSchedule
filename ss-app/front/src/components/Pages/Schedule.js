@@ -133,7 +133,7 @@ const Schedule = props => {
   }
   
 
-  // Print a warning of the conflict indices
+  // Print a general warning of the conflict indices. Also prints out the "Get Started Menu"
   const print_conflicts = props => {
     // "Props" is the props.conflicts
 
@@ -154,6 +154,24 @@ const Schedule = props => {
       </div>
       )
     }
+  };
+
+
+  //Print a general warning of the conflict indices
+  const print_conflict = curr_sc_idx => {
+
+    // Only print the conflict warnings if there are conflicts present
+    // for the length of the conflicts produced
+    for (let i = 0; i < props.conflicts.length; i++) {
+      if(curr_sc_idx == props.conflicts[i] ){
+        return(
+          <div className='alert alert-danger' id='conflicts_div'>
+              <strong><b>Warning: </b> There is a class conflict in this schedule.</strong>
+          </div>
+        )
+      }
+    }
+
   };
 
   // Determine Class format
@@ -179,8 +197,6 @@ const Schedule = props => {
           <div></div>
         );
       }
-
-      console.log("INFO: ", props.final_schedule_info)
 
       // Else, For EACH schedule, render the schedule table (test_sc => curr_schedule)
       return (
@@ -209,6 +225,9 @@ const Schedule = props => {
             })}
 
           </div>
+
+          {/* Print any conflicts warnings (if they exist) */ }
+          {print_conflict(curr_sc_index)}
         
 
           {/* Generate the Schedule Table */ }
@@ -227,17 +246,13 @@ const Schedule = props => {
                 </thead>
                 <tbody>
                 {curr_schedule.slice(0, curr_schedule.length).map((row, index) => {
-
                       return (
                         <tr key={index} >
-
                           <td class='def_color_table'>{periods[index]}</td>
                           <td class='def_color_table'>{times[index]}</td>
                           
-                          
                           {generate_colored_sched_cells(row)}
 
-                          
                         </tr>
                       );
                 })}
@@ -256,31 +271,31 @@ const Schedule = props => {
                       return (
                         <tr>
                           <td class='def_color_table' colSpan="2">Online (100%)</td>
-                          <td class='color_class_1' colSpan="6">{curr_class_obj[curr_sc_index].course_code}</td>
+                          <td class='color_class_1' colSpan="6">{curr_class_obj[curr_sc_index].course_code} | {curr_class_obj[curr_sc_index].course_name}</td>
                         </tr>);
                     }else if(curr_cl_code== props.courseNums[1].toUpperCase()){
                       return (
                         <tr>
                           <td class='def_color_table' colSpan="2">Online (100%)</td>
-                          <td class='color_class_2' colSpan="6">{curr_class_obj[curr_sc_index].course_code}</td>
+                          <td class='color_class_2' colSpan="6">{curr_class_obj[curr_sc_index].course_code} | {curr_class_obj[curr_sc_index].course_name}</td>
                         </tr>);
                     }else if(curr_cl_code== props.courseNums[3].toUpperCase()){
                       return (
                         <tr>
                           <td class='def_color_table' colSpan="2">Online (100%)</td>
-                          <td class='color_class_3' colSpan="6">{curr_class_obj[curr_sc_index].course_code}</td>
+                          <td class='color_class_3' colSpan="6">{curr_class_obj[curr_sc_index].course_code} | {curr_class_obj[curr_sc_index].course_name}</td>
                         </tr>);
                     }else if(curr_cl_code== props.courseNums[4].toUpperCase()){
                       return (
                         <tr>
                           <td class='def_color_table' colSpan="2">Online (100%)</td>
-                          <td class='color_class_4' colSpan="6">{curr_class_obj[curr_sc_index].course_code}</td>
+                          <td class='color_class_4' colSpan="6">{curr_class_obj[curr_sc_index].course_code} | {curr_class_obj[curr_sc_index].course_name}</td>
                         </tr>);
                     }else {
                       return (
                         <tr>
                           <td class='def_color_table' colSpan="2">Online (100%)</td>
-                          <td class='def_color_table' colSpan="6">{curr_class_obj[curr_sc_index].course_code}</td>
+                          <td class='def_color_table' colSpan="6">{curr_class_obj[curr_sc_index].course_code} | {curr_class_obj[curr_sc_index].course_name}</td>
                         </tr>);
                     }
 
@@ -308,7 +323,6 @@ const Schedule = props => {
 <td>{row[3]}</td>
 <td>{row[4]}</td>
 <td>{row[5]}</td>
-
 */
 
 
@@ -517,7 +531,7 @@ const Schedule = props => {
               {/* {scheduleGrids}*/}
               {scheduleGrids}
 
-              {print_conflicts(props.conflicts)}
+              {print_conflicts(props.conflicts_print)}
 
           </Card>
         </div>

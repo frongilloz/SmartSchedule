@@ -120,16 +120,16 @@ const Schedule = props => {
       }
       else{
         // Go through the courseNums submitted, and match to print the color
-        if(curr_row[i] == props.courseNums[0]){
+        if(curr_row[i] == props.courseNums[0].toUpperCase()){
           array_ret.push(<td class='color_class_1'>{curr_row[i]}</td>)
         }
-        else if(curr_row[i] == props.courseNums[1]){
+        else if(curr_row[i] == props.courseNums[1].toUpperCase()){
           array_ret.push(<td class='color_class_2'>{curr_row[i]}</td>)
         }
-        else if(curr_row[i] == props.courseNums[2]){
+        else if(curr_row[i] == props.courseNums[2].toUpperCase()){
           array_ret.push(<td class='color_class_3'>{curr_row[i]}</td>)
         }
-        else if(curr_row[i] == props.courseNums[3]){
+        else if(curr_row[i] == props.courseNums[3].toUpperCase()){
           array_ret.push(<td class='color_class_4'>{curr_row[i]}</td>)
         }
         else{

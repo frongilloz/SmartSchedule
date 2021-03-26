@@ -8,6 +8,7 @@ import Four_Year_Content from './Pages/Four_Year';
 import About_Us_Content from './Pages/About_Us';
 import Login_Content from './Pages/Login';
 import Sign_Up_Content from './Pages/Sign_Up';
+import Forgot_Password_Content from './Pages/Forgot_Password';
 import Profile_Content from './Pages/Profile';
 
 // import the generate schedule function
@@ -25,182 +26,233 @@ export const Home = () => (
     </div>
   );
 
-export const Schedule = () => {
-  //states for the forms
-  const [SemAdd, setSem] = useState('');
-  const [CNumAdd1, setC_Num1] = useState('');
-  const [CNumAdd2, setC_Num2] = useState('');
-  const [CNumAdd3, setC_Num3] = useState('');
-  const [CNumAdd4, setC_Num4] = useState('');
-  const [CL_NumAdd1, setCL_Num1] = useState('');
-  const [CL_NumAdd2, setCL_Num2] = useState('');
-  const [CL_NumAdd3, setCL_Num3] = useState('');
-  const [CL_NumAdd4, setCL_Num4] = useState('');
-  
-  const [test_sc, set_test_sc] = useState('');
-  const [update_sc, set_update_sc] = useState('');
-
-  //state for schedule generation
-  let [responseData, setResponseData] = useState('')
-
-
-  //external change functions
-  const SemUpdate = value => {
-    setSem(value);
-    console.log('SemUpdate() called, value: ', value);
-  };
-  const C_NumUpdate1 = value => {
-    setC_Num1(value);
-    console.log('CNumUpdate1() called, value: ', value);
-  };
-  const C_NumUpdate2 = value => {
-    setC_Num2(value);
-    console.log('CNumUpdate2() called, value: ', value);
-  };
-  const C_NumUpdate3 = value => {
-    setC_Num3(value);
-    console.log('CNumUpdate3() called, value: ', value);
-  };
-  const C_NumUpdate4 = value => {
-    setC_Num4(value);
-    console.log('CNumUpdate4() called, value: ', value);
-  };
-  const CL_NumUpdate1 = value => {
-    setCL_Num1(value);
-    console.log('CL_NumUpdate1() called, value: ', value);
-  };
-  const CL_NumUpdate2 = value => {
-    setCL_Num2(value);
-    console.log('CL_NumUpdate2() called, value: ', value);
-  };
-  const CL_NumUpdate3 = value => {
-    setCL_Num3(value);
-    console.log('CL_NumUpdate3() called, value: ', value);
-  };
-  const CL_NumUpdate4 = value => {
-    setCL_Num4(value);
-    console.log('CL_NumUpdate4() called, value: ', value);
-  };
-  
-  // Relevant initializations
-  let courseData = [];
-  let emptyArray = Array(14).fill(0).map(row => new Array(6).fill(" "))
-
-  let emptyArrays = [emptyArray, emptyArray];
-  let testSc = emptyArrays;
-  let num_courses_sub = 0;
-  const courseNums = [CNumAdd1, CNumAdd2, CNumAdd3, CNumAdd4]; 
-
-  const check = async event => {
-    // prevent the refresh of page on submit
-    event.preventDefault();
-
-
-    courseNums.forEach(async courseNum => {
-      /* if this field was filled in by the user */
-      if (courseNum){
-        set_update_sc(false);
-
-        const queryString = '/api/courses/find/'  + courseNum + '/'
-                                                  + SemAdd;
-        /* make a backend request for this course data */
-        try {
-          await axios.get(queryString)
-            .then((response) => {
-              console.log("GET axios called")
-              console.log("GET resp data", response.data);
-              courseData.push(response.data);
-
-              // Prev
-              setResponseData(courseData)
-
-              
-            });
+  export const Schedule = () => {
+    //states for the forms
+    const [SemAdd, setSem] = useState('');
+    const [CNumAdd1, setC_Num1] = useState('');
+    const [CNumAdd2, setC_Num2] = useState('');
+    const [CNumAdd3, setC_Num3] = useState('');
+    const [CNumAdd4, setC_Num4] = useState('');
+    const [CL_NumAdd1, setCL_Num1] = useState('');
+    const [CL_NumAdd2, setCL_Num2] = useState('');
+    const [CL_NumAdd3, setCL_Num3] = useState('');
+    const [CL_NumAdd4, setCL_Num4] = useState('');
     
-        } catch (err) {
-          // TODO: do something
-        }
-      }
+    const [test_sc, set_test_sc] = useState('');
+    const [update_sc, set_update_sc] = useState('');
+  
+  
+    //state for schedule generation
+    let [responseData, setResponseData] = useState('')
+  
+  
+    let ctr =0;
 
+    //external change functions
+    const SemUpdate = value => {
+      setSem(value);
+      console.log('SemUpdate() called, value: ', value);
+    };
+    const C_NumUpdate1 = value => {
+      setC_Num1(value);
+      console.log('CNumUpdate1() called, value: ', value);
+    };
+    const C_NumUpdate2 = value => {
+      setC_Num2(value);
+      console.log('CNumUpdate2() called, value: ', value);
+    };
+    const C_NumUpdate3 = value => {
+      setC_Num3(value);
+      console.log('CNumUpdate3() called, value: ', value);
+    };
+    const C_NumUpdate4 = value => {
+      setC_Num4(value);
+      console.log('CNumUpdate4() called, value: ', value);
+    };
+    const CL_NumUpdate1 = value => {
+      setCL_Num1(value);
+      console.log('CL_NumUpdate1() called, value: ', value);
+    };
+    const CL_NumUpdate2 = value => {
+      setCL_Num2(value);
+      console.log('CL_NumUpdate2() called, value: ', value);
+    };
+    const CL_NumUpdate3 = value => {
+      setCL_Num3(value);
+      console.log('CL_NumUpdate3() called, value: ', value);
+    };
+    const CL_NumUpdate4 = value => {
+      setCL_Num4(value);
+      console.log('CL_NumUpdate4() called, value: ', value);
+    };
+    
+    // Relevant initializations
+    let courseData = [];
+    let conflicts = [];
+    let conflicts_print = [];
+    let final_schedule_info = [];
+    let emptyArray = Array(14).fill(0).map(row => new Array(6).fill(" "))
+  
+    let emptyArrays = [emptyArray, emptyArray];
+    let testSc = emptyArrays;
+    let num_courses_sub = 0;
+    const courseNums = [CNumAdd1, CNumAdd2, CNumAdd3, CNumAdd4]; 
+    const classNums = [CL_NumAdd1, CL_NumAdd2, CL_NumAdd3, CL_NumAdd4]; 
+  
+    const check = async event => {
+      // prevent the refresh of page on submit
+      event.preventDefault();
+
+      // Reset
+      let courseNumCounter = -1;
+  
+      // For each course submitted
+      courseNums.forEach(async courseNum => {
+        /* if this field was filled in by the user */
+        if (courseNum){
+          //Reset
+          set_update_sc(false);
+
+          // update counter
+          courseNumCounter++;
+
+          let queryString; // was const
+
+
+          // Create a query string based on if a class Number was submitted or not
+          //Check to see if the course had a corresponding class number submitted
+          if(classNums[courseNumCounter] != ''){
+            console.log("TRUE")
+            queryString = '/api/courses/find/'  + courseNum + '/' + classNums[courseNumCounter] + '/' + SemAdd;
+          }else{
+            queryString = '/api/courses/find/'  + courseNum + '/'
+                                                    + SemAdd;
+          }
+
+          console.log("QUERY CALLED: ", queryString)
+          
+          /* make a backend request for this course data */
+          try {
+            await axios.get(queryString)
+              .then((response) => {
+                console.log("GET axios called")
+                console.log("GET resp data", response.data);
+                courseData.push(response.data);
+  
+                // Prev
+                setResponseData(courseData)
+  
+                
+              });
       
-
-    }) // end for each
-
-   
-
-
-    //courseData.forEach(course => {
-    //  console.log(course);
-    //})
-
-  }; // end of async
+          } catch (err) {
+            // TODO: do something
+          }
+        }
   
-
-    console.log("st")
-    console.log('Pages.js length of resposneData is: ', responseData.length)
+        
+  
+      }) // end for each
+  
+     
+  
+  
+      //courseData.forEach(course => {
+      //  console.log(course);
+      //})
+  
+    }; // end of async
     
-    // Get the number of courses submitted
-    for (let i = 0; i < courseNums.length; i++) {
-      if(courseNums[i]){
-        num_courses_sub++
-      }
-    }
-
-    console.log('Pages.js num_courses_sub is: ', num_courses_sub)
   
-    // only generate the new schedule once all the course requests have been completed
-    if(responseData.length !== 0){
-      if(responseData.length === num_courses_sub){
-        // Run the generate schedule function
-        testSc = generateSchedule(responseData)  
-        console.log("Test Schedule(s)",testSc)
-
-        //If the testSc has not been changed, don't do anything
-        if (testSc === emptyArrays) { console.log("nothing has happened here. testSc is: ", testSc) }
-        // Based on if the update state is T/F
-        else if (update_sc === false){
-          // Update the schedule state variable w/ the generate Scheudle if they are NOT the same
-          set_test_sc(testSc)
-          console.log("UPDATE", update_sc)
-          // Set the flag that this has been updated so it doesn't re-render
-          set_update_sc(true);
+      console.log("st")
+      console.log('Pages.js length of resposneData is: ', responseData.length)
+      
+      // Get the number of courses submitted
+      for (let i = 0; i < courseNums.length; i++) {
+        if(courseNums[i]){
+          num_courses_sub++
         }
-        else{
-          console.log("testSc and test_sc are the same, no update performed")
-        }
-
-
       }
+  
+      console.log('Pages.js num_courses_sub is: ', num_courses_sub)
+    
+      // only generate the new schedule once all the course requests have been completed
+      if(responseData.length !== 0){
+        if(responseData.length === num_courses_sub){
+          // Run the generate schedule function
+          let gen_schedule_return = generateSchedule(responseData)  
 
-        console.log("bool", update_sc)
-        console.log("testSc", testSc)
-        console.log("test_sc", test_sc)
+          //deconstruct returned object into the components we need to use
+          testSc = gen_schedule_return.finalSchedules;
+          conflicts = gen_schedule_return.conflicts;
+          final_schedule_info = gen_schedule_return.finalSchedule_Info;
 
-    } // end of outer else
+          console.log("Test Schedule(s) Received, ",testSc)
+          console.log("Conflict(s) Received, ",conflicts)
+          console.log("final_schedule_info(s) Received, ",final_schedule_info)
 
+          // Parse out the confilcts
+          for (let i = 0; i < conflicts.length; i++) {
+            //console.log("conflicts[i],",conflicts[i])
+            let temp_st = conflicts[i].toString()
+            conflicts_print.push(temp_st)
+            conflicts_print.push(',')
+          }
+          //console.log("conflicts_print ",conflicts_print)
+          
+          //Parse out the info based on length of responsData (# of courses)
+  
+          //If the testSc has not been changed, don't do anything
+          if (testSc === emptyArrays) { console.log("nothing has happened here. testSc is: ", testSc) }
+          // Based on if the update state is T/F
+          else if (update_sc === false){
+            // Update the schedule state variable w/ the generate Scheudle if they are NOT the same
+            set_test_sc(testSc)
+            console.log("UPDATE", update_sc)
+            // Set the flag that this has been updated so it doesn't re-render
+            set_update_sc(true);
+          }
+          else{
+            console.log("testSc and test_sc are the same, no update performed")
+          }
+  
+  
+        }
 
-    console.log("fin")
+        // Delay on submit error checks
+          //console.log("bool", update_sc)
+          //console.log("testSc", testSc)
+          //console.log("test_sc", test_sc)
+  
+      } // end of outer else
+  
 
-  return (
-  <div>
-    <Schedule_Content 
-        check={check}
-        SemUpdate={SemUpdate}
-        C_NumUpdate1={C_NumUpdate1}
-        C_NumUpdate2={C_NumUpdate2}
-        C_NumUpdate3={C_NumUpdate3}
-        C_NumUpdate4={C_NumUpdate4}
-        CL_NumUpdate1={CL_NumUpdate1}
-        CL_NumUpdate2={CL_NumUpdate2}
-        CL_NumUpdate3={CL_NumUpdate3}
-        CL_NumUpdate4={CL_NumUpdate4}
-        responseData={responseData}
-        test_sc={testSc}
-    />
-  </div>
-  );
-};
-
+      console.log("conflicts_print", conflicts_print)
+      console.log("fin")
+  
+    return (
+    <div>
+      <Schedule_Content 
+          check={check}
+          SemUpdate={SemUpdate}
+          C_NumUpdate1={C_NumUpdate1}
+          C_NumUpdate2={C_NumUpdate2}
+          C_NumUpdate3={C_NumUpdate3}
+          C_NumUpdate4={C_NumUpdate4}
+          CL_NumUpdate1={CL_NumUpdate1}
+          CL_NumUpdate2={CL_NumUpdate2}
+          CL_NumUpdate3={CL_NumUpdate3}
+          CL_NumUpdate4={CL_NumUpdate4}
+          responseData={responseData}
+          test_sc={testSc}
+          conflicts={conflicts}
+          conflicts_print={conflicts_print}
+          final_schedule_info={final_schedule_info}
+          courseNums={courseNums}
+      />
+    </div>
+    );
+  };
 export const Four_Year = () => (
   <div>
     <Four_Year_Content />
@@ -272,6 +324,7 @@ export const Sign_Up = () => {
       email: emailAdd,
       password: passAdd
     };
+
 
     try {
       console.log('Post User sent');
@@ -365,6 +418,80 @@ export const Login = props => {
       checkPass={checkPass}
       displayMsg={displayMsg}
     />
+  );
+};
+
+export const Forgot_Password = () => {
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [newPass, setNewPass] = useState('');
+  const [newPassC, setnewPassC] = useState('');
+  const [reload, setReload] = useState(false);
+
+  const emailUpdate = value => {
+    setEmail(value);
+  };
+  const nameUpdate = value => {
+    setName(value);
+  };
+  const NewPassUpdate = value => {
+    setNewPass(value);
+  };
+  const NewPassCUpdate = value => {
+    setnewPassC(value);
+  };
+
+  const save = async event => {
+    //prevent the refresh of page on submit
+    event.preventDefault();
+
+    //log
+    console.log('save Forgot Password() called');
+    console.log('email: ', email);
+    console.log('name: ', name);
+    //console.log('newPass: ', newPass);
+    //console.log('newPassC: ', newPassC);
+
+    let User = {
+      FNme: name,
+      email: email,
+      newPass: newPass
+    };
+
+    try {
+      console.log('PW reset sent');
+      const s = await axios.put('/api/users/forgot', User);
+      if (s.status == 200) {
+        setReload(true);
+      }
+    } catch (err) {
+      return false;
+    }
+    console.log('trying reload');
+
+    //TODO: need to query the database based on the email
+    //then update the user schema with the new password
+  };
+
+  // redirect to login once password reset
+  if (reload) {
+    console.log('caught redirect');
+    setTimeout(() => {
+      setReload(false);
+    }, 10000);
+    return <Redirect to='/login' />;
+  }
+
+  return (
+    <div>
+      <Forgot_Password_Content
+        emailUpdate={emailUpdate}
+        nameUpdate={nameUpdate}
+        NewPassUpdate={NewPassUpdate}
+        NewPassCUpdate={NewPassCUpdate}
+        save={save}
+      />
+    </div>
   );
 };
 

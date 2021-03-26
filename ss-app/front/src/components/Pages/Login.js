@@ -10,9 +10,6 @@ const Login = props => {
 
     //change by calling App external function
     props.checkEmail(event.target.value);
-
-    //log
-    console.log('email: ', event.target.value);
   };
 
   const addPassInt = event => {
@@ -20,9 +17,6 @@ const Login = props => {
 
     //change by calling App external function
     props.checkPass(event.target.value);
-
-    //log
-    console.log('password: ', event.target.value);
   };
 
   useEffect(() => {

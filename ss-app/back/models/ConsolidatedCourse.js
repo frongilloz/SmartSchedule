@@ -36,6 +36,9 @@ const ConsolidatedCourseSchema = new Schema({
         credits: {
             type: Number
         },
+        sectWeb: {
+            type: String
+        },
         instructors: [{
             name: {
                 type: String

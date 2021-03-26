@@ -7,6 +7,7 @@ import Session from '../models/Session.js';
 
 const router = express.Router();
 
+// Login a User
 router.post('/', async (req, res) => {
   const user = await User.findOne({email: req.body.email});
   if(user === null) {
@@ -23,6 +24,7 @@ router.post('/', async (req, res) => {
   }
 });
 
+// Delete a login session
 router.delete('/', async (req, res) => {
   if(req.session) {
     req.session.delete();

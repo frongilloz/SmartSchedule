@@ -1,18 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 
-import Grid from '@material-ui/core/Grid';
-import Table_M from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-
-import { Form, Col, Card, Button, Container, Row , Table} from 'react-bootstrap';
+import { Form, Col, Card, Button, Container, Row , Table, Alert, Collapse} from 'react-bootstrap';
 import './basic.css';
 
 const periods = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "E1", "E2", "E3"];
 const daysShort = ["M", "T", "W", "R", "F"]
-
 
 const times = [
     "7:25 AM - 8:15 AM", "8:30 AM - 9:20 AM", "9:35 AM - 10:25 AM",
@@ -35,7 +27,7 @@ const Schedule = props => {
     props.SemUpdate(event.target.value);
 
     //log
-    console.log('SemInt: ', event.target.value);
+    //console.log('SemInt: ', event.target.value);
   };
 
   const CourseNumInt1 = event => {
@@ -45,7 +37,7 @@ const Schedule = props => {
     props.C_NumUpdate1(event.target.value);
 
     //log
-    console.log('C_Num1: ', event.target.value);
+    //console.log('C_Num1: ', event.target.value);
   };
 
   const CourseNumInt2 = event => {
@@ -55,7 +47,7 @@ const Schedule = props => {
     props.C_NumUpdate2(event.target.value);
 
     //log
-    console.log('C_Num2: ', event.target.value);
+    //console.log('C_Num2: ', event.target.value);
   };
 
   const CourseNumInt3 = event => {
@@ -65,7 +57,7 @@ const Schedule = props => {
     props.C_NumUpdate3(event.target.value);
 
     //log
-    console.log('C_Num3: ', event.target.value);
+    //console.log('C_Num3: ', event.target.value);
   };
 
   const CourseNumInt4 = event => {
@@ -75,75 +67,170 @@ const Schedule = props => {
     props.C_NumUpdate4(event.target.value);
 
     //log
-    console.log('C_Num4: ', event.target.value);
+    //console.log('C_Num4: ', event.target.value);
   };
 
   const ClassNumInt1 = event => {
     //change by calling App external function
     props.CL_NumUpdate1(event.target.value);
-    console.log('ClassNumInt1: ', event.target.value);
+    //console.log('ClassNumInt1: ', event.target.value);
     };
 
   const ClassNumInt2 = event => {
     //change by calling App external function
     props.CL_NumUpdate2(event.target.value);
-    console.log('ClassNumInt2: ', event.target.value);
+    //console.log('ClassNumInt2: ', event.target.value);
     };
 
   const ClassNumInt3 = event => {
     //change by calling App external function
     props.CL_NumUpdate3(event.target.value);
-    console.log('ClassNumInt3: ', event.target.value);
+    //console.log('ClassNumInt3: ', event.target.value);
     };
 
   const ClassNumInt4 = event => {
     //change by calling App external function
     props.CL_NumUpdate4(event.target.value);
-    console.log('ClassNumInt4: ', event.target.value);
+    //console.log('ClassNumInt4: ', event.target.value);
     };
 
-  const check_cell_val = row => {
-    console.log("WOWWOW", row)
+
+  // Color classes
+  const generate_colored_sched_cells = curr_row => {
+    //console.log("curr_row", curr_row)
+
+    // init
+    let array_ret = [];
+
+    // Iterate through the row, and check the 6 values of the string array
+    for (let i = 0; i < curr_row.length; i++) {
+      if(curr_row[i] == ' '){
+        array_ret.push(<td class='def_color_table'>{curr_row[i]}</td>)
+      }
+      else{
+        // Go through the courseNums submitted, and match to print the color
+        if(curr_row[i] == props.courseNums[0].toUpperCase()){
+          array_ret.push(<td class='color_class_1'>{curr_row[i]}</td>)
+        }
+        else if(curr_row[i] == props.courseNums[1].toUpperCase()){
+          array_ret.push(<td class='color_class_2'>{curr_row[i]}</td>)
+        }
+        else if(curr_row[i] == props.courseNums[2].toUpperCase()){
+          array_ret.push(<td class='color_class_3'>{curr_row[i]}</td>)
+        }
+        else if(curr_row[i] == props.courseNums[3].toUpperCase()){
+          array_ret.push(<td class='color_class_4'>{curr_row[i]}</td>)
+        }
+        else{
+          array_ret.push(<td class='def_color_table'>{curr_row[i]}</td>)
+        }
+        
+      }
+    }
+
+    // At the end, return compiled table elements with styled cells
+    return(array_ret)
+  }
   
+
+  // Print a general warning of the conflict indices. Also prints out the "Get Started Menu"
+  const print_conflicts = props => {
+    // "Props" is the props.conflicts
+
+    // Only print the conflict warnings if there are conflicts present
+    if(props.length != 0){
+      return(
+        <div className='alert alert-danger' id='conflicts_div'>
+            <strong>There are conflicts at schedules: {props}</strong>
+        </div>
+      )
+    }
+    else{
+      return(
+        <div>
+        <Alert variant='primary'>
+          Please enter your courses on the left menu to get started.
+        </Alert>
+      </div>
+      )
+    }
   };
+
+
+  //Print a general warning of the conflict indices
+  const print_conflict = curr_sc_idx => {
+
+    // Only print the conflict warnings if there are conflicts present
+    // for the length of the conflicts produced
+    for (let i = 0; i < props.conflicts.length; i++) {
+      if(curr_sc_idx == props.conflicts[i] ){
+        return(
+          <div className='alert alert-danger' id='conflicts_div'>
+              <strong><b>Warning: </b> There is a class conflict in this schedule.</strong>
+          </div>
+        )
+      }
+    }
+
+  };
+
+  // Determine Class format
+  const get_online_status = curr_sect => {
+    if(curr_sect == "AD"){
+      return('Online')
+    }
+    else{
+      return('Primarily Classroom/Traditional')
+    }
+  }
     
   //create a number of schedules based on the number submitted
-  // Future: will return multiple schedules to map through
-  const scheduleGrids = props.test_sc.map(curr_schedule => {
-      console.log("curr_schedule: ", curr_schedule)
+  // MAP: For EACH schedule generated, go through this printing protocol
+  const scheduleGrids = props.test_sc.map((curr_schedule, curr_sc_index)  => {
+      //console.log("curr_schedule: ", curr_schedule)
 
       let temp_r1;
 
-      // iterate through each schedule to look for cells with values
-      curr_schedule.slice(0, curr_schedule.length).map((row, col) => {
-        // Each item corresponds to a "row" of the table
-        //console.log("row ", row)
-        //console.log("col ", col)
+      // if schedule does not exist, do not render table and just return nothing
+      if(!props.final_schedule_info[0]){
+        return(
+          <div></div>
+        );
+      }
 
-        // Can access 0-5 indices within rows
-        //console.log("row[1] ", row[1])
-
-        // To iterate through all 6 days in a school week (row)
-        for (let i = 0; i < curr_schedule.length; i++) {
-          if (row[i] === ""){
-            temp_r1 = (<td>{row[i]}</td>)
-          }
-          else{
-            temp_r1 = (<td class="color_table_bd_cell">{row[i]}</td>)
-          }
-
-        }
-
-      })
-
-      //console.log("temp_r1", temp_r1)
-
-  
-
-
+      // Else, For EACH schedule, render the schedule table (test_sc => curr_schedule)
       return (
-
         <div>
+
+        {/* Generate the detail submenu */ }
+          <div class='card_blue' id='sched_detail'>
+            {props.final_schedule_info.slice(0, props.final_schedule_info.length).map((curr_class_obj, curr_idx) => {
+              return (
+              <div class='left_align'>
+              
+                <div class='center_align'>
+                  <p><b>Course Name:</b> {curr_class_obj[curr_sc_index].course_code} - {curr_class_obj[curr_sc_index].course_name}</p>
+                </div>
+
+                <p><b>Class Number:</b> {curr_class_obj[curr_sc_index].section_c_num}</p>
+                <p><b>Course Instructor:</b> {curr_class_obj[curr_sc_index].section_inst[0].name}</p>
+                <p><b>Course Description:</b> {curr_class_obj[curr_sc_index].course_desc}</p>
+                <p><b>Course Credits:</b> {curr_class_obj[curr_sc_index].section_credits}</p>
+                <p><b>Class Format:</b> {get_online_status(curr_class_obj[curr_sc_index].section_web)}</p>
+                <p><b>Location:</b> TBD</p>
+
+                <p>TBD: Add a "Route" button that routes the walk to front end</p>
+              </div>
+              );
+            })}
+
+          </div>
+
+          {/* Print any conflicts warnings (if they exist) */ }
+          {print_conflict(curr_sc_index)}
+        
+
+          {/* Generate the Schedule Table */ }
             <table class="table table-bordered" >
                 <thead>
                   <tr class="color_table_hd_row">
@@ -161,31 +248,82 @@ const Schedule = props => {
                 {curr_schedule.slice(0, curr_schedule.length).map((row, index) => {
                       return (
                         <tr key={index} >
-                          <td>{periods[index]}</td>
-                          <td>{times[index]}</td>
+                          <td class='def_color_table'>{periods[index]}</td>
+                          <td class='def_color_table'>{times[index]}</td>
                           
-                          
-                          
-                          {() => check_cell_val( row[0] )}
+                          {generate_colored_sched_cells(row)}
 
-                          <td>{row[0]}</td>
-
-
-                          <td>{row[1]}</td>
-                          <td>{row[2]}</td>
-                          <td>{row[3]}</td>
-                          <td>{row[4]}</td>
-                          <td>{row[5]}</td>
                         </tr>
                       );
-                    })}
+                })}
+
+
+            {/* Online Classes: sectWeb:"AD"; In person: "PC" */ }
+              {props.final_schedule_info.slice(0, props.final_schedule_info.length).map((curr_class_obj, curr_idx) => {
+
+                  // For each index, check to see if it is online (AD = Online); (PC = In person)
+                  if(curr_class_obj[curr_sc_index].section_web == "AD"){
+                    // define a temp var
+                    let curr_cl_code = curr_class_obj[curr_sc_index].course_code;
+
+                    // Then check against the responseData for coloring
+                    if(curr_cl_code == props.courseNums[0].toUpperCase()){
+                      return (
+                        <tr>
+                          <td class='def_color_table' colSpan="2">Online (100%)</td>
+                          <td class='color_class_1' colSpan="6">{curr_class_obj[curr_sc_index].course_code} | {curr_class_obj[curr_sc_index].course_name}</td>
+                        </tr>);
+                    }else if(curr_cl_code== props.courseNums[1].toUpperCase()){
+                      return (
+                        <tr>
+                          <td class='def_color_table' colSpan="2">Online (100%)</td>
+                          <td class='color_class_2' colSpan="6">{curr_class_obj[curr_sc_index].course_code} | {curr_class_obj[curr_sc_index].course_name}</td>
+                        </tr>);
+                    }else if(curr_cl_code== props.courseNums[3].toUpperCase()){
+                      return (
+                        <tr>
+                          <td class='def_color_table' colSpan="2">Online (100%)</td>
+                          <td class='color_class_3' colSpan="6">{curr_class_obj[curr_sc_index].course_code} | {curr_class_obj[curr_sc_index].course_name}</td>
+                        </tr>);
+                    }else if(curr_cl_code== props.courseNums[4].toUpperCase()){
+                      return (
+                        <tr>
+                          <td class='def_color_table' colSpan="2">Online (100%)</td>
+                          <td class='color_class_4' colSpan="6">{curr_class_obj[curr_sc_index].course_code} | {curr_class_obj[curr_sc_index].course_name}</td>
+                        </tr>);
+                    }else {
+                      return (
+                        <tr>
+                          <td class='def_color_table' colSpan="2">Online (100%)</td>
+                          <td class='def_color_table' colSpan="6">{curr_class_obj[curr_sc_index].course_code} | {curr_class_obj[curr_sc_index].course_name}</td>
+                        </tr>);
+                    }
+
+                  }
+                  
+                })}
+
+
+
                 </tbody>
             </table>     
 
+            
         </div>
+
       );
     });
 
+
+/*
+// Orig way to render table
+<td>{row[0]}</td>
+<td>{row[1]}</td>
+<td>{row[2]}</td>
+<td>{row[3]}</td>
+<td>{row[4]}</td>
+<td>{row[5]}</td>
+*/
 
 
 /*
@@ -258,10 +396,10 @@ const Schedule = props => {
                 <Form onSubmit={props.check}>
                   <h2>Add Courses</h2>
 
-                  <div className='h1_p_1'>
-                    <Form.Row>
+                  <div className='required'>
+                    <Form.Row >
                       <Form.Label><b>Semester</b></Form.Label>
-                      <select className="form-control" name="Semester" onChange={SemInt} required="true">
+                      <select className="form-control" name="Semester" onChange={SemInt} required="required">
                           <option selected>Semester - Required</option>
                           <option value="fall2021">Fall 2021</option>
                           <option value="spring2021">Spring 2021</option>
@@ -272,6 +410,7 @@ const Schedule = props => {
             
                   <div className='h1_p_1'>
                     <Form.Row>
+                      <Col>
                       <Form.Label><b>Course Number 1</b></Form.Label>
                       <Form.Control
                         input
@@ -279,25 +418,24 @@ const Schedule = props => {
                         id='CourseNum1'
                         onChange={CourseNumInt1}
                       />
-                      
-                    </Form.Row>
-                  </div>
+                      </Col>
 
-                  <div className='h_cl_num'>
-                  <Form.Row>
-                      <Form.Label>Class Number</Form.Label>
+                      <Col>
+                    <Form.Label><b>Class #</b></Form.Label>
                       <Form.Control
                         input
                         placeholder='(Optional) ex. 15110'
                         id='ClassNum1'
                         onChange={ClassNumInt1}
                       />
+                      </Col>
+                      
                     </Form.Row>
                   </div>
 
-
                   <div className='h1_p_1'>
                     <Form.Row>
+                      <Col>
                       <Form.Label><b>Course Number 2</b></Form.Label>
                       <Form.Control
                         input
@@ -305,24 +443,25 @@ const Schedule = props => {
                         id='CourseNum2'
                         onChange={CourseNumInt2}
                       />
-                    </Form.Row>
-                  </div>
+                      </Col>
 
-                  <div className='h_cl_num'>
-                  <Form.Row>
-                      <Form.Label>Class Number</Form.Label>
+                      <Col>
+                    <Form.Label><b>Class #</b></Form.Label>
                       <Form.Control
                         input
                         placeholder='(Optional) ex. 15110'
                         id='ClassNum2'
                         onChange={ClassNumInt2}
                       />
+                      </Col>
+                      
                     </Form.Row>
                   </div>
 
 
                   <div className='h1_p_1'>
                     <Form.Row>
+                      <Col>
                       <Form.Label><b>Course Number 3</b></Form.Label>
                       <Form.Control
                         input
@@ -330,23 +469,23 @@ const Schedule = props => {
                         id='CourseNum3'
                         onChange={CourseNumInt3}
                       />
-                    </Form.Row>
-                  </div>
+                      </Col>
 
-                  <div className='h_cl_num'>
-                  <Form.Row>
-                      <Form.Label>Class Number</Form.Label>
+                      <Col>
+                    <Form.Label><b>Class #</b></Form.Label>
                       <Form.Control
                         input
                         placeholder='(Optional) ex. 15110'
                         id='ClassNum3'
                         onChange={ClassNumInt3}
                       />
+                      </Col>
+                      
                     </Form.Row>
                   </div>
-
                   <div className='h1_p_1'>
                     <Form.Row>
+                      <Col>
                       <Form.Label><b>Course Number 4</b></Form.Label>
                       <Form.Control
                         input
@@ -354,18 +493,18 @@ const Schedule = props => {
                         id='CourseNum4'
                         onChange={CourseNumInt4}
                       />
-                    </Form.Row>
-                  </div>
+                      </Col>
 
-                  <div className='h_cl_num'>
-                  <Form.Row>
-                      <Form.Label>Class Number</Form.Label>
+                      <Col>
+                    <Form.Label><b>Class #</b></Form.Label>
                       <Form.Control
                         input
                         placeholder='(Optional) ex. 15110'
                         id='ClassNum4'
                         onChange={ClassNumInt4}
                       />
+                      </Col>
+                      
                     </Form.Row>
                   </div>
 
@@ -388,8 +527,11 @@ const Schedule = props => {
         <div class="col-lg-8">
           <Card body>
               <h2>Possible Schedules</h2>
+
               {/* {scheduleGrids}*/}
               {scheduleGrids}
+
+              {print_conflicts(props.conflicts_print)}
 
           </Card>
         </div>

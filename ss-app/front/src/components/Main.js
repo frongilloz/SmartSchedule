@@ -7,6 +7,7 @@ import {
   About_Us,
   Login,
   Sign_Up,
+  Forgot_Password,
   Profile
 } from './pages'; // import our pages
 
@@ -30,6 +31,7 @@ const Main = props => (
         )}
       />
       <Route exact path='/sign-up' component={Sign_Up} />
+      <Route exact path='/forgot' component={Forgot_Password} />
       <Route 
         exact path='/user-profile' 
         component={() => (

@@ -8,6 +8,7 @@ import Four_Year_Content from './Pages/Four_Year';
 import About_Us_Content from './Pages/About_Us';
 import Login_Content from './Pages/Login';
 import Sign_Up_Content from './Pages/Sign_Up';
+import Forgot_Password_Content from './Pages/Forgot_Password';
 import Profile_Content from './Pages/Profile';
 
 // import the generate schedule function
@@ -324,6 +325,7 @@ export const Sign_Up = () => {
       password: passAdd
     };
 
+
     try {
       console.log('Post User sent');
       const s = await axios.post('/api/users/', newUser);
@@ -416,6 +418,80 @@ export const Login = props => {
       checkPass={checkPass}
       displayMsg={displayMsg}
     />
+  );
+};
+
+export const Forgot_Password = () => {
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [newPass, setNewPass] = useState('');
+  const [newPassC, setnewPassC] = useState('');
+  const [reload, setReload] = useState(false);
+
+  const emailUpdate = value => {
+    setEmail(value);
+  };
+  const nameUpdate = value => {
+    setName(value);
+  };
+  const NewPassUpdate = value => {
+    setNewPass(value);
+  };
+  const NewPassCUpdate = value => {
+    setnewPassC(value);
+  };
+
+  const save = async event => {
+    //prevent the refresh of page on submit
+    event.preventDefault();
+
+    //log
+    console.log('save Forgot Password() called');
+    console.log('email: ', email);
+    console.log('name: ', name);
+    //console.log('newPass: ', newPass);
+    //console.log('newPassC: ', newPassC);
+
+    let User = {
+      FNme: name,
+      email: email,
+      newPass: newPass
+    };
+
+    try {
+      console.log('PW reset sent');
+      const s = await axios.put('/api/users/forgot', User);
+      if (s.status == 200) {
+        setReload(true);
+      }
+    } catch (err) {
+      return false;
+    }
+    console.log('trying reload');
+
+    //TODO: need to query the database based on the email
+    //then update the user schema with the new password
+  };
+
+  // redirect to login once password reset
+  if (reload) {
+    console.log('caught redirect');
+    setTimeout(() => {
+      setReload(false);
+    }, 10000);
+    return <Redirect to='/login' />;
+  }
+
+  return (
+    <div>
+      <Forgot_Password_Content
+        emailUpdate={emailUpdate}
+        nameUpdate={nameUpdate}
+        NewPassUpdate={NewPassUpdate}
+        NewPassCUpdate={NewPassCUpdate}
+        save={save}
+      />
+    </div>
   );
 };
 

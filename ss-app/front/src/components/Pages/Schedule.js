@@ -1,21 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 
-import Grid from '@material-ui/core/Grid';
-import Table_M from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-
-import { Form, Col, Card, Button, Container, Row , Table, Alert} from 'react-bootstrap';
+import { Form, Col, Card, Button, Container, Row , Table, Alert, Collapse} from 'react-bootstrap';
 import './basic.css';
 
 const periods = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "E1", "E2", "E3"];
 const daysShort = ["M", "T", "W", "R", "F"]
-
-let ctr_classes = 0;
-let schedule_Exist = false;
-
 
 const times = [
     "7:25 AM - 8:15 AM", "8:30 AM - 9:20 AM", "9:35 AM - 10:25 AM",
@@ -107,7 +96,7 @@ const Schedule = props => {
 
 
   // Color classes
-  const check_cells = curr_row => {
+  const generate_colored_sched_cells = curr_row => {
     //console.log("curr_row", curr_row)
 
     // init
@@ -141,7 +130,6 @@ const Schedule = props => {
 
     // At the end, return compiled table elements with styled cells
     return(array_ret)
-    
   }
   
 
@@ -167,8 +155,19 @@ const Schedule = props => {
       )
     }
   };
+
+  // Determine Class format
+  const get_online_status = curr_sect => {
+    if(curr_sect == "AD"){
+      return('Online')
+    }
+    else{
+      return('Primarily Classroom/Traditional')
+    }
+  }
     
   //create a number of schedules based on the number submitted
+  // MAP: For EACH schedule generated, go through this printing protocol
   const scheduleGrids = props.test_sc.map((curr_schedule, curr_sc_index)  => {
       //console.log("curr_schedule: ", curr_schedule)
 
@@ -181,22 +180,28 @@ const Schedule = props => {
         );
       }
 
+      console.log("INFO: ", props.final_schedule_info)
+
       // Else, For EACH schedule, render the schedule table (test_sc => curr_schedule)
       return (
         <div>
 
+        {/* Generate the detail submenu */ }
           <div class='card_blue' id='sched_detail'>
             {props.final_schedule_info.slice(0, props.final_schedule_info.length).map((curr_class_obj, curr_idx) => {
               return (
               <div class='left_align'>
-              <div class='center_align'>
-                <p><b>Course Name:</b> {curr_class_obj[curr_sc_index].course_code} - {curr_class_obj[curr_sc_index].course_name}</p>
-              </div>
+              
+                <div class='center_align'>
+                  <p><b>Course Name:</b> {curr_class_obj[curr_sc_index].course_code} - {curr_class_obj[curr_sc_index].course_name}</p>
+                </div>
+
                 <p><b>Class Number:</b> {curr_class_obj[curr_sc_index].section_c_num}</p>
                 <p><b>Course Instructor:</b> {curr_class_obj[curr_sc_index].section_inst[0].name}</p>
                 <p><b>Course Description:</b> {curr_class_obj[curr_sc_index].course_desc}</p>
                 <p><b>Course Credits:</b> {curr_class_obj[curr_sc_index].section_credits}</p>
-                <p><b>Location:</b> Building, room # and then link to UF's map after Spencer's changes are integrated</p>
+                <p><b>Class Format:</b> {get_online_status(curr_class_obj[curr_sc_index].section_web)}</p>
+                <p><b>Location:</b> TBD</p>
 
                 <p>TBD: Add a "Route" button that routes the walk to front end</p>
               </div>
@@ -204,8 +209,9 @@ const Schedule = props => {
             })}
 
           </div>
+        
 
-          
+          {/* Generate the Schedule Table */ }
             <table class="table table-bordered" >
                 <thead>
                   <tr class="color_table_hd_row">
@@ -229,7 +235,7 @@ const Schedule = props => {
                           <td class='def_color_table'>{times[index]}</td>
                           
                           
-                          {check_cells(row)}
+                          {generate_colored_sched_cells(row)}
 
                           
                         </tr>
@@ -237,10 +243,52 @@ const Schedule = props => {
                 })}
 
 
-            <tr>
-              <td class='def_color_table' colSpan="2">Online (100%)</td>
-              <td class='def_color_table' colSpan="6">TBD</td>
-            </tr>
+            {/* Online Classes: sectWeb:"AD"; In person: "PC" */ }
+              {props.final_schedule_info.slice(0, props.final_schedule_info.length).map((curr_class_obj, curr_idx) => {
+
+                  // For each index, check to see if it is online (AD = Online); (PC = In person)
+                  if(curr_class_obj[curr_sc_index].section_web == "AD"){
+                    // define a temp var
+                    let curr_cl_code = curr_class_obj[curr_sc_index].course_code;
+
+                    // Then check against the responseData for coloring
+                    if(curr_cl_code == props.courseNums[0].toUpperCase()){
+                      return (
+                        <tr>
+                          <td class='def_color_table' colSpan="2">Online (100%)</td>
+                          <td class='color_class_1' colSpan="6">{curr_class_obj[curr_sc_index].course_code}</td>
+                        </tr>);
+                    }else if(curr_cl_code== props.courseNums[1].toUpperCase()){
+                      return (
+                        <tr>
+                          <td class='def_color_table' colSpan="2">Online (100%)</td>
+                          <td class='color_class_2' colSpan="6">{curr_class_obj[curr_sc_index].course_code}</td>
+                        </tr>);
+                    }else if(curr_cl_code== props.courseNums[3].toUpperCase()){
+                      return (
+                        <tr>
+                          <td class='def_color_table' colSpan="2">Online (100%)</td>
+                          <td class='color_class_3' colSpan="6">{curr_class_obj[curr_sc_index].course_code}</td>
+                        </tr>);
+                    }else if(curr_cl_code== props.courseNums[4].toUpperCase()){
+                      return (
+                        <tr>
+                          <td class='def_color_table' colSpan="2">Online (100%)</td>
+                          <td class='color_class_4' colSpan="6">{curr_class_obj[curr_sc_index].course_code}</td>
+                        </tr>);
+                    }else {
+                      return (
+                        <tr>
+                          <td class='def_color_table' colSpan="2">Online (100%)</td>
+                          <td class='def_color_table' colSpan="6">{curr_class_obj[curr_sc_index].course_code}</td>
+                        </tr>);
+                    }
+
+                  }
+                  
+                })}
+
+
 
                 </tbody>
             </table>     

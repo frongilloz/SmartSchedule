@@ -51,6 +51,7 @@ export function generateSchedule(responseData) {
     let count = 0
     for (let k = 0; k < responseDataLength.length; k++) {
 
+      // NEW
       //reset sect_objects array for each new course
       let sect_objects = []
 
@@ -60,7 +61,7 @@ export function generateSchedule(responseData) {
       let curr_course_desc = responseData[k].description
       let curr_course_name = responseData[k].name
       let curr_course_prereq = responseData[k].prerequisites
-      let curr_section_c_num,curr_section_credits,curr_section_inst
+      let curr_section_c_num,curr_section_credits,curr_section_inst, curr_section_mT,curr_section_web
 
       // Schedule Generation things
       let sectionsArray = responseData[k].sections
@@ -69,10 +70,13 @@ export function generateSchedule(responseData) {
 
         for (let i = 0; i < sectionsArray.length; i++) {
 
+          // NEW
           //For each section [i], save the section information
           curr_section_c_num = sectionsArray[i].classNumber
           curr_section_credits = sectionsArray[i].credits
           curr_section_inst = sectionsArray[i].instructors // could be an array (multiple)
+          curr_section_mT = sectionsArray[i].meetTimes // an array
+          curr_section_web = sectionsArray[i].sectWeb // an array
 
 
            // Schedule Generation things
@@ -119,6 +123,7 @@ export function generateSchedule(responseData) {
           //console.log('what does new schedule look like: ', newSchedule)
 
 
+          // NEW
           // Display for front end; construct an object
           // Object will map to each schedule to display responseData info
           temp_sect_object = {
@@ -131,7 +136,9 @@ export function generateSchedule(responseData) {
             
             section_c_num :curr_section_c_num,
             section_credits:curr_section_credits,
-            section_inst : curr_section_inst
+            section_inst : curr_section_inst,
+            section_mT : curr_section_mT,
+            section_web : curr_section_web
           }
 
           // save each object to section array

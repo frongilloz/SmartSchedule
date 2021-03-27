@@ -62,13 +62,22 @@ const Schedule = props => {
 
   const CourseNumInt4 = event => {
     console.log('CourseNumInt4 Triggered');
-
+    
     //change by calling App external function
     props.C_NumUpdate4(event.target.value);
-
     //log
     //console.log('C_Num4: ', event.target.value);
   };
+
+  const CourseNumInt5 = event => {
+    //change by calling App external function
+    props.C_NumUpdate5(event.target.value);
+  };
+  const CourseNumInt6 = event => {
+    //change by calling App external function
+    props.C_NumUpdate6(event.target.value);
+  };
+
 
   const ClassNumInt1 = event => {
     //change by calling App external function
@@ -92,6 +101,16 @@ const Schedule = props => {
     //change by calling App external function
     props.CL_NumUpdate4(event.target.value);
     //console.log('ClassNumInt4: ', event.target.value);
+    };
+
+  const ClassNumInt5 = event => {
+    //change by calling App external function
+    props.CL_NumUpdate5(event.target.value);
+    };
+
+  const ClassNumInt6 = event => {
+    //change by calling App external function
+    props.CL_NumUpdate6(event.target.value);
     };
 
 
@@ -120,6 +139,12 @@ const Schedule = props => {
         }
         else if(curr_row[i] == props.courseNums[3].toUpperCase()){
           array_ret.push(<td class='color_class_4'>{curr_row[i]}</td>)
+        }
+        else if(curr_row[i] == props.courseNums[4].toUpperCase()){
+          array_ret.push(<td class='color_class_5'>{curr_row[i]}</td>)
+        }
+        else if(curr_row[i] == props.courseNums[5].toUpperCase()){
+          array_ret.push(<td class='color_class_6'>{curr_row[i]}</td>)
         }
         else{
           array_ret.push(<td class='def_color_table'>{curr_row[i]}</td>)
@@ -279,17 +304,29 @@ const Schedule = props => {
                           <td class='def_color_table' colSpan="2">Online (100%)</td>
                           <td class='color_class_2' colSpan="6">{curr_class_obj[curr_sc_index].course_code} | {curr_class_obj[curr_sc_index].course_name}</td>
                         </tr>);
-                    }else if(curr_cl_code== props.courseNums[3].toUpperCase()){
+                    }else if(curr_cl_code== props.courseNums[2].toUpperCase()){
                       return (
                         <tr>
                           <td class='def_color_table' colSpan="2">Online (100%)</td>
                           <td class='color_class_3' colSpan="6">{curr_class_obj[curr_sc_index].course_code} | {curr_class_obj[curr_sc_index].course_name}</td>
                         </tr>);
-                    }else if(curr_cl_code== props.courseNums[4].toUpperCase()){
+                    }else if(curr_cl_code== props.courseNums[3].toUpperCase()){
                       return (
                         <tr>
                           <td class='def_color_table' colSpan="2">Online (100%)</td>
                           <td class='color_class_4' colSpan="6">{curr_class_obj[curr_sc_index].course_code} | {curr_class_obj[curr_sc_index].course_name}</td>
+                        </tr>);
+                    }else if(curr_cl_code== props.courseNums[4].toUpperCase()){
+                      return (
+                        <tr>
+                          <td class='def_color_table' colSpan="2">Online (100%)</td>
+                          <td class='color_class_5' colSpan="6">{curr_class_obj[curr_sc_index].course_code} | {curr_class_obj[curr_sc_index].course_name}</td>
+                        </tr>);
+                    }else if(curr_cl_code== props.courseNums[5].toUpperCase()){
+                      return (
+                        <tr>
+                          <td class='def_color_table' colSpan="2">Online (100%)</td>
+                          <td class='color_class_6' colSpan="6">{curr_class_obj[curr_sc_index].course_code} | {curr_class_obj[curr_sc_index].course_name}</td>
                         </tr>);
                     }else {
                       return (
@@ -483,6 +520,7 @@ const Schedule = props => {
                       
                     </Form.Row>
                   </div>
+
                   <div className='h1_p_1'>
                     <Form.Row>
                       <Col>
@@ -502,6 +540,56 @@ const Schedule = props => {
                         placeholder='(Optional) ex. 15110'
                         id='ClassNum4'
                         onChange={ClassNumInt4}
+                      />
+                      </Col>
+                      
+                    </Form.Row>
+                  </div>
+
+                  <div className='h1_p_1'>
+                    <Form.Row>
+                      <Col>
+                      <Form.Label><b>Course Number 5</b></Form.Label>
+                      <Form.Control
+                        input
+                        placeholder='ex. ACG2021'
+                        id='CourseNum5'
+                        onChange={CourseNumInt5}
+                      />
+                      </Col>
+
+                      <Col>
+                    <Form.Label><b>Class #</b></Form.Label>
+                      <Form.Control
+                        input
+                        placeholder='(Optional) ex. 15110'
+                        id='ClassNum5'
+                        onChange={ClassNumInt5}
+                      />
+                      </Col>
+                    </Form.Row>
+                  </div>
+
+
+                  <div className='h1_p_1'>
+                    <Form.Row>
+                      <Col>
+                      <Form.Label><b>Course Number 6</b></Form.Label>
+                      <Form.Control
+                        input
+                        placeholder='ex. ACG2021'
+                        id='CourseNum6'
+                        onChange={CourseNumInt6}
+                      />
+                      </Col>
+
+                      <Col>
+                    <Form.Label><b>Class #</b></Form.Label>
+                      <Form.Control
+                        input
+                        placeholder='(Optional) ex. 15110'
+                        id='ClassNum6'
+                        onChange={ClassNumInt6}
                       />
                       </Col>
                       

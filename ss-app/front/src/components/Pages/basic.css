@@ -136,3 +136,15 @@ table.table-bordered > tbody > tr > td{
   color: white;
   font-weight: bold;
 }
+
+.color_class_5 {
+  background-color: #1d39af;
+  color: white;
+  font-weight: bold;
+}
+
+.color_class_6 {
+  background-color: #654334;
+  color: white;
+  font-weight: bold;
+}

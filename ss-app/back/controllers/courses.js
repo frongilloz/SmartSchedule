@@ -82,14 +82,27 @@ const find_section = (course, query_class_num) => {
 
             console.log("RET_COURSE: ", ret_Course)
 
+            // Construct a return object
+            let ret_obj = {
+                course : ret_Course,
+                course_found : true
+            }
+
             // Return 
-            return ret_Course;
+            return ret_obj;
         }
 
     }
 
-    // If no match found, return an error 
-    return res.status(500).send(err);
+    // NOT found in this class section
+    // Construct a return object
+    let ret_obj = {
+        ret_Course : ret_Course,
+        course_found : false
+    }
+
+    // Return 
+    return ret_obj;
 }
 
 //@route  GET api/courses
@@ -132,6 +145,7 @@ router.get('/find/:code/:classNum/:semester', (req, res) => {
     console.log("be courses")
 
     const courseCode = req.params.code.toUpperCase();
+    let ret_obj;
 
     /**
      * query DB for each course with code and section number.   
@@ -153,22 +167,44 @@ router.get('/find/:code/:classNum/:semester', (req, res) => {
          * 1) for each of these results, check if drop deadline is within 
          * the specified semester. if yes, return that result
          * 
-         * 2) for each of these results, check for the section #. if found, return that result
+         * 2) for each of these results, check for the section #. if found, return that result/
+         * 
+         * NOTE: There can be multiple instances of 1 class (i.e. F2F and online). So need to be able to go through multiple
          **/
         courses.forEach((course) => {
             if (isSameSemester(req.params.semester, course)) {
                 // 1) Check section BEFORE returning; Will keep only the relevant section of the class queried
-                course = find_section(course, req.params.classNum)
+                ret_obj = find_section(course, req.params.classNum)
 
-                // 2) Condense
-                course = condenseCourse(course);
+                console.log("FOUND,", ret_obj.course_found)
 
-                // 3) Return
-                res.json(course);
-                return;
+                // IF Found, proceed to finish return
+                if(ret_obj.course_found){
+                     // 2) Condense the course
+                    ret_obj.course = condenseCourse(course);
+
+                    console.log("RETURN")
+
+                    // 3) Return
+                    res.json(course);
+                    return;
+                }
+
+                // Else, not found, continue to parse through to look for section
+            } else{
+                res.status(500).send(err);
             }
-            res.status(500).send(err);
         })
+
+        console.log("REACH?")
+
+        // If not found at the end of the for loop, return error because course was not found
+        if (err) {
+            res.status(500).send(err);
+            return;
+        }
+
+        res.status(200).send();
 
     })
 });

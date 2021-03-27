@@ -47,7 +47,6 @@ router.get('/:email', async(req, res) => {
 });
 
 //Added update functionality to update pw
-// WIP
 router.put('/forgot', async(req, res) => {
   console.log("REQUEST PW", req.body)
 

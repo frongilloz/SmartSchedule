@@ -33,10 +33,14 @@ export const Home = () => (
     const [CNumAdd2, setC_Num2] = useState('');
     const [CNumAdd3, setC_Num3] = useState('');
     const [CNumAdd4, setC_Num4] = useState('');
+    const [CNumAdd5, setC_Num5] = useState('');
+    const [CNumAdd6, setC_Num6] = useState('');
     const [CL_NumAdd1, setCL_Num1] = useState('');
     const [CL_NumAdd2, setCL_Num2] = useState('');
     const [CL_NumAdd3, setCL_Num3] = useState('');
     const [CL_NumAdd4, setCL_Num4] = useState('');
+    const [CL_NumAdd5, setCL_Num5] = useState('');
+    const [CL_NumAdd6, setCL_Num6] = useState('');
     
     const [test_sc, set_test_sc] = useState('');
     const [update_sc, set_update_sc] = useState('');
@@ -69,6 +73,14 @@ export const Home = () => (
       setC_Num4(value);
       console.log('CNumUpdate4() called, value: ', value);
     };
+    const C_NumUpdate5 = value => {
+      setC_Num5(value);
+      console.log('CNumUpdate5() called, value: ', value);
+    };
+    const C_NumUpdate6 = value => {
+      setC_Num6(value);
+      console.log('CNumUpdate6() called, value: ', value);
+    };
     const CL_NumUpdate1 = value => {
       setCL_Num1(value);
       console.log('CL_NumUpdate1() called, value: ', value);
@@ -85,6 +97,14 @@ export const Home = () => (
       setCL_Num4(value);
       console.log('CL_NumUpdate4() called, value: ', value);
     };
+    const CL_NumUpdate5 = value => {
+      setCL_Num5(value);
+      console.log('CL_NumUpdate5() called, value: ', value);
+    };
+    const CL_NumUpdate6 = value => {
+      setCL_Num6(value);
+      console.log('CL_NumUpdate6() called, value: ', value);
+    };
     
     // Relevant initializations
     let courseData = [];
@@ -96,8 +116,8 @@ export const Home = () => (
     let emptyArrays = [emptyArray, emptyArray];
     let testSc = emptyArrays;
     let num_courses_sub = 0;
-    const courseNums = [CNumAdd1, CNumAdd2, CNumAdd3, CNumAdd4]; 
-    const classNums = [CL_NumAdd1, CL_NumAdd2, CL_NumAdd3, CL_NumAdd4]; 
+    const courseNums = [CNumAdd1, CNumAdd2, CNumAdd3, CNumAdd4, CNumAdd5, CNumAdd6]; 
+    const classNums = [CL_NumAdd1, CL_NumAdd2, CL_NumAdd3, CL_NumAdd4, CL_NumAdd5, CL_NumAdd6]; 
   
     const check = async event => {
       // prevent the refresh of page on submit
@@ -239,10 +259,14 @@ export const Home = () => (
           C_NumUpdate2={C_NumUpdate2}
           C_NumUpdate3={C_NumUpdate3}
           C_NumUpdate4={C_NumUpdate4}
+          C_NumUpdate3={C_NumUpdate5}
+          C_NumUpdate4={C_NumUpdate6}
           CL_NumUpdate1={CL_NumUpdate1}
           CL_NumUpdate2={CL_NumUpdate2}
           CL_NumUpdate3={CL_NumUpdate3}
           CL_NumUpdate4={CL_NumUpdate4}
+          CL_NumUpdate3={CL_NumUpdate5}
+          CL_NumUpdate4={CL_NumUpdate6}
           responseData={responseData}
           test_sc={testSc}
           conflicts={conflicts}

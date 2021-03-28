@@ -6,7 +6,7 @@ export function generateSchedule(responseData) {
   let curr_sched_info;
 
   let finalSchedules = []
-  console.log('what is finalSchedules doing?.....', finalSchedules)
+
   let checkArray = [1]
   //console.log('Before: ', scheduleArray)
   //console.log(checkArray.length)
@@ -17,12 +17,14 @@ export function generateSchedule(responseData) {
   let totalScheduleCount = 1;
   let conflicts = [];
 
+  
+
   let temp_sect_object;
 
   let newSchedule = []
-  let dummySchedule = Array(14).fill(0).map(row => new Array(6).fill(" "))
+  //let dummySchedule = Array(14).fill(0).map(row => new Array(6).fill(" "))
 
-  if (Array.isArray(responseData) && checkArray.length && responseData[0]) {  //check if responseData array exists and if something exists in it (try taking out the checkArray thing)
+  if (Array.isArray(responseData) && checkArray.length && responseData[0]) {  //check if responseData array exists and if something exists in it 
     console.log("Wow, something's here")
     console.log('ResponseData (from schedule.js) is: ', responseData)
 
@@ -61,7 +63,11 @@ export function generateSchedule(responseData) {
       let curr_course_desc = responseData[k].description
       let curr_course_name = responseData[k].name
       let curr_course_prereq = responseData[k].prerequisites
-      let curr_section_c_num,curr_section_credits,curr_section_inst, curr_section_mT,curr_section_web
+      let curr_section_c_num, curr_section_credits, curr_section_inst, curr_section_mT, curr_section_web
+
+      // NEW 
+      // Create an array of meeting times, then use the reduce function to find the most frequent class times 
+      let allClassTimes = []
 
       // Schedule Generation things
       let sectionsArray = responseData[k].sections
@@ -80,7 +86,9 @@ export function generateSchedule(responseData) {
 
 
            // Schedule Generation things
+          // For each section [i], iterate through the class meet times
           let meetTArray = sectionsArray[i].meetTimes
+
           //console.log('meetTArray is: ', meetTArray)
           for (let j = 0; j < meetTArray.length; j++) {
             day_index = daysShort.indexOf(meetTArray[j].meetDays[0])
@@ -92,8 +100,12 @@ export function generateSchedule(responseData) {
             period_index2 = periods.indexOf(meetTArray[j].meetPeriodEnd)
             //console.log('period_index2 is: ', period_index2)
 
+            let sectionInfo = [day_index, period_index1, period_index2] 
+            allClassTimes.push(sectionInfo)
+
+            // Store meeting info into 2D array 
             newSchedule = finalSchedules[count]
-            dummySchedule = Array(14).fill(0).map(row => new Array(6).fill(" "))
+            //dummySchedule = Array(14).fill(0).map(row => new Array(6).fill(" "))
 
             //console.log('newSchedule is: ', newSchedule)
 
@@ -104,7 +116,7 @@ export function generateSchedule(responseData) {
                 conflicts.push(count);
               }
               newSchedule[period_index1][day_index] = responseData[k].code
-              dummySchedule[period_index1][day_index] = responseData[k].code
+              //dummySchedule[period_index1][day_index] = responseData[k].code
             }
             else {
               if (newSchedule[period_index1][day_index] != " " || newSchedule[period_index2][day_index] != " "){
@@ -114,8 +126,8 @@ export function generateSchedule(responseData) {
               }
               newSchedule[period_index1][day_index] = responseData[k].code
               newSchedule[period_index2][day_index] = responseData[k].code
-              dummySchedule[period_index1][day_index] = responseData[k].code
-              dummySchedule[period_index2][day_index] = responseData[k].code
+              //dummySchedule[period_index1][day_index] = responseData[k].code
+              //dummySchedule[period_index2][day_index] = responseData[k].code
             }
 
           }
@@ -138,7 +150,12 @@ export function generateSchedule(responseData) {
             section_credits:curr_section_credits,
             section_inst : curr_section_inst,
             section_mT : curr_section_mT,
-            section_web : curr_section_web
+            section_web: curr_section_web
+
+            // NEW
+            // Adding lab and lecture times per course into object
+            //section_lecture_times: 
+            //section_lab_times: 
           }
 
           // save each object to section array
@@ -148,6 +165,8 @@ export function generateSchedule(responseData) {
           finalSchedules[count] = newSchedule
           count++
 
+
+          console.log("allClassTimes for the current course are:", allClassTimes)
         } // end for loop "i" sections
 
 
@@ -157,7 +176,11 @@ export function generateSchedule(responseData) {
       
       // Save the schedule info for each course
       // Will be in order of the schedule generated; exact section corresponds to the ordering of schedule produced
-      finalSchedule_Info.push( sect_objects);
+      finalSchedule_Info.push(sect_objects);
+
+      // NEW 
+      // Find most occuring meet times and put them into lecture array
+      //console.log("allClassTimes for the current course are:", allClassTimes)
 
     } // end for loop of "k" courses
   }

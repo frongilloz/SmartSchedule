@@ -128,6 +128,9 @@ export function generateSchedule(responseData) {
                 console.log("uh oh, there are two classes that could be here")
                 //add the index of the conflicts
                 conflicts.push(count);
+
+                //Print our the 2 conflicting classes
+                //console.log("CONFLICT: ", )
               }
               newSchedule[period_index1][day_index] = responseData[k].code
               newSchedule[period_index2][day_index] = responseData[k].code

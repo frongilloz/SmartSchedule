@@ -45,7 +45,8 @@ export const Home = () => (
     const [test_sc, set_test_sc] = useState('');
     const [update_sc, set_update_sc] = useState('');
   
-  
+    const [inHover, setHover] = useState(false);
+
     //state for schedule generation
     let [responseData, setResponseData] = useState('')
   
@@ -276,6 +277,8 @@ export const Home = () => (
           final_schedule_info={final_schedule_info}
           courseNums={courseNums}
           final_lab_lecture_info={final_lab_lecture_info}
+          inHover={inHover}
+          setHover={setHover}
       />
     </div>
     );

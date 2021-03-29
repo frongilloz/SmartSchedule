@@ -124,12 +124,16 @@ const Schedule = props => {
     // Iterate through the row, and check the 6 values of the string array
     for (let i = 0; i < curr_row.length; i++) {
       if(curr_row[i] == ' '){
+        // empty
         array_ret.push(<td class='def_color_table'>{curr_row[i]}</td>)
       }
       else{
         // Go through the courseNums submitted, and match to print the color
         if(curr_row[i] == props.courseNums[0].toUpperCase()){
-          array_ret.push(<td class='color_class_1'>{curr_row[i]}</td>)
+          array_ret.push(<td class='color_class_1' 
+            onMouseEnter={() => props.setHover(true)}
+            onMouseLeave={() => props.setHover(false)}
+              >{curr_row[i]}</td>)
         }
         else if(curr_row[i] == props.courseNums[1].toUpperCase()){
           array_ret.push(<td class='color_class_2'>{curr_row[i]}</td>)
@@ -208,6 +212,43 @@ const Schedule = props => {
       return('Primarily Classroom/Traditional')
     }
   }
+
+  //Print the meeting locations
+  const print_meeting_locations = (curr_sect, web) => {
+    let ret_meetings = [];
+    let tempDate, tempLoc_b, tempLoc_r, temp_str;
+
+    //for the length og the section_mT array
+    for (let i = 0; i < curr_sect.length; i++) {
+      // Get the date
+      tempDate = curr_sect[i].meetDays; // may need to parse when an array
+      tempLoc_b = curr_sect[i].meetBuilding;
+      tempLoc_r = curr_sect[i].meetRoom;
+
+      // If building/room is undefined, chage to TBD
+      if(tempLoc_b == ''){
+        tempLoc_b = "TBD"
+      }
+
+      // append a string object to return
+      temp_str= " (" + tempDate + ") at " +  tempLoc_b + tempLoc_r + ",";
+      console.log(temp_str)
+
+      ret_meetings.push(temp_str);
+    }
+
+    // Return the relevant printing
+    // Map through the ret_meetings and print out the strings 
+    // if F2F
+    if(web == "PC"){
+      return( 
+            <p>{ret_meetings}</p>
+      )
+    }
+    else{
+      return(' Online')
+    }
+  }
     
   //create a number of schedules based on the number submitted
   // MAP: For EACH schedule generated, go through this printing protocol
@@ -242,7 +283,7 @@ const Schedule = props => {
                 <p><b>Course Description:</b> {curr_class_obj[curr_sc_index].course_desc}</p>
                 <p><b>Course Credits:</b> {curr_class_obj[curr_sc_index].section_credits}</p>
                 <p><b>Class Format:</b> {get_online_status(curr_class_obj[curr_sc_index].section_web)}</p>
-                <p><b>Location:</b> TBD</p>
+                <p><b>Location:</b>{print_meeting_locations(curr_class_obj[curr_sc_index].section_mT, curr_class_obj[curr_sc_index].section_web)}</p>
 
                 <p>TBD: Add a "Route" button that routes the walk to front end</p>
               </div>
@@ -276,6 +317,7 @@ const Schedule = props => {
                           <td class='def_color_table'>{periods[index]}</td>
                           <td class='def_color_table'>{times[index]}</td>
                           
+                          {/* Generate the Colored cells*/ }
                           {generate_colored_sched_cells(row)}
 
                         </tr>
@@ -283,7 +325,7 @@ const Schedule = props => {
                 })}
 
 
-            {/* Online Classes: sectWeb:"AD"; In person: "PC" */ }
+            {/* Table- Online Classes: sectWeb:"AD"; In person: "PC" */ }
               {props.final_schedule_info.slice(0, props.final_schedule_info.length).map((curr_class_obj, curr_idx) => {
 
                   // For each index, check to see if it is online (AD = Online); (PC = In person)
@@ -340,11 +382,12 @@ const Schedule = props => {
                   
                 })}
 
-
-
                 </tbody>
             </table>     
 
+            {/* WIP: Hover locations or somehting?
+            { props.inHover && <p>Hi!</p>}
+            */ }
             
         </div>
 
@@ -620,6 +663,15 @@ const Schedule = props => {
               {scheduleGrids}
 
               {print_conflicts(props.conflicts_print)}
+
+              {/* 
+              <button
+              onMouseEnter={() => props.setHover(true)}
+              onMouseLeave={() => props.setHover(false)}
+              >Hover!!</button>
+            
+              { props.inHover && <p>Hi!</p>}
+              }*/}
 
           </Card>
         </div>

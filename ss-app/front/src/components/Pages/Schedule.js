@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react';
 
-import { Form, Col, Card, Button, Container, Row , Table, Alert, Collapse} from 'react-bootstrap';
+import { Form, Col, Card, Button, Container, Row , Table, Alert, Collapse, Accordion} from 'react-bootstrap';
 import './basic.css';
 
 const periods = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "E1", "E2", "E3"];
@@ -112,6 +112,71 @@ const Schedule = props => {
     //change by calling App external function
     props.CL_NumUpdate6(event.target.value);
     };
+
+
+    // Print Online Classes for table
+    /*
+    const generate_colored_sched_cells = curr_row => {
+      return(
+
+    {props.final_schedule_info.slice(0, props.final_schedule_info.length).map((curr_class_obj, curr_idx) => {
+
+      // For each index, check to see if it is online (AD = Online); (PC = In person)
+      if(curr_class_obj[curr_sc_index].section_web == "AD"){
+        // define a temp var
+        let curr_cl_code = curr_class_obj[curr_sc_index].course_code;
+
+        // Then check against the responseData for coloring
+        if(curr_cl_code == props.courseNums[0].toUpperCase()){
+          return (
+            <tr>
+              <td class='def_color_table' colSpan="2">Online (100%)</td>
+              <td class='color_class_1' colSpan="6">{curr_class_obj[curr_sc_index].course_code} | {curr_class_obj[curr_sc_index].course_name}</td>
+            </tr>);
+        }else if(curr_cl_code== props.courseNums[1].toUpperCase()){
+          return (
+            <tr>
+              <td class='def_color_table' colSpan="2">Online (100%)</td>
+              <td class='color_class_2' colSpan="6">{curr_class_obj[curr_sc_index].course_code} | {curr_class_obj[curr_sc_index].course_name}</td>
+            </tr>);
+        }else if(curr_cl_code== props.courseNums[2].toUpperCase()){
+          return (
+            <tr>
+              <td class='def_color_table' colSpan="2">Online (100%)</td>
+              <td class='color_class_3' colSpan="6">{curr_class_obj[curr_sc_index].course_code} | {curr_class_obj[curr_sc_index].course_name}</td>
+            </tr>);
+        }else if(curr_cl_code== props.courseNums[3].toUpperCase()){
+          return (
+            <tr>
+              <td class='def_color_table' colSpan="2">Online (100%)</td>
+              <td class='color_class_4' colSpan="6">{curr_class_obj[curr_sc_index].course_code} | {curr_class_obj[curr_sc_index].course_name}</td>
+            </tr>);
+        }else if(curr_cl_code== props.courseNums[4].toUpperCase()){
+          return (
+            <tr>
+              <td class='def_color_table' colSpan="2">Online (100%)</td>
+              <td class='color_class_5' colSpan="6">{curr_class_obj[curr_sc_index].course_code} | {curr_class_obj[curr_sc_index].course_name}</td>
+            </tr>);
+        }else if(curr_cl_code== props.courseNums[5].toUpperCase()){
+          return (
+            <tr>
+              <td class='def_color_table' colSpan="2">Online (100%)</td>
+              <td class='color_class_6' colSpan="6">{curr_class_obj[curr_sc_index].course_code} | {curr_class_obj[curr_sc_index].course_name}</td>
+            </tr>);
+        }else {
+          return (
+            <tr>
+              <td class='def_color_table' colSpan="2">Online (100%)</td>
+              <td class='def_color_table' colSpan="6">{curr_class_obj[curr_sc_index].course_code} | {curr_class_obj[curr_sc_index].course_name}</td>
+            </tr>);
+        }
+
+      }
+      
+    })}
+);
+  }
+  */
 
 
   // Color classes
@@ -395,6 +460,177 @@ const Schedule = props => {
     });
 
 
+// Print the header 1 based on if the form has been submitted
+const print_header_1= props => {
+  if(props.length != 0){
+    return(
+      <h2>All Course Timing</h2>
+    );
+  }
+  else{
+    return(<div></div>);
+  }
+};
+
+// Print the info for the lab and lecture times for EACH class
+const print_schedule_lab_lecture = props.final_lab_lecture_info.map((curr_class_info, curr_class_info_index)  => {
+  // 1) if schedule does not exist, do not render table and just return nothing
+  if(!props.final_lab_lecture_info[0]){
+    return(
+      <div></div>
+    );
+  }
+
+  // Else, For EACH schedule, render the schedule table 
+  // 2) Check to see if the lectures/lab sections match.  If so, tell that to user
+  if(curr_class_info.lab_lecture_match){
+    return (
+      <div>
+        
+          <Card>
+            <Card.Header>
+              <Accordion.Toggle as={Button} variant="link" eventKey={curr_class_info.course_code}>
+                {curr_class_info.course_code}
+              </Accordion.Toggle>
+            </Card.Header>
+        
+          <Accordion.Collapse eventKey={curr_class_info.course_code}>
+          <Card.Body>
+
+            <h3>Lecture Times for Course: {curr_class_info.course_code}</h3>
+
+            <Alert variant='primary'>
+              <b>Note:</b> For course {curr_class_info.course_code}, there are no unique lab/discussion sections, only lectures.
+            </Alert>
+
+            {/* Generate the Schedule Table */ }
+            <table class="table table-bordered" >
+                <thead>
+                  <tr class="color_table_hd_row">
+                    <th scope="col">Period</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Monday</th>
+                    <th scope="col">Tuesday</th>
+                    <th scope="col">Wednesday</th>
+                    <th scope="col">Thursday</th>
+                    <th scope="col">Friday</th>
+                    <th scope="col">Saturday</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {curr_class_info.labArray.slice(0, curr_class_info.labArray.length).map((row, index) => {
+                      return (
+                        <tr key={index} >
+                          <td class='def_color_table'>{periods[index]}</td>
+                          <td class='def_color_table'>{times[index]}</td>
+                          
+                          {/* Generate the Colored cells */ }
+                          {generate_colored_sched_cells(row)}
+      
+                        </tr>
+                      );
+                })}
+                </tbody>
+              </table>
+
+
+            </Card.Body>
+        </Accordion.Collapse>
+      </Card>
+  
+      </div>
+        );
+  }
+
+  // 3) Else, BOTH labs AND lectures exist
+  else{
+    return (
+      <div>
+
+          <Card>
+            <Card.Header>
+              <Accordion.Toggle as={Button} variant="link" eventKey={curr_class_info.course_code}>
+                {curr_class_info.course_code}
+              </Accordion.Toggle>
+            </Card.Header>
+        
+          <Accordion.Collapse eventKey={curr_class_info.course_code}>
+          <Card.Body>
+
+            <h3>Lab Sections for Course: {curr_class_info.course_code}</h3>
+            {/* Generate the Schedule Table */ }
+            <table class="table table-bordered" >
+                <thead>
+                  <tr class="color_table_hd_row">
+                    <th scope="col">Period</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Monday</th>
+                    <th scope="col">Tuesday</th>
+                    <th scope="col">Wednesday</th>
+                    <th scope="col">Thursday</th>
+                    <th scope="col">Friday</th>
+                    <th scope="col">Saturday</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {curr_class_info.labArray.slice(0, curr_class_info.labArray.length).map((row, index) => {
+                      return (
+                        <tr key={index} >
+                          <td class='def_color_table'>{periods[index]}</td>
+                          <td class='def_color_table'>{times[index]}</td>
+                          
+                          {/* Generate the Colored cells */ }
+                          {generate_colored_sched_cells(row)}
+
+                        </tr>
+                      );
+                })}
+                </tbody>
+              </table>
+
+
+              <h3>Lecture Sections for Course: {curr_class_info.course_code}</h3>
+            {/* Generate the Schedule Table */ }
+            <table class="table table-bordered" >
+                <thead>
+                  <tr class="color_table_hd_row">
+                    <th scope="col">Period</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Monday</th>
+                    <th scope="col">Tuesday</th>
+                    <th scope="col">Wednesday</th>
+                    <th scope="col">Thursday</th>
+                    <th scope="col">Friday</th>
+                    <th scope="col">Saturday</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {curr_class_info.lectureArray.slice(0, curr_class_info.lectureArray.length).map((row, index) => {
+                      return (
+                        <tr key={index} >
+                          <td class='def_color_table'>{periods[index]}</td>
+                          <td class='def_color_table'>{times[index]}</td>
+                          {/* Generate the Colored cells */ }
+                          {generate_colored_sched_cells(row)}
+                        </tr>
+                      );
+                })}
+                </tbody>
+              </table>
+
+              
+            </Card.Body>
+        </Accordion.Collapse>
+      </Card>
+  
+
+      </div>
+        );
+    }
+
+
+  });
+
 /*
 // Orig way to render table
 <td>{row[0]}</td>
@@ -404,62 +640,6 @@ const Schedule = props => {
 <td>{row[4]}</td>
 <td>{row[5]}</td>
 */
-
-
-/*
-  function generateSchedule() {
-    let checkArray = [1] 
-    let oldSchedule = Array(14).fill(0).map(row => new Array(6).fill(" "))
-    let newSchedule = Array(14).fill(0).map(row => new Array(6).fill(" "))
-    oldSchedule = TestSchdule;
-    /*
-    console.log('Before: ', TestSchdule)
-    console.log('oldSchedule is : ', oldSchedule)
-    console.log('newSchedule is : ', newSchedule)
-    
-    //console.log(checkArray.length)
-    let day_index = 0;
-    let period_index1 = 0;
-    let period_index2 = 0;
-    if (Array.isArray(props.responseData) && checkArray.length && props.responseData[0]) {
-      //console.log("Wow, something's here")
-      //console.log('ResponseData (from schedule.js) is: ', props.responseData)
-      let responseDataLength = [];
-      responseDataLength = props.responseData
-      //console.log('length of resposneData is: ', responseDataLength.length)
-      for (let k = 0; k < responseDataLength.length; k++) {
-        let sectionsArray = props.responseData[k].sections
-        console.log('sectionsArray is: ', sectionsArray)
-        let meetTArray = sectionsArray[0].meetTimes
-        console.log('meetTArray is: ', meetTArray)
-        for (let j = 0; j < meetTArray.length; j++) {
-          //console.log('meetTDay is: ', meetTArray[j].meetDays[0])
-          //console.log(meetTArray[j].meetPeriodBegin)
-          //console.log(meetTArray[j].meetPeriodEnd)
-          day_index = daysShort.indexOf(meetTArray[j].meetDays[0])
-          console.log('day_index is: ', day_index)
-          period_index1 = periods.indexOf(meetTArray[j].meetPeriodBegin)
-          console.log('period_index1 is: ', period_index1)
-          period_index2 = periods.indexOf(meetTArray[j].meetPeriodEnd)
-          console.log('period_index2 is: ', period_index2)
-          if (period_index1 === period_index2)
-            TestSchdule[period_index1][day_index] = props.responseData[k].code
-          else {
-            TestSchdule[period_index1][day_index] = props.responseData[k].code
-            TestSchdule[period_index2][day_index] = props.responseData[k].code
-            }
-          }
-        }
-      }
-    else {
-      console.log("I guess there's nothing here")
-      console.log(props.responseData)
-      //console.log('Is there really nothing here?...', props.responseData[0].code)
-    }
-    console.log('After: ', TestSchdule)
-    }
-   */
-
 
     
   return (
@@ -657,7 +837,17 @@ const Schedule = props => {
         
         <div class="col-lg-8">
           <Card body>
-              <h2>Possible Schedules</h2>
+
+        
+            {/* Lab/Lecture Times*/}
+            {print_header_1(props.conflicts_print)}
+
+              <Accordion>
+                {print_schedule_lab_lecture}
+              </Accordion>
+
+              <hr></hr>
+              <h2 class='h_cl_num'>Possible Schedules</h2>
 
               {/* {scheduleGrids}*/}
               {scheduleGrids}

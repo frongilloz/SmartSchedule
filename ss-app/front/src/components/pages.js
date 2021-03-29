@@ -111,6 +111,7 @@ export const Home = () => (
     let conflicts = [];
     let conflicts_print = [];
     let final_schedule_info = [];
+    let final_lab_lecture_info = []
     let emptyArray = Array(14).fill(0).map(row => new Array(6).fill(" "))
   
     let emptyArrays = [emptyArray, emptyArray];
@@ -206,10 +207,11 @@ export const Home = () => (
           testSc = gen_schedule_return.finalSchedules;
           conflicts = gen_schedule_return.conflicts;
           final_schedule_info = gen_schedule_return.finalSchedule_Info;
-
+          final_lab_lecture_info = gen_schedule_return.finalsectionInfo;
           console.log("Test Schedule(s) Received, ",testSc)
           console.log("Conflict(s) Received, ",conflicts)
-          console.log("final_schedule_info(s) Received, ",final_schedule_info)
+          console.log("final_schedule_info(s) Received, ", final_schedule_info)
+          console.log("final_lab_lecture_info(s) Received, ", final_lab_lecture_info)
 
           // Parse out the confilcts
           for (let i = 0; i < conflicts.length; i++) {
@@ -273,6 +275,7 @@ export const Home = () => (
           conflicts_print={conflicts_print}
           final_schedule_info={final_schedule_info}
           courseNums={courseNums}
+          final_lab_lecture_info={final_lab_lecture_info}
       />
     </div>
     );

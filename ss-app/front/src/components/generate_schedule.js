@@ -4,9 +4,10 @@ const daysShort = ["M", "T", "W", "R", "F"]
 export function generateSchedule(responseData) {
   let finalSchedule_Info = []
   let curr_sched_info;
+  let finalsectionInfo = []
 
   let finalSchedules = []
-  console.log('what is finalSchedules doing?.....', finalSchedules)
+
   let checkArray = [1]
   //console.log('Before: ', scheduleArray)
   //console.log(checkArray.length)
@@ -17,12 +18,14 @@ export function generateSchedule(responseData) {
   let totalScheduleCount = 1;
   let conflicts = [];
 
+  // Object declarations
+  let temp_section_times;
   let temp_sect_object;
 
   let newSchedule = []
-  let dummySchedule = Array(14).fill(0).map(row => new Array(6).fill(" "))
+  //let dummySchedule = Array(14).fill(0).map(row => new Array(6).fill(" "))
 
-  if (Array.isArray(responseData) && checkArray.length && responseData[0]) {  //check if responseData array exists and if something exists in it (try taking out the checkArray thing)
+  if (Array.isArray(responseData) && checkArray.length && responseData[0]) {  //check if responseData array exists and if something exists in it 
     console.log("Wow, something's here")
     console.log('ResponseData (from schedule.js) is: ', responseData)
 
@@ -61,7 +64,11 @@ export function generateSchedule(responseData) {
       let curr_course_desc = responseData[k].description
       let curr_course_name = responseData[k].name
       let curr_course_prereq = responseData[k].prerequisites
-      let curr_section_c_num,curr_section_credits,curr_section_inst, curr_section_mT,curr_section_web
+      let curr_section_c_num, curr_section_credits, curr_section_inst, curr_section_mT, curr_section_web
+
+      // NEW 
+      // Create an array of meeting times, then use the reduce function to find the most frequent class times 
+      let allClassTimes = []
 
       // Schedule Generation things
       let sectionsArray = responseData[k].sections
@@ -80,7 +87,9 @@ export function generateSchedule(responseData) {
 
 
            // Schedule Generation things
+          // For each section [i], iterate through the class meet times
           let meetTArray = sectionsArray[i].meetTimes
+
           //console.log('meetTArray is: ', meetTArray)
           for (let j = 0; j < meetTArray.length; j++) {
             day_index = daysShort.indexOf(meetTArray[j].meetDays[0])
@@ -92,8 +101,16 @@ export function generateSchedule(responseData) {
             period_index2 = periods.indexOf(meetTArray[j].meetPeriodEnd)
             //console.log('period_index2 is: ', period_index2)
 
+            let sectionInfo_Indexes = []
+            sectionInfo_Indexes.push(day_index)
+            sectionInfo_Indexes.push(period_index1)
+            sectionInfo_Indexes.push(period_index2)
+            //let sectionInfo = [meetTArray[j].meetDays[0], meetTArray[j].meetPeriodBegin, meetTArray[j].meetPeriodEnd] 
+            allClassTimes.push(sectionInfo_Indexes)
+
+            // Store meeting info into 2D array 
             newSchedule = finalSchedules[count]
-            dummySchedule = Array(14).fill(0).map(row => new Array(6).fill(" "))
+            //dummySchedule = Array(14).fill(0).map(row => new Array(6).fill(" "))
 
             //console.log('newSchedule is: ', newSchedule)
 
@@ -104,7 +121,7 @@ export function generateSchedule(responseData) {
                 conflicts.push(count);
               }
               newSchedule[period_index1][day_index] = responseData[k].code
-              dummySchedule[period_index1][day_index] = responseData[k].code
+              //dummySchedule[period_index1][day_index] = responseData[k].code
             }
             else {
               if (newSchedule[period_index1][day_index] != " " || newSchedule[period_index2][day_index] != " "){
@@ -114,8 +131,8 @@ export function generateSchedule(responseData) {
               }
               newSchedule[period_index1][day_index] = responseData[k].code
               newSchedule[period_index2][day_index] = responseData[k].code
-              dummySchedule[period_index1][day_index] = responseData[k].code
-              dummySchedule[period_index2][day_index] = responseData[k].code
+              //dummySchedule[period_index1][day_index] = responseData[k].code
+              //dummySchedule[period_index2][day_index] = responseData[k].code
             }
 
           }
@@ -138,7 +155,8 @@ export function generateSchedule(responseData) {
             section_credits:curr_section_credits,
             section_inst : curr_section_inst,
             section_mT : curr_section_mT,
-            section_web : curr_section_web
+            section_web: curr_section_web
+
           }
 
           // save each object to section array
@@ -157,7 +175,95 @@ export function generateSchedule(responseData) {
       
       // Save the schedule info for each course
       // Will be in order of the schedule generated; exact section corresponds to the ordering of schedule produced
-      finalSchedule_Info.push( sect_objects);
+      finalSchedule_Info.push(sect_objects);
+
+      //NEW 
+      // Generate lab and lecture sections by parsing through master meet_time array
+
+      let time_counts = allClassTimes.reduce(function (a, c) {
+        if (c in a) {
+          a[c]++
+        }
+        else {
+          a[c] = 1
+        }
+        return a
+      }, {})
+      //console.log("time_counts is: ", time_counts)
+      
+      let maxCount = Math.max(...Object.values(time_counts));
+      let leastCount = Math.min(...Object.values(time_counts));
+      let lectureTimes_Index = Object.keys(time_counts).filter(k => time_counts[k] === maxCount);
+      let labTimes_Index = Object.keys(time_counts).filter(k => time_counts[k] === leastCount);
+      let converted_lectureTimes_Index = [];
+      let converted_labTimes_Index = [];
+
+      let lectureArray = Array(14).fill(0).map(row => new Array(6).fill(" "))
+      let labArray = Array(14).fill(0).map(row => new Array(6).fill(" "))
+
+      for (let h = 0; h < lectureTimes_Index.length; h++) {
+        let test = new String(lectureTimes_Index[h])
+        //console.log("lectureTimes_Index[]", test)
+        converted_lectureTimes_Index.push(test.split(",").map(Number))
+      }
+
+      //console.log("converted_lectureTimes_Index", converted_lectureTimes_Index)
+
+      for (let d = 0; d < labTimes_Index.length; d++) {
+        let test = new String(labTimes_Index[d])
+        //console.log("labTimes_Index[]", test)
+        converted_labTimes_Index.push(test.split(",").map(Number))
+      }
+
+      //console.log("converted_labTimes_Index", converted_labTimes_Index)
+
+      for (let j = 0; j < converted_lectureTimes_Index.length; j++) {
+        let current_point = converted_lectureTimes_Index[j]
+        if (current_point[1] === current_point[2]) {
+          lectureArray[current_point[1]][current_point[0]] = curr_course_code
+        }
+        else {
+          lectureArray[current_point[1]][current_point[0]] = curr_course_code
+          lectureArray[current_point[2]][current_point[0]] = curr_course_code
+        }
+      }
+
+      for (let j = 0; j < converted_labTimes_Index.length; j++) {
+        let current_point = converted_labTimes_Index[j]
+        if (current_point[1] === current_point[2]) {
+          labArray[current_point[1]][current_point[0]] = curr_course_code
+        }
+        else {
+          labArray[current_point[1]][current_point[0]] = curr_course_code
+          labArray[current_point[2]][current_point[0]] = curr_course_code
+        }
+      }
+
+
+      let curr_course_lectures = converted_lectureTimes_Index
+      let curr_course_labs = converted_labTimes_Index
+      let curr_course_lectureArray = lectureArray
+      let curr_course_labArray = labArray
+      let curr_course_sections_match = false
+
+      if (JSON.stringify(curr_course_lectureArray) === JSON.stringify(curr_course_labArray))
+        curr_course_sections_match = true
+
+      temp_section_times = {
+
+        course_code: curr_course_code,
+        // NOTE: it is entirely possible that the lecture and lab sections match, in which case, there is only a lecture meeting
+        // there is a bool that accounts for this
+        lab_lecture_match: curr_course_sections_match,
+        lectureIndexes : curr_course_lectures,
+        labIndexes : curr_course_labs,
+        lectureArray : curr_course_lectureArray,
+        labArray: curr_course_labArray
+
+      } 
+
+      finalsectionInfo.push(temp_section_times)
+      //console.log("allClassTimes for the current course are:", allClassTimes)
 
     } // end for loop of "k" courses
   }
@@ -168,7 +274,8 @@ export function generateSchedule(responseData) {
   }
 
   console.log("conflicts: ", conflicts)
+  console.log("sectionInfo objects are: ", finalsectionInfo)
 
   //return finalSchedules
-  return {finalSchedules, conflicts, finalSchedule_Info};
+  return {finalSchedules, conflicts, finalSchedule_Info, finalsectionInfo};
 }

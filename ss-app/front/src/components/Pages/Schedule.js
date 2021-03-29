@@ -232,7 +232,7 @@ const Schedule = props => {
 
       // append a string object to return
       temp_str= " (" + tempDate + ") at " +  tempLoc_b + tempLoc_r + ",";
-      console.log(temp_str)
+      //console.log(temp_str)
 
       ret_meetings.push(temp_str);
     }

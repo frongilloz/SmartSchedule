@@ -4,6 +4,7 @@ const daysShort = ["M", "T", "W", "R", "F"]
 export function generateSchedule(responseData) {
   let finalSchedule_Info = []
   let curr_sched_info;
+  let finalsectionInfo = []
 
   let finalSchedules = []
 
@@ -17,8 +18,8 @@ export function generateSchedule(responseData) {
   let totalScheduleCount = 1;
   let conflicts = [];
 
-  
-
+  // Object declarations
+  let temp_section_times;
   let temp_sect_object;
 
   let newSchedule = []
@@ -100,8 +101,12 @@ export function generateSchedule(responseData) {
             period_index2 = periods.indexOf(meetTArray[j].meetPeriodEnd)
             //console.log('period_index2 is: ', period_index2)
 
-            let sectionInfo = [day_index, period_index1, period_index2] 
-            allClassTimes.push(sectionInfo)
+            let sectionInfo_Indexes = []
+            sectionInfo_Indexes.push(day_index)
+            sectionInfo_Indexes.push(period_index1)
+            sectionInfo_Indexes.push(period_index2)
+            //let sectionInfo = [meetTArray[j].meetDays[0], meetTArray[j].meetPeriodBegin, meetTArray[j].meetPeriodEnd] 
+            allClassTimes.push(sectionInfo_Indexes)
 
             // Store meeting info into 2D array 
             newSchedule = finalSchedules[count]
@@ -152,10 +157,6 @@ export function generateSchedule(responseData) {
             section_mT : curr_section_mT,
             section_web: curr_section_web
 
-            // NEW
-            // Adding lab and lecture times per course into object
-            //section_lecture_times: 
-            //section_lab_times: 
           }
 
           // save each object to section array
@@ -165,8 +166,6 @@ export function generateSchedule(responseData) {
           finalSchedules[count] = newSchedule
           count++
 
-
-          console.log("allClassTimes for the current course are:", allClassTimes)
         } // end for loop "i" sections
 
 
@@ -178,8 +177,92 @@ export function generateSchedule(responseData) {
       // Will be in order of the schedule generated; exact section corresponds to the ordering of schedule produced
       finalSchedule_Info.push(sect_objects);
 
-      // NEW 
-      // Find most occuring meet times and put them into lecture array
+      //NEW 
+      // Generate lab and lecture sections by parsing through master meet_time array
+
+      let time_counts = allClassTimes.reduce(function (a, c) {
+        if (c in a) {
+          a[c]++
+        }
+        else {
+          a[c] = 1
+        }
+        return a
+      }, {})
+      //console.log("time_counts is: ", time_counts)
+      
+      let maxCount = Math.max(...Object.values(time_counts));
+      let leastCount = Math.min(...Object.values(time_counts));
+      let lectureTimes_Index = Object.keys(time_counts).filter(k => time_counts[k] === maxCount);
+      let labTimes_Index = Object.keys(time_counts).filter(k => time_counts[k] === leastCount);
+      let converted_lectureTimes_Index = [];
+      let converted_labTimes_Index = [];
+
+      let lectureArray = Array(14).fill(0).map(row => new Array(6).fill(" "))
+      let labArray = Array(14).fill(0).map(row => new Array(6).fill(" "))
+
+      for (let h = 0; h < lectureTimes_Index.length; h++) {
+        let test = new String(lectureTimes_Index[h])
+        //console.log("lectureTimes_Index[]", test)
+        converted_lectureTimes_Index.push(test.split(",").map(Number))
+      }
+
+      //console.log("converted_lectureTimes_Index", converted_lectureTimes_Index)
+
+      for (let d = 0; d < labTimes_Index.length; d++) {
+        let test = new String(labTimes_Index[d])
+        //console.log("labTimes_Index[]", test)
+        converted_labTimes_Index.push(test.split(",").map(Number))
+      }
+
+      //console.log("converted_labTimes_Index", converted_labTimes_Index)
+
+      for (let j = 0; j < converted_lectureTimes_Index.length; j++) {
+        let current_point = converted_lectureTimes_Index[j]
+        if (current_point[1] === current_point[2]) {
+          lectureArray[current_point[1]][current_point[0]] = curr_course_code
+        }
+        else {
+          lectureArray[current_point[1]][current_point[0]] = curr_course_code
+          lectureArray[current_point[2]][current_point[0]] = curr_course_code
+        }
+      }
+
+      for (let j = 0; j < converted_labTimes_Index.length; j++) {
+        let current_point = converted_labTimes_Index[j]
+        if (current_point[1] === current_point[2]) {
+          labArray[current_point[1]][current_point[0]] = curr_course_code
+        }
+        else {
+          labArray[current_point[1]][current_point[0]] = curr_course_code
+          labArray[current_point[2]][current_point[0]] = curr_course_code
+        }
+      }
+
+
+      let curr_course_lectures = converted_lectureTimes_Index
+      let curr_course_labs = converted_labTimes_Index
+      let curr_course_lectureArray = lectureArray
+      let curr_course_labArray = labArray
+      let curr_course_sections_match = false
+
+      if (JSON.stringify(curr_course_lectureArray) === JSON.stringify(curr_course_labArray))
+        curr_course_sections_match = true
+
+      temp_section_times = {
+
+        course_code: curr_course_code,
+        // NOTE: it is entirely possible that the lecture and lab sections match, in which case, there is only a lecture meeting
+        // there is a bool that accounts for this
+        lab_lecture_match: curr_course_sections_match,
+        lectureIndexes : curr_course_lectures,
+        labIndexes : curr_course_labs,
+        lectureArray : curr_course_lectureArray,
+        labArray: curr_course_labArray
+
+      } 
+
+      finalsectionInfo.push(temp_section_times)
       //console.log("allClassTimes for the current course are:", allClassTimes)
 
     } // end for loop of "k" courses
@@ -191,7 +274,8 @@ export function generateSchedule(responseData) {
   }
 
   console.log("conflicts: ", conflicts)
+  console.log("sectionInfo objects are: ", finalsectionInfo)
 
   //return finalSchedules
-  return {finalSchedules, conflicts, finalSchedule_Info};
+  return {finalSchedules, conflicts, finalSchedule_Info, finalsectionInfo};
 }

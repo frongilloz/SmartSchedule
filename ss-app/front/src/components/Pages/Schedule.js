@@ -274,15 +274,16 @@ const Schedule = props => {
 
   //Print a mapping warning of the conflict indices
   const print_mapping_alerts = curr_sc_idx => {
+    // init array so can add on to it before returning
+    let array_ret = [];
 
     // Only print the conflict warnings if there are conflicts present
     // for the length of the conflicts produced
-
     for (let i = 0; i < props.walking_Durs.length; i++) {
       if(curr_sc_idx == props.walking_Durs[i].scheduleIdx ){
         // If under 15 minutes
         if(!props.walking_Durs[i].over15){
-          return(
+          array_ret.push(
             <Alert variant='primary'>
               <b>Note:</b> For courses {props.walking_Durs[i].class1} and {props.walking_Durs[i].class2} , 
               you will have to walk between <b>{props.walking_Durs[i].loc1}</b> and <b>{props.walking_Durs[i].loc2}</b>  on day 
@@ -296,7 +297,7 @@ const Schedule = props => {
 
         //else over 15 mins
         else{
-          return(
+          array_ret.push(
             <div className='alert alert-danger' id='conflicts_div'>
                  <b>Note: Walking time over 15 minutes. </b> For courses {props.walking_Durs[i].class1} and {props.walking_Durs[i].class2} , 
               you will have to walk between <b>{props.walking_Durs[i].loc1}</b> and <b>{props.walking_Durs[i].loc2}</b>  on day 
@@ -309,6 +310,8 @@ const Schedule = props => {
       }
       
     }
+
+    return array_ret;
 
   };
 

@@ -65,13 +65,8 @@ export function get_mapping_distance(final_schedule_info, testSc) {
         laterScheduleIterator = getIterator(laterScheduleEntry);
 
         /* based on the count value, get the course info associated with them */
-        // PREV
-        earlierCourseInfo = final_schedule_info[earlierScheduleIterator.offsetIntoFinalScheduleInfo][earlierScheduleIterator.currCount];
-        laterCourseInfo = final_schedule_info[laterScheduleIterator.offsetIntoFinalScheduleInfo][laterScheduleIterator.currCount];
-        
-        // ISSUE: INDICES NEED TO BE CHANGED; looks to be just pulling from the first section info object
-        //earlierCourseInfo = final_schedule_info[][];
-        //laterCourseInfo = final_schedule_info[][];
+        earlierCourseInfo = final_schedule_info[earlierScheduleIterator.offsetIntoFinalScheduleInfo][scheduleIdx];
+        laterCourseInfo = final_schedule_info[laterScheduleIterator.offsetIntoFinalScheduleInfo][scheduleIdx];
 
         // log 
         //console.log("earlierCourseInfo", earlierCourseInfo)
@@ -137,18 +132,6 @@ export function get_mapping_distance(final_schedule_info, testSc) {
             currDay = 'Sat';
         }
 
-        console.log("WWWW", scheduleIdx)
-        console.log("WWWW", scheduleIdx)
-        
-        console.log("earlierCourseInfo", earlierCourseInfo.course_code)
-        console.log("earlierCourseInfo", earlierCourseInfo.section_c_num)
-        
-        console.log("laterCourseInfo", laterCourseInfo.course_code)
-        console.log("laterCourseInfo", laterCourseInfo.section_c_num)
-
-        console.log("earlierCourseInfo.section_web", earlierCourseInfo.section_web)
-        console.log("laterCourseInfo.section_web", laterCourseInfo.section_web)
-
 
         // Object to push
         let wlk_object={
@@ -164,14 +147,14 @@ export function get_mapping_distance(final_schedule_info, testSc) {
             isOnline: currIsOnline 
         }
 
-        // front en dobject
+        // front end object
         walking_Durs.push(wlk_object)
-
         }
     }
     }
     
     console.log("conflictingDayHourPairs", conflictingDayHourPairs);
+    
 
     return walking_Durs
 }

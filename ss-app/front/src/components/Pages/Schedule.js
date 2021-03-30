@@ -268,6 +268,23 @@ const Schedule = props => {
 
   };
 
+  //Print a mapping warning of the conflict indices
+  const print_mapping_alerts = curr_sc_idx => {
+
+    // Only print the conflict warnings if there are conflicts present
+    // for the length of the conflicts produced
+    for (let i = 0; i < props.conflicts.length; i++) {
+      if(curr_sc_idx == props.conflicts[i] ){
+        return(
+          <div className='alert alert-danger' id='conflicts_div'>
+              <strong><b>Warning: </b> There is a class conflict in this schedule.</strong>
+          </div>
+        )
+      }
+    }
+  };
+
+  
   // Determine Class format
   const get_online_status = curr_sect => {
     if(curr_sect == "AD"){

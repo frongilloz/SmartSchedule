@@ -114,7 +114,8 @@ export const Home = () => (
     let conflicts = [];
     let conflicts_print = [];
     let final_schedule_info = [];
-    let final_lab_lecture_info = []
+    let final_lab_lecture_info = [];
+    let walking_Durs = [];
     let emptyArray = Array(14).fill(0).map(row => new Array(6).fill(" "))
   
     let emptyArrays = [emptyArray, emptyArray];
@@ -224,6 +225,7 @@ export const Home = () => (
             conflicts_print.push(',')
           }
 
+          // Spencer
           let courseIterators = [];
           let courseIterator;
           let finalScheduleInfoIdx;
@@ -255,6 +257,7 @@ export const Home = () => (
           let earlierCourseInfo;
           let laterCourseInfo;
           let walkingDurationMins;
+          let currover15 = false;
 
           testSc.forEach((schedule) => {
             for (dayIdx = 0; dayIdx < schedule[0].length; dayIdx++) {
@@ -305,10 +308,26 @@ export const Home = () => (
 
                 if (walkingDurationMins > 15) {
                   console.log(`Can't make it in time from ${fromCode} to ${toCode}!!!`);
+                  currover15 = true
                 }
+
+                // Object to push
+                let wlk_object={
+                  sched_i: earlierScheduleIterator.offsetIntoFinalScheduleInfo,
+                  index1: earlierScheduleIterator.currCount,
+                  index2: laterScheduleIterator.currCount,
+                  over15: currover15,
+                  loc1: fromCode,
+                  loc2: toCode,
+                  duration: walkingDurationMins
+                }
+                walking_Durs.push(wlk_object)
+
               }
             }
           })
+
+          // / Spencer
           
           //console.log("conflicts_print ",conflicts_print)
           
@@ -340,6 +359,7 @@ export const Home = () => (
   
 
       console.log("conflicts_print", conflicts_print)
+      console.log("walking_Durs", walking_Durs)
       console.log("fin")
   
     return (

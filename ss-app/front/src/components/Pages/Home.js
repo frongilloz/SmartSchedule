@@ -1,7 +1,6 @@
 import React from 'react';
-import KommunicateChat from '../chat';
-
 import { Form, Button, Card } from 'react-bootstrap';
+import ChatWidget  from '../chatWidget.js'
 import './basic.css';
 
 const Home = props => {
@@ -16,7 +15,6 @@ const Home = props => {
     //log
     console.log('Update Full Name: ', event.target.value);
   };
-
 
   return (
     <div className='App'>
@@ -86,8 +84,12 @@ const Home = props => {
           </div>
         </section>
       </Card>
-      <KommunicateChat/>
+      {/* <KommunicateChat/> */}
+      <div>
+        <ChatWidget/>
+      </div>
     </div>
+    
   );
 };
 export default Home;

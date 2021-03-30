@@ -255,8 +255,13 @@ export const Home = () => (
           let earlierCourseInfo;
           let laterCourseInfo;
           let walkingDurationMins;
+          let conflictingDayHourPairs = [];
+          let dayHourPair;
+          let schedule;
+          let scheduleIdx;
 
-          testSc.forEach((schedule) => {
+          for (scheduleIdx = 0; scheduleIdx < testSc.length; scheduleIdx++) {
+            schedule = testSc[scheduleIdx];
             for (dayIdx = 0; dayIdx < schedule[0].length; dayIdx++) {
               for (hourIdx = 0; hourIdx < (schedule.length - 1); hourIdx++) {
                 earlierScheduleEntry = schedule[hourIdx][dayIdx];
@@ -284,7 +289,7 @@ export const Home = () => (
   
                 fromCode = "NEB";
                 toCode = "GER";
-                
+
                 /* @TODO: extract building code of relevant sections.
                    if they're both in-person, call getWalkingDistance() */
 
@@ -305,11 +310,18 @@ export const Home = () => (
 
                 if (walkingDurationMins > 15) {
                   console.log(`Can't make it in time from ${fromCode} to ${toCode}!!!`);
+                  dayHourPair = {
+                    scheduleIdx:  scheduleIdx,
+                    dayIdx:       dayIdx,
+                    hourIdx:      hourIdx
+                  };
+                  conflictingDayHourPairs.push(dayHourPair);
                 }
               }
             }
-          })
+          }
           
+          console.log(conflictingDayHourPairs);
           //console.log("conflicts_print ",conflicts_print)
           
           //Parse out the info based on length of responsData (# of courses)

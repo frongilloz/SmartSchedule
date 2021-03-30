@@ -292,11 +292,223 @@ export const Home = () => (
     </div>
     );
   };
-export const Four_Year = () => (
-  <div>
-    <Four_Year_Content />
-  </div>
-);
+
+export const Four_Year = props => {
+  const [SemCAdd, setSemC] = useState('');
+  const [yearAdd, setYearC] = useState('');
+  const [CNum1, setCNum1] = useState('');
+  const [CNum2, setCNum2] = useState('');
+  const [CNum3, setCNum3] = useState('');
+  const [CNum4, setCNum4] = useState('');
+  const [CNum5, setCNum5] = useState('');
+  const [CNum6, setCNum6] = useState('');
+  const [CName1, setCName1] = useState('');
+  const [CName2, setCName2] = useState('');
+  const [CName3, setCName3] = useState('');
+  const [CName4, setCName4] = useState('');
+  const [CName5, setCName5] = useState('');
+  const [CName6, setCName6] = useState('');
+  const [CCred1, setCCred1] = useState('');
+  const [CCred2, setCCred2] = useState('');
+  const [CCred3, setCCred3] = useState('');
+  const [CCred4, setCCred4] = useState('');
+  const [CCred5, setCCred5] = useState('');
+  const [CCred6, setCCred6] = useState('');
+  const SemChoice = value => {
+    setSemC(value);
+    console.log('SemChoice() called, value: ', value);
+  };
+  const YChoice = value => {
+    setYearC(value);
+    console.log('YChoice() called, value: ', value);
+  };
+  const addCNUM1Update = value => {
+    setCNum1(value); 
+    console.log('addCNUM1Update() called, value: ', value);
+  };
+  const addCNUM2Update = value => {
+    setCNum2(value); 
+    console.log('addCNUM2Update() called, value: ', value);
+  };
+  const addCNUM3Update = value => {
+    setCNum3(value); 
+    console.log('addCNUM3Update() called, value: ', value);
+  };
+  const addCNUM4Update = value => {
+    setCNum4(value); 
+    console.log('addCNUM4Update() called, value: ', value);
+  };
+  const addCNUM5Update = value => {
+    setCNum5(value); 
+    console.log('addCNUM5Update() called, value: ', value);
+  };
+  const addCNUM6Update = value => {
+    setCNum6(value); 
+    console.log('addCNUM6Update() called, value: ', value);
+  };
+  const addCNAME1Update = value => {
+    setCName1(value); 
+    console.log('addCName1Update() called, value: ', value);
+  };
+  const addCNAME2Update = value => {
+    setCName2(value); 
+    console.log('addCName2Update() called, value: ', value);
+  };
+  const addCNAME3Update = value => {
+    setCName3(value); 
+    console.log('addCName3Update() called, value: ', value);
+  };
+  const addCNAME4Update = value => {
+    setCName4(value); 
+    console.log('addCName4Update() called, value: ', value);
+  };
+  const addCNAME5Update = value => {
+    setCName5(value); 
+    console.log('addCName5Update() called, value: ', value);
+  };
+  const addCNAME6Update = value => {
+    setCName6(value); 
+    console.log('addCName6Update() called, value: ', value);
+  };
+  const addCCRED1Update = value => {
+    setCCred1(value); 
+    console.log('addCCRED1Update() called, value: ', value);
+  };
+  const addCCRED2Update = value => {
+    setCCred2(value); 
+    console.log('addCCRED2Update() called, value: ', value);
+  };
+  const addCCRED3Update = value => {
+    setCCred3(value); 
+    console.log('addCCRED3Update() called, value: ', value);
+  };
+  const addCCRED4Update = value => {
+    setCCred4(value); 
+    console.log('addCCRED4Update() called, value: ', value);
+  };
+  const addCCRED5Update = value => {
+    setCCred5(value); 
+    console.log('addCCRED5Update() called, value: ', value);
+  };
+  const addCCRED6Update = value => {
+    setCCred6(value); 
+    console.log('addCCRED6Update() called, value: ', value);
+  };
+  const saveSchedule = async event => {
+  event.preventDefault(); 
+  console.log('saveSchedule() called');
+  console.log('Save CourseName1: ', CName1); 
+  console.log('Save CourseName2: ', CName2); 
+  console.log('Save CourseName3: ', CName3); 
+  console.log('Save CourseName4: ', CName4); 
+  console.log('Save CourseName5: ', CName5); 
+  console.log('Save CourseName6: ', CName6); 
+  console.log('Save CourseNum1: ', CNum1); 
+  console.log('Save CourseNum2: ', CNum2); 
+  console.log('Save CourseNum3: ', CNum3); 
+  console.log('Save CourseNum4: ', CNum4); 
+  console.log('Save CourseNum5: ', CNum5); 
+  console.log('Save CourseNum6: ', CNum6); 
+  console.log('Save CourseCred1: ', CCred1);
+  console.log('Save CourseCred2: ', CCred2);
+  console.log('Save CourseCred3: ', CCred3);
+  console.log('Save CourseCred4: ', CCred4);
+  console.log('Save CourseCred5: ', CCred5);
+  console.log('Save CourseCred6: ', CCred6);
+  console.log('Year save: ', yearAdd); 
+  console.log('Semester save: ', SemCAdd); 
+  let newSemester = {
+    year: yearAdd, 
+    semester: SemCAdd,
+    course1:
+    {
+      number: CNum1,
+      name: CName1,
+      credits: CCred1
+    },
+    course2:
+    {
+      number: CNum2,
+      name: CName2,
+      credits: CCred2
+    },
+    course3:
+    {
+      number: CNum3,
+      name: CName3,
+      credits: CCred3
+    },
+    course4:
+    {
+      number: CNum4,
+      name: CName4,
+      credits: CCred4
+    },
+    course5:
+    {
+      number: CNum5,
+      name: CName5,
+      credits: CCred5
+    },
+    course6:
+    {
+      number: CNum6,
+      name: CName6,
+      credits: CCred6
+    },
+  };
+
+  let curr_email =  props.email;
+
+  console.log("POST sent for 4 Year", newSemester, curr_email);
+
+  try {
+    console.log('Post Semester sent');
+    const s = await axios.post('/api/users/', (newSemester, curr_email));
+    /*
+    if (s.status == 200) {
+      setReload(true);
+    }*/
+  } catch (err) {
+    return false;
+  }
+  console.log('trying reload');
+  } ;
+/*
+  if (reload) {
+    console.log('caught redirect');
+    setTimeout(() => {
+      setReload(false);
+    }, 10000);
+    return <Redirect to='/login' />;
+  } */
+  return (
+    <Four_Year_Content 
+    saveSchedule = {saveSchedule}
+    SemChoice = {SemChoice}
+    YChoice = {YChoice}
+    addCNUM1Update = {addCNUM1Update}
+    addCNUM2Update = {addCNUM2Update}
+    addCNUM3Update = {addCNUM3Update}
+    addCNUM4Update = {addCNUM4Update}
+    addCNUM5Update = {addCNUM5Update}
+    addCNUM6Update = {addCNUM6Update}
+    addCNAME1Update = {addCNAME1Update}
+    addCNAME2Update = {addCNAME2Update}
+    addCNAME3Update = {addCNAME3Update}
+    addCNAME4Update = {addCNAME4Update}
+    addCNAME5Update = {addCNAME5Update}
+    addCNAME6Update = {addCNAME6Update}
+    addCCRED1Update = {addCCRED1Update}
+    addCCRED2Update = {addCCRED2Update}
+    addCCRED3Update = {addCCRED3Update}
+    addCCRED4Update = {addCCRED4Update}
+    addCCRED5Update = {addCCRED5Update}
+    addCCRED6Update = {addCCRED6Update}
+    />
+  );
+
+};
 
 export const About_Us = () => (
   <div>

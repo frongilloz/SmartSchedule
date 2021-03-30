@@ -17,7 +17,12 @@ const Main = props => (
     <Switch>
       <Route exact path='/' component={Home} />
       <Route exact path='/schedule' component={Schedule} />
-      <Route exact path='/four-year-plan' component={Four_Year} />
+      <Route exact path='/four-year-plan' component={() => (
+          <Four_Year
+            setToken={props.setToken}
+            email={props.email}
+          />
+        )} />
       <Route exact path='/about-us' component={About_Us} />
       <Route
         exact path='/login'

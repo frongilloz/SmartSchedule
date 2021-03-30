@@ -46,6 +46,59 @@ router.get('/:email', async(req, res) => {
   }
 });
 
+// Update User Profile
+router.put('/post_plan', async(req, res) => {
+  console.log("POST PLAN", req.body)
+  // Semester plan and the user email
+
+  // query for user
+  const user = await User.findOne({email:req.body.curr_email});
+  
+  // If user doesn't exist
+  if(user === null) {
+    return res.status(400).send();
+  }
+  
+  // Parse user's request to updated Object
+  const updateUser = new User({
+    FName: user.FName,
+    LName: user.LNameAdd,
+    fullName: user.fullName,
+    email: user.email,
+    password: req.body.newPass
+  });
+
+  // Else get the returned user's credentials
+  let curr_user_id = user._id 
+
+  console.log('updateUser:', updateUser)
+  console.log('curr_user_id:', curr_user_id)
+  console.log('User:', User)
+
+  // Checks for semester and year
+
+  
+  // Update the database; query based on the user's id
+  try{
+    await User.updateOne({_id: curr_user_id },{semesterPlan: req.body.newSemester }, function (err, docs){
+          if (err){
+            console.log(err)
+        }
+        else{
+            console.log("Updated Docs : ", docs);
+            console.log("Added Semester success!")
+            res.status(200).send();
+        }
+    });
+    
+    }catch (err) {
+    res.json({message: err});
+  } 
+
+
+
+}
+
 //Added update functionality to update pw
 router.put('/forgot', async(req, res) => {
   console.log("REQUEST PW", req.body)

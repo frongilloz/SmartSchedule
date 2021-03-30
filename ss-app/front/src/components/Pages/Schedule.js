@@ -495,7 +495,7 @@ const print_schedule_lab_lecture = props.final_lab_lecture_info.map((curr_class_
             </Card.Header>
         
           <Accordion.Collapse eventKey={curr_class_info.course_code}>
-          <Card.Body>
+          <Card.Body class='card_blue_light'>
 
             <h3>Lecture Times for Course: {curr_class_info.course_code}</h3>
 
@@ -555,7 +555,7 @@ const print_schedule_lab_lecture = props.final_lab_lecture_info.map((curr_class_
             </Card.Header>
         
           <Accordion.Collapse eventKey={curr_class_info.course_code}>
-          <Card.Body>
+          <Card.Body class='card_blue_light'>
 
             <h3>Lab Sections for Course: {curr_class_info.course_code}</h3>
             {/* Generate the Schedule Table */ }

@@ -94,6 +94,11 @@
   border:3px solid rgb(115, 125, 150);
 }
 
+.card_blue_light {
+  background-color: rgb(247, 247, 247);
+  padding: 3%;
+}
+
 .simple_border{
   border: 4px #737d96;
 }

@@ -13,6 +13,9 @@ import Profile_Content from './Pages/Profile';
 
 // import the generate schedule function
 import { generateSchedule } from './generate_schedule.js';
+import { get_mapping_distance } from './get_mapping_distance.js';
+
+import { getWalkingDurationBetweenMins } from './data/building_data.js';
 
 import { Redirect } from 'react-router-dom';
 
@@ -33,15 +36,20 @@ export const Home = () => (
     const [CNumAdd2, setC_Num2] = useState('');
     const [CNumAdd3, setC_Num3] = useState('');
     const [CNumAdd4, setC_Num4] = useState('');
+    const [CNumAdd5, setC_Num5] = useState('');
+    const [CNumAdd6, setC_Num6] = useState('');
     const [CL_NumAdd1, setCL_Num1] = useState('');
     const [CL_NumAdd2, setCL_Num2] = useState('');
     const [CL_NumAdd3, setCL_Num3] = useState('');
     const [CL_NumAdd4, setCL_Num4] = useState('');
+    const [CL_NumAdd5, setCL_Num5] = useState('');
+    const [CL_NumAdd6, setCL_Num6] = useState('');
     
     const [test_sc, set_test_sc] = useState('');
     const [update_sc, set_update_sc] = useState('');
   
-  
+    const [inHover, setHover] = useState(false);
+
     //state for schedule generation
     let [responseData, setResponseData] = useState('')
   
@@ -69,6 +77,14 @@ export const Home = () => (
       setC_Num4(value);
       console.log('CNumUpdate4() called, value: ', value);
     };
+    const C_NumUpdate5 = value => {
+      setC_Num5(value);
+      console.log('CNumUpdate5() called, value: ', value);
+    };
+    const C_NumUpdate6 = value => {
+      setC_Num6(value);
+      console.log('CNumUpdate6() called, value: ', value);
+    };
     const CL_NumUpdate1 = value => {
       setCL_Num1(value);
       console.log('CL_NumUpdate1() called, value: ', value);
@@ -85,20 +101,29 @@ export const Home = () => (
       setCL_Num4(value);
       console.log('CL_NumUpdate4() called, value: ', value);
     };
+    const CL_NumUpdate5 = value => {
+      setCL_Num5(value);
+      console.log('CL_NumUpdate5() called, value: ', value);
+    };
+    const CL_NumUpdate6 = value => {
+      setCL_Num6(value);
+      console.log('CL_NumUpdate6() called, value: ', value);
+    };
     
     // Relevant initializations
     let courseData = [];
     let conflicts = [];
     let conflicts_print = [];
     let final_schedule_info = [];
-    let final_lab_lecture_info = []
+    let final_lab_lecture_info = [];
+    let walking_Durs = [];
     let emptyArray = Array(14).fill(0).map(row => new Array(6).fill(" "))
   
     let emptyArrays = [emptyArray, emptyArray];
     let testSc = emptyArrays;
     let num_courses_sub = 0;
-    const courseNums = [CNumAdd1, CNumAdd2, CNumAdd3, CNumAdd4]; 
-    const classNums = [CL_NumAdd1, CL_NumAdd2, CL_NumAdd3, CL_NumAdd4]; 
+    const courseNums = [CNumAdd1, CNumAdd2, CNumAdd3, CNumAdd4, CNumAdd5, CNumAdd6]; 
+    const classNums = [CL_NumAdd1, CL_NumAdd2, CL_NumAdd3, CL_NumAdd4, CL_NumAdd5, CL_NumAdd6]; 
   
     const check = async event => {
       // prevent the refresh of page on submit
@@ -200,10 +225,13 @@ export const Home = () => (
             conflicts_print.push(temp_st)
             conflicts_print.push(',')
           }
+
+          // Spencer Additions
+          walking_Durs = get_mapping_distance(final_schedule_info, testSc)
+
           //console.log("conflicts_print ",conflicts_print)
           
           //Parse out the info based on length of responsData (# of courses)
-  
           //If the testSc has not been changed, don't do anything
           if (testSc === emptyArrays) { console.log("nothing has happened here. testSc is: ", testSc) }
           // Based on if the update state is T/F
@@ -230,6 +258,7 @@ export const Home = () => (
   
 
       console.log("conflicts_print", conflicts_print)
+      console.log("walking_Durs", walking_Durs)
       console.log("fin")
   
     return (
@@ -241,10 +270,14 @@ export const Home = () => (
           C_NumUpdate2={C_NumUpdate2}
           C_NumUpdate3={C_NumUpdate3}
           C_NumUpdate4={C_NumUpdate4}
+          C_NumUpdate5={C_NumUpdate5}
+          C_NumUpdate6={C_NumUpdate6}
           CL_NumUpdate1={CL_NumUpdate1}
           CL_NumUpdate2={CL_NumUpdate2}
           CL_NumUpdate3={CL_NumUpdate3}
           CL_NumUpdate4={CL_NumUpdate4}
+          CL_NumUpdate5={CL_NumUpdate5}
+          CL_NumUpdate6={CL_NumUpdate6}
           responseData={responseData}
           test_sc={testSc}
           conflicts={conflicts}
@@ -252,6 +285,9 @@ export const Home = () => (
           final_schedule_info={final_schedule_info}
           courseNums={courseNums}
           final_lab_lecture_info={final_lab_lecture_info}
+          inHover={inHover}
+          setHover={setHover}
+          walking_Durs={walking_Durs}
       />
     </div>
     );

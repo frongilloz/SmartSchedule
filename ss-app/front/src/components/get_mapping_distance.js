@@ -1,0 +1,177 @@
+
+import { getWalkingDurationBetweenMins } from './data/building_data.js';
+
+export function get_mapping_distance(final_schedule_info, testSc) {
+
+    let walking_Durs = [];
+    let courseIterators = [];
+    let courseIterator;
+    let finalScheduleInfoIdx;
+
+    for (finalScheduleInfoIdx = 0; finalScheduleInfoIdx < final_schedule_info.length; finalScheduleInfoIdx++) {
+    courseIterator = {
+        courseCode: final_schedule_info[finalScheduleInfoIdx][0].course_code,
+        offsetIntoFinalScheduleInfo: finalScheduleInfoIdx,
+        currCount:  0
+    };
+
+    courseIterators.push(courseIterator);
+    }
+
+    const getIterator = (courseCode) => {
+    return courseIterators.find(courseIterator => (courseIterator.courseCode === courseCode));
+    }
+
+    console.log(courseIterators);
+
+    let fromCode;
+    let toCode;
+    let dayIdx;
+    let hourIdx;
+    let earlierScheduleEntry;
+    let laterScheduleEntry;
+    let earlierScheduleIterator;
+    let laterScheduleIterator;
+    let earlierCourseInfo;
+    let laterCourseInfo;
+    let walkingDurationMins;
+    let conflictingDayHourPairs = [];
+    let dayHourPair;
+    let schedule;
+    let scheduleIdx;
+
+    for (scheduleIdx = 0; scheduleIdx < testSc.length; scheduleIdx++) {
+    schedule = testSc[scheduleIdx];
+
+    for (dayIdx = 0; dayIdx < schedule[0].length; dayIdx++) {
+        for (hourIdx = 0; hourIdx < (schedule.length - 1); hourIdx++) {
+        earlierScheduleEntry = schedule[hourIdx][dayIdx];
+        laterScheduleEntry = schedule[hourIdx + 1][dayIdx];
+
+        if (earlierScheduleEntry === " ") {
+            continue;
+        }
+
+        if (laterScheduleEntry === " ") {
+            continue;
+        }
+
+        if (earlierScheduleEntry === laterScheduleEntry) {
+            continue;
+        }
+
+        /* get the iterators associated with these courses */
+        earlierScheduleIterator = getIterator(earlierScheduleEntry);
+        laterScheduleIterator = getIterator(laterScheduleEntry);
+
+        /* based on the count value, get the course info associated with them */
+        // PREV
+        earlierCourseInfo = final_schedule_info[earlierScheduleIterator.offsetIntoFinalScheduleInfo][earlierScheduleIterator.currCount];
+        laterCourseInfo = final_schedule_info[laterScheduleIterator.offsetIntoFinalScheduleInfo][laterScheduleIterator.currCount];
+        
+        // ISSUE: INDICES NEED TO BE CHANGED; looks to be just pulling from the first section info object
+        //earlierCourseInfo = final_schedule_info[][];
+        //laterCourseInfo = final_schedule_info[][];
+
+        // log 
+        //console.log("earlierCourseInfo", earlierCourseInfo)
+        //console.log("laterCourseInfo", laterCourseInfo)
+
+        fromCode = "NEB";
+        toCode = "GER";
+
+        /* @TODO: extract building code of relevant sections.
+            if they're both in-person, call getWalkingDistance() */
+
+        let currover15=false;
+        let currIsOnline= false;
+
+        if (earlierCourseInfo.section_web === "AD") {
+            continue;
+        }
+
+        if (laterCourseInfo.section_web === "AD") {
+            continue;
+        }
+
+        // NEED to change; RN getting the building location from the FIRST building, not the actual one
+        fromCode = earlierCourseInfo.section_mT[0].meetBuilding;
+        toCode = laterCourseInfo.section_mT[0].meetBuilding;
+
+        walkingDurationMins = getWalkingDurationBetweenMins(fromCode, toCode);
+
+        //console.log(`${walkingDurationMins} minutes`);
+
+        // If the duration is greater than 15 minutes
+        if (walkingDurationMins > 15) {
+            console.log(`Can't make it in time from ${fromCode} to ${toCode}!!!`);
+            currover15=true;
+        }
+
+        // Later
+        let dayHourPair = {
+            scheduleIdx:  scheduleIdx,
+            dayIdx:       dayIdx,
+            hourIdx:      hourIdx
+        };
+        conflictingDayHourPairs.push(dayHourPair);
+
+        //////
+        let currDay;
+        if(dayIdx ===  0){
+            currDay = 'M';
+        }
+        else if(dayIdx ===  1){
+            currDay = 'T';
+        }
+        else if(dayIdx === 2){
+            currDay = 'W';
+        }
+        else if(dayIdx === 3){
+            currDay = 'Th';
+        }
+        else if(dayIdx === 4){
+            currDay = 'F';
+        }
+        else if(dayIdx === 5){
+            currDay = 'Sat';
+        }
+
+        console.log("WWWW", scheduleIdx)
+        console.log("WWWW", scheduleIdx)
+        
+        console.log("earlierCourseInfo", earlierCourseInfo.course_code)
+        console.log("earlierCourseInfo", earlierCourseInfo.section_c_num)
+        
+        console.log("laterCourseInfo", laterCourseInfo.course_code)
+        console.log("laterCourseInfo", laterCourseInfo.section_c_num)
+
+        console.log("earlierCourseInfo.section_web", earlierCourseInfo.section_web)
+        console.log("laterCourseInfo.section_web", laterCourseInfo.section_web)
+
+
+        // Object to push
+        let wlk_object={
+            scheduleIdx: scheduleIdx,
+            over15: currover15,
+            loc1: fromCode,
+            loc2: toCode,
+            duration: walkingDurationMins.toFixed(3),
+            dayIdx: currDay,
+            hourIdx: hourIdx+1,
+            class1: earlierCourseInfo.course_code,
+            class2:laterCourseInfo.course_code,
+            isOnline: currIsOnline 
+        }
+
+        // front en dobject
+        walking_Durs.push(wlk_object)
+
+        }
+    }
+    }
+    
+    console.log("conflictingDayHourPairs", conflictingDayHourPairs);
+
+    return walking_Durs
+}

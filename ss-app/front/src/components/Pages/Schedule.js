@@ -239,6 +239,10 @@ const Schedule = props => {
         </div>
       )
     }
+    else if(props.final_schedule_info){
+      return(<div></div> )
+    }
+
     else{
       return(
         <div>
@@ -265,26 +269,50 @@ const Schedule = props => {
         )
       }
     }
-
   };
+
 
   //Print a mapping warning of the conflict indices
   const print_mapping_alerts = curr_sc_idx => {
 
     // Only print the conflict warnings if there are conflicts present
     // for the length of the conflicts produced
-    for (let i = 0; i < props.conflicts.length; i++) {
-      if(curr_sc_idx == props.conflicts[i] ){
-        return(
-          <div className='alert alert-danger' id='conflicts_div'>
-              <strong><b>Warning: </b> There is a class conflict in this schedule.</strong>
-          </div>
-        )
+
+    for (let i = 0; i < props.walking_Durs.length; i++) {
+      if(curr_sc_idx == props.walking_Durs[i].scheduleIdx ){
+        // If under 15 minutes
+        if(!props.walking_Durs[i].over15){
+          return(
+            <Alert variant='primary'>
+              <b>Note:</b> For courses {props.walking_Durs[i].class1} and {props.walking_Durs[i].class2} , 
+              you will have to walk between <b>{props.walking_Durs[i].loc1}</b> and <b>{props.walking_Durs[i].loc2}</b>  on day 
+              <b> {props.walking_Durs[i].dayIdx}</b> after period <b> {props.walking_Durs[i].hourIdx}</b>. 
+              <br></br>
+              <b> Estimated Time Walking: </b> {props.walking_Durs[i].duration} minutes.
+              
+            </Alert>
+          )
+        }
+
+        //else over 15 mins
+        else{
+          return(
+            <div className='alert alert-danger' id='conflicts_div'>
+                 <b>Note: Walking time over 15 minutes. </b> For courses {props.walking_Durs[i].class1} and {props.walking_Durs[i].class2} , 
+              you will have to walk between <b>{props.walking_Durs[i].loc1}</b> and <b>{props.walking_Durs[i].loc2}</b>  on day 
+              <b> {props.walking_Durs[i].dayIdx}</b> after period <b> {props.walking_Durs[i].hourIdx}</b>.  
+              <br></br>
+              <b> Estimated Time Walking: </b> {props.walking_Durs[i].duration} minutes.
+            </div>
+          )
+        }
       }
+      
     }
+
   };
 
-  
+
   // Determine Class format
   const get_online_status = curr_sect => {
     if(curr_sect == "AD"){
@@ -376,6 +404,9 @@ const Schedule = props => {
 
           {/* Print any conflicts warnings (if they exist) */ }
           {print_conflict(curr_sc_index)}
+
+          {/* Print any mapping warnings (if they exist) */ }
+          {print_mapping_alerts(curr_sc_index)}
         
 
           {/* Generate the Schedule Table */ }
@@ -857,8 +888,7 @@ const print_schedule_lab_lecture = props.final_lab_lecture_info.map((curr_class_
 
         
             {/* Lab/Lecture Times*/}
-            {print_header_1(props.conflicts_print)}
-
+            {print_header_1(props.final_schedule_info)}
               <Accordion>
                 {print_schedule_lab_lecture}
               </Accordion>

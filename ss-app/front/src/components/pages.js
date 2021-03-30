@@ -244,6 +244,8 @@ export const Home = () => (
 
           console.log(courseIterators);
 
+          let fromCode;
+          let toCode;
           let dayIdx;
           let hourIdx;
           let earlierScheduleEntry;
@@ -286,6 +288,8 @@ export const Home = () => (
                    if they're both in-person, call getWalkingDistance() */
                 walkingDurationMins = getWalkingDurationBetweenMins(fromCode, toCode);
 
+                console.log(`${walkingDurationMins} minutes`);
+                
                 if (walkingDurationMins > 15) {
                   console.log(`Can't make it in time from ${fromCode} to ${toCode}!!!`);
                 }

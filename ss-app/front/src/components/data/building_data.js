@@ -1,4 +1,4 @@
-export default [
+export const building_data = [
     {
         id: 1,
         code: 'AAF',
@@ -1459,11 +1459,13 @@ const getHaversine = (lat1, lon1, lat2, lon2) => {
 const AVG_HUMAN_WALKING_SPEED_MPH   =   3.5;
 const MINS_PER_HOUR                 =   60;
 
+const TOLERANCE_MINS                =   3;
+
 export const getWalkingDurationBetweenMins = (fromBuildingCode, toBuildingCode) => {
     const fromCoordinates = findBuildingByCode(fromBuildingCode).coordinates;
     const toCoordinates = findBuildingByCode(toBuildingCode).coordinates;
 
     const distanceMiles = getHaversine(fromCoordinates.latitude, fromCoordinates.longitude, toCoordinates.latitude, toCoordinates.longitude);
 
-    return distanceMiles * AVG_HUMAN_WALKING_SPEED_MPH * MINS_PER_HOUR;
+    return (distanceMiles * AVG_HUMAN_WALKING_SPEED_MPH * MINS_PER_HOUR / 10) + TOLERANCE_MINS;
 }

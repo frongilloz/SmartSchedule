@@ -13,6 +13,7 @@ import Profile_Content from './Pages/Profile';
 
 // import the generate schedule function
 import { generateSchedule } from './generate_schedule.js';
+import { get_mapping_distance } from './get_mapping_distance.js';
 
 import { getWalkingDurationBetweenMins } from './data/building_data.js';
 
@@ -225,114 +226,12 @@ export const Home = () => (
             conflicts_print.push(',')
           }
 
-          // Spencer
-          let courseIterators = [];
-          let courseIterator;
-          let finalScheduleInfoIdx;
+          // Spencer Additions
+          walking_Durs = get_mapping_distance(final_schedule_info, testSc)
 
-          for (finalScheduleInfoIdx = 0; finalScheduleInfoIdx < final_schedule_info.length; finalScheduleInfoIdx++) {
-            courseIterator = {
-              courseCode: final_schedule_info[finalScheduleInfoIdx][0].course_code,
-              offsetIntoFinalScheduleInfo: finalScheduleInfoIdx,
-              currCount:  0
-            };
-
-            courseIterators.push(courseIterator);
-          }
-
-          const getIterator = (courseCode) => {
-            return courseIterators.find(courseIterator => (courseIterator.courseCode === courseCode));
-          }
-
-          console.log(courseIterators);
-
-          let fromCode;
-          let toCode;
-          let dayIdx;
-          let hourIdx;
-          let earlierScheduleEntry;
-          let laterScheduleEntry;
-          let earlierScheduleIterator;
-          let laterScheduleIterator;
-          let earlierCourseInfo;
-          let laterCourseInfo;
-          let walkingDurationMins;
-          let currover15 = false;
-
-          testSc.forEach((schedule) => {
-            for (dayIdx = 0; dayIdx < schedule[0].length; dayIdx++) {
-              for (hourIdx = 0; hourIdx < (schedule.length - 1); hourIdx++) {
-                earlierScheduleEntry = schedule[hourIdx][dayIdx];
-                laterScheduleEntry = schedule[hourIdx + 1][dayIdx];
-  
-                if (earlierScheduleEntry === " ") {
-                  continue;
-                }
-  
-                if (laterScheduleEntry === " ") {
-                  continue;
-                }
-
-                if (earlierScheduleEntry === laterScheduleEntry) {
-                  continue;
-                }
-  
-                /* get the iterators associated with these courses */
-                earlierScheduleIterator = getIterator(earlierScheduleEntry);
-                laterScheduleIterator = getIterator(laterScheduleEntry);
-  
-                /* based on the count value, get the course info associated with them */
-                earlierCourseInfo = final_schedule_info[earlierScheduleIterator.offsetIntoFinalScheduleInfo][earlierScheduleIterator.currCount];
-                laterCourseInfo = final_schedule_info[laterScheduleIterator.offsetIntoFinalScheduleInfo][laterScheduleIterator.currCount];
-  
-                fromCode = "NEB";
-                toCode = "GER";
-                
-                /* @TODO: extract building code of relevant sections.
-                   if they're both in-person, call getWalkingDistance() */
-
-                if (earlierCourseInfo.section_web === "AD") {
-                  continue;
-                }
-
-                if (laterCourseInfo.section_web === "AD") {
-                  continue;
-                }
-
-                fromCode = earlierCourseInfo.section_mT[0].meetBuilding;
-                toCode = laterCourseInfo.section_mT[0].meetBuilding;
-
-                walkingDurationMins = getWalkingDurationBetweenMins(fromCode, toCode);
-
-                console.log(`${walkingDurationMins} minutes`);
-
-                if (walkingDurationMins > 15) {
-                  console.log(`Can't make it in time from ${fromCode} to ${toCode}!!!`);
-                  currover15 = true
-                }
-
-                // Object to push
-                let wlk_object={
-                  sched_i: earlierScheduleIterator.offsetIntoFinalScheduleInfo,
-                  index1: earlierScheduleIterator.currCount,
-                  index2: laterScheduleIterator.currCount,
-                  over15: currover15,
-                  loc1: fromCode,
-                  loc2: toCode,
-                  duration: walkingDurationMins
-                }
-                walking_Durs.push(wlk_object)
-
-              }
-            }
-          })
-
-          // / Spencer
-          
           //console.log("conflicts_print ",conflicts_print)
           
           //Parse out the info based on length of responsData (# of courses)
-  
           //If the testSc has not been changed, don't do anything
           if (testSc === emptyArrays) { console.log("nothing has happened here. testSc is: ", testSc) }
           // Based on if the update state is T/F
@@ -388,6 +287,7 @@ export const Home = () => (
           final_lab_lecture_info={final_lab_lecture_info}
           inHover={inHover}
           setHover={setHover}
+          walking_Durs={walking_Durs}
       />
     </div>
     );

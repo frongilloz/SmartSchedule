@@ -284,12 +284,25 @@ export const Home = () => (
   
                 fromCode = "NEB";
                 toCode = "GER";
+                
                 /* @TODO: extract building code of relevant sections.
                    if they're both in-person, call getWalkingDistance() */
+
+                if (earlierCourseInfo.section_web === "AD") {
+                  continue;
+                }
+
+                if (laterCourseInfo.section_web === "AD") {
+                  continue;
+                }
+
+                fromCode = earlierCourseInfo.section_mT[0].meetBuilding;
+                toCode = laterCourseInfo.section_mT[0].meetBuilding;
+
                 walkingDurationMins = getWalkingDurationBetweenMins(fromCode, toCode);
 
                 console.log(`${walkingDurationMins} minutes`);
-                
+
                 if (walkingDurationMins > 15) {
                   console.log(`Can't make it in time from ${fromCode} to ${toCode}!!!`);
                 }

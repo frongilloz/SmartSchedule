@@ -54,4 +54,13 @@
     font-size: 1rem;
 }
 
+input[type='text'] {
+    position: relative;
+    margin-top: 98%;
+    left: -1.5%;
+    width: 95%;
+    height: 34px;
+    font-size: 14px;
+}
+
   

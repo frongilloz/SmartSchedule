@@ -1,3 +1,7 @@
+/*
+Cite: This building data was provided and used from the bootcamps of course CEN3031.
+*/
+
 export const building_data = [
     {
         id: 1,

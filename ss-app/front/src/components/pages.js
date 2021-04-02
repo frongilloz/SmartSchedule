@@ -109,6 +109,12 @@ export const Home = () => (
       setCL_Num6(value);
       console.log('CL_NumUpdate6() called, value: ', value);
     };
+
+    const reset_button = async event => {
+      
+      event.preventDefault();
+      console.log('RSESET');
+    };
     
     // Relevant initializations
     let courseData = [];
@@ -288,6 +294,7 @@ export const Home = () => (
           inHover={inHover}
           setHover={setHover}
           walking_Durs={walking_Durs}
+          reset_button={reset_button}
       />
     </div>
     );

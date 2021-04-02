@@ -112,7 +112,13 @@ const Schedule = props => {
     //change by calling App external function
     props.CL_NumUpdate6(event.target.value);
     };
-
+  
+    
+    const reset_but = event => {
+      //change by calling App external function
+      props.reset_button(event.target.value);
+      };
+    
 
     // Print Online Classes for table
     /*
@@ -515,7 +521,16 @@ const Schedule = props => {
 const print_header_1= props => {
   if(props.length != 0){
     return(
+      <div>
+        
       <h2>All Course Timing</h2>
+
+{/* 
+              <Button variant='secondary' type='submit'  onClick={reset_but}>
+                      Reset
+                </Button>
+                */}
+      </div>
     );
   }
   else{

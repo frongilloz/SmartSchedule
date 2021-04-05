@@ -7,6 +7,7 @@ export function generateSchedule(responseData) {
   let finalsectionInfo = []
 
   let finalSchedules = []
+  let conflictSchedules = []
 
   let checkArray = [1]
   //console.log('Before: ', scheduleArray)
@@ -47,6 +48,7 @@ export function generateSchedule(responseData) {
     for (let c = 0; c < totalScheduleCount; c++) {
       let emptySchedule = Array(14).fill(0).map(row => new Array(6).fill(" "))
       finalSchedules.push(emptySchedule)
+      conflictSchedules.push(emptySchedule)
     }
 
     //console.log('finalSchedules initial status: ', finalSchedules)
@@ -114,11 +116,18 @@ export function generateSchedule(responseData) {
 
             //console.log('newSchedule is: ', newSchedule)
 
+            // reset every loop
+            let currConflictCode = " ";
+
             if (period_index1 === period_index2) {
               if (newSchedule[period_index1][day_index] != " "){
                 console.log("uh oh, there are two classes that could be here")
                 //add the index of the conflicts
                 conflicts.push(count);
+
+                // Print conflicts
+                console.log("CONFLICT 1: ", newSchedule[period_index1][day_index] )
+                //conflictSchedules[period_index1][day_index] = newSchedule[period_index1][day_index]
               }
               newSchedule[period_index1][day_index] = responseData[k].code
               //dummySchedule[period_index1][day_index] = responseData[k].code
@@ -130,7 +139,28 @@ export function generateSchedule(responseData) {
                 conflicts.push(count);
 
                 //Print our the 2 conflicting classes
-                //console.log("CONFLICT: ", )
+                console.log("CONFLICT 2a: ", newSchedule[period_index1][day_index] )
+                console.log("CONFLICT 2b: ", newSchedule[period_index2][day_index] )
+
+                // Append to conflict schedule
+                /*
+                if(newSchedule[period_index1][day_index] != " "){
+                  conflictSchedules[period_index1][day_index] = newSchedule[period_index1][day_index]
+                }
+                else if (newSchedule[period_index2][day_index] != " "){
+                  conflictSchedules[period_index1][day_index] = newSchedule[period_index2][day_index]
+                }
+                */
+
+                /* Meth 2
+                if(newSchedule[period_index1][day_index] != " "){
+                  currConflictCode = newSchedule[period_index1][day_index]
+                }
+                else if (newSchedule[period_index2][day_index] != " "){
+                  currConflictCode = newSchedule[period_index2][day_index]
+                }
+                */
+               
               }
               newSchedule[period_index1][day_index] = responseData[k].code
               newSchedule[period_index2][day_index] = responseData[k].code
@@ -278,6 +308,7 @@ export function generateSchedule(responseData) {
 
   console.log("conflicts: ", conflicts)
   console.log("sectionInfo objects are: ", finalsectionInfo)
+  console.log("conflictSchedules: ", conflictSchedules)
 
   //return finalSchedules
   return {finalSchedules, conflicts, finalSchedule_Info, finalsectionInfo};

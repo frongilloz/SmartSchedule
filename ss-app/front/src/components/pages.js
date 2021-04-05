@@ -16,6 +16,7 @@ import { generateSchedule } from './generate_schedule.js';
 import { get_mapping_distance } from './get_mapping_distance.js';
 
 import { getWalkingDurationBetweenMins } from './data/building_data.js';
+import { findBuildingByCode } from './data/building_data.js';
 
 import { Redirect } from 'react-router-dom';
 
@@ -295,6 +296,7 @@ export const Home = () => (
           setHover={setHover}
           walking_Durs={walking_Durs}
           reset_button={reset_button}
+          findBuildingByCode={findBuildingByCode}
       />
     </div>
     );

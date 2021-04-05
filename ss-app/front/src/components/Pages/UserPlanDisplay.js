@@ -280,7 +280,7 @@ if(1)
     var Y5_Fa_C6_Credit = " ";
 }
     const data = [
-        [UserName],
+        ["Student:", UserName],
         [" "],
         ["2021"],
         ["Spring", " ", " ", " ", "Summer", " ", " ", " ", "Fall"],

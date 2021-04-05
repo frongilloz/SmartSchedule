@@ -50,8 +50,13 @@ export const Home = () => (
   
     const [inHover, setHover] = useState(false);
 
+    
+
     //state for schedule generation
     let [responseData, setResponseData] = useState('')
+
+    //rename the following after you figure out the problem -Dom
+    let [callCounter_r, setcallCounter_r] = useState('')
   
   
     let ctr =0;
@@ -118,6 +123,7 @@ export const Home = () => (
     
     // Relevant initializations
     let courseData = [];
+    let queryStrings = [];
     let conflicts = [];
     let conflicts_print = [];
     let final_schedule_info = [];
@@ -130,21 +136,112 @@ export const Home = () => (
     let num_courses_sub = 0;
     const courseNums = [CNumAdd1, CNumAdd2, CNumAdd3, CNumAdd4, CNumAdd5, CNumAdd6]; 
     const classNums = [CL_NumAdd1, CL_NumAdd2, CL_NumAdd3, CL_NumAdd4, CL_NumAdd5, CL_NumAdd6]; 
-  
+
+
+    //Troubleshooting attempt #1: try to move the get request to an async function 
+    //async function sendGetRequest(queryStrings) {
+    //  for (const query of queryStrings) {
+    //    try {
+    //      await axios.get(query)
+    //        .then((response) => {
+    //          console.log("GET axios called")
+    //          console.log("GET resp data", response.data);
+    //          courseData.push(response.data);
+
+    //          // Prev
+    //          setResponseData(courseData)
+
+    //          console.log("Step 2")
+    //        });
+
+    //    } catch (err) {
+    //      // TODO: do something
+    //      console.log("the axios try catch block caught something... is it a bug?")
+    //    }
+    //  }
+    //}
+
+    //Troubleshoot attempt #2 : create another check to separate the call for generateschedule.js
+    const check2 = async event => {
+
+      // prevent the refresh of page on submit
+      //event.preventDefault();
+
+      console.log("start of check2")
+      console.log('Pages.js length of resposneData is: ', responseData.length)
+      console.log("responseData length is:", responseData.length)
+      console.log("callCounter:", callCounter_r)
+      if (responseData.length === callCounter_r)
+        console.log("responseData length and num of courses from form match")
+      else
+        console.log("responseData length and num of courses from form do not match")
+    }
+    // only generate the new schedule once all the course requests have been completed
+    if (responseData.length !== 0) {
+      if (responseData.length === callCounter_r) {
+        // Run the generate schedule function
+        let gen_schedule_return = generateSchedule(responseData)
+
+        //deconstruct returned object into the components we need to use
+        testSc = gen_schedule_return.finalSchedules;
+        conflicts = gen_schedule_return.conflicts;
+        final_schedule_info = gen_schedule_return.finalSchedule_Info;
+        final_lab_lecture_info = gen_schedule_return.finalsectionInfo;
+        console.log("Test Schedule(s) Received, ", testSc)
+        console.log("Conflict(s) Received, ", conflicts)
+        console.log("final_schedule_info(s) Received, ", final_schedule_info)
+        console.log("final_lab_lecture_info(s) Received, ", final_lab_lecture_info)
+
+        // Parse out the confilcts
+        for (let i = 0; i < conflicts.length; i++) {
+          //console.log("conflicts[i],",conflicts[i])
+          let temp_st = conflicts[i].toString()
+          conflicts_print.push(temp_st)
+          conflicts_print.push(',')
+        }
+
+        // Spencer Additions
+        walking_Durs = get_mapping_distance(final_schedule_info, testSc)
+
+        //console.log("conflicts_print ",conflicts_print)
+
+        //Parse out the info based on length of responsData (# of courses)
+        //If the testSc has not been changed, don't do anything
+        if (testSc === emptyArrays) { console.log("nothing has happened here. testSc is: ", testSc) }
+        // Based on if the update state is T/F
+        else if (update_sc === false) {
+          // Update the schedule state variable w/ the generate Scheudle if they are NOT the same
+          set_test_sc(testSc)
+          console.log("UPDATE", update_sc)
+          // Set the flag that this has been updated so it doesn't re-render
+          set_update_sc(true);
+        }
+        else {
+          console.log("testSc and test_sc are the same, no update performed")
+        }
+
+        //Delay on submit error checks
+        console.log("bool", update_sc)
+        console.log("testSc", testSc)
+        console.log("test_sc", test_sc)
+
+      } // end of outer else
+    }
+
     const check = async event => {
       // prevent the refresh of page on submit
       event.preventDefault();
 
       // Reset
       let courseNumCounter = -1;
-  
+
       // For each course submitted
       courseNums.forEach(async courseNum => {
         /* if this field was filled in by the user */
         if (courseNum){
           //Reset
           set_update_sc(false);
-
+          console.log("what is course number here:", courseNum)
           // update counter
           courseNumCounter++;
 
@@ -155,113 +252,73 @@ export const Home = () => (
           //Check to see if the course had a corresponding class number submitted
           if(classNums[courseNumCounter] != ''){
             console.log("TRUE")
-            queryString = '/api/courses/find/'  + courseNum + '/' + classNums[courseNumCounter] + '/' + SemAdd;
+            queryString = '/api/courses/find/' + courseNum + '/' + classNums[courseNumCounter] + '/' + SemAdd;
+            console.log("Step 1")
           }else{
             queryString = '/api/courses/find/'  + courseNum + '/'
-                                                    + SemAdd;
+              + SemAdd;
+            console.log("Step 1")
           }
 
           console.log("QUERY CALLED: ", queryString)
-          
-          /* make a backend request for this course data */
-          try {
-            await axios.get(queryString)
-              .then((response) => {
-                console.log("GET axios called")
-                console.log("GET resp data", response.data);
-                courseData.push(response.data);
-  
-                // Prev
-                setResponseData(courseData)
-  
-                
-              });
-      
-          } catch (err) {
-            // TODO: do something
-          }
+          queryStrings.push(queryString)
         }
-  
-        
-  
       }) // end for each
-  
-     
-  
-  
-      //courseData.forEach(course => {
-      //  console.log(course);
-      //})
-  
+
+      console.log("does this show up after every query call?")
+      check3()
+      //check2()
+
     }; // end of async
-    
-  
+
+    //Troubleshoot attempt #3 : use check3 after the forEach is finished within the async call, then call check2
+    async function check3() {
+      console.log("start of check3")
+
       console.log("st")
-      console.log('Pages.js length of resposneData is: ', responseData.length)
-      
+      console.log("queryStrings is: ", queryStrings)
+
       // Get the number of courses submitted
       for (let i = 0; i < courseNums.length; i++) {
-        if(courseNums[i]){
+        if (courseNums[i]) {
           num_courses_sub++
         }
       }
-  
+
       console.log('Pages.js num_courses_sub is: ', num_courses_sub)
-    
-      // only generate the new schedule once all the course requests have been completed
-      if(responseData.length !== 0){
-        if(responseData.length === num_courses_sub){
-          // Run the generate schedule function
-          let gen_schedule_return = generateSchedule(responseData)  
 
-          //deconstruct returned object into the components we need to use
-          testSc = gen_schedule_return.finalSchedules;
-          conflicts = gen_schedule_return.conflicts;
-          final_schedule_info = gen_schedule_return.finalSchedule_Info;
-          final_lab_lecture_info = gen_schedule_return.finalsectionInfo;
-          console.log("Test Schedule(s) Received, ",testSc)
-          console.log("Conflict(s) Received, ",conflicts)
-          console.log("final_schedule_info(s) Received, ", final_schedule_info)
-          console.log("final_lab_lecture_info(s) Received, ", final_lab_lecture_info)
+      let callCounter = 0
+      for (const query of queryStrings) {
+        try {
+          await axios.get(query)
+            .then((response) => {
+              console.log("GET axios called")
+              console.log("GET resp data", response.data);
+              courseData.push(response.data);
 
-          // Parse out the confilcts
-          for (let i = 0; i < conflicts.length; i++) {
-            //console.log("conflicts[i],",conflicts[i])
-            let temp_st = conflicts[i].toString()
-            conflicts_print.push(temp_st)
-            conflicts_print.push(',')
-          }
+              //// Prev
+              //setResponseData(courseData)
+              callCounter++
 
-          // Spencer Additions
-          walking_Durs = get_mapping_distance(final_schedule_info, testSc)
+              if (callCounter === num_courses_sub) {
+                setResponseData(courseData)
+                setcallCounter_r(callCounter)
+              }
 
-          //console.log("conflicts_print ",conflicts_print)
-          
-          //Parse out the info based on length of responsData (# of courses)
-          //If the testSc has not been changed, don't do anything
-          if (testSc === emptyArrays) { console.log("nothing has happened here. testSc is: ", testSc) }
-          // Based on if the update state is T/F
-          else if (update_sc === false){
-            // Update the schedule state variable w/ the generate Scheudle if they are NOT the same
-            set_test_sc(testSc)
-            console.log("UPDATE", update_sc)
-            // Set the flag that this has been updated so it doesn't re-render
-            set_update_sc(true);
-          }
-          else{
-            console.log("testSc and test_sc are the same, no update performed")
-          }
-  
-  
+              console.log("Step 2")
+              console.log("show me courseData", courseData)
+              console.log("what is callCounter", callCounter)
+
+            });
+
+        } catch (err) {
+          // TODO: do something
+          console.log("the axios try catch block caught something... is it a bug?")
         }
-
-        // Delay on submit error checks
-          //console.log("bool", update_sc)
-          //console.log("testSc", testSc)
-          //console.log("test_sc", test_sc)
-  
-      } // end of outer else
-  
+      }
+    }
+      //Troubleshoot attempt #3 : call check2 (which calls generateSchedule and mapping function) after check3
+      check2()
 
       console.log("conflicts_print", conflicts_print)
       console.log("walking_Durs", walking_Durs)

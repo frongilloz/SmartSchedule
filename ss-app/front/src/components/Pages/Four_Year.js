@@ -1,6 +1,7 @@
 import React , { Component } from 'react';
 import { Form, Col, Card, Button, Row, Container} from 'react-bootstrap';
 import './basic.css';
+import UserPlanDisplay from './UserPlanDisplay'; 
 
 const Four_Year = props => {
 
@@ -246,6 +247,7 @@ const Four_Year = props => {
   </Row>
 </Form>  
     </Card>
+    <UserPlanDisplay />
   </div>
   );
 };

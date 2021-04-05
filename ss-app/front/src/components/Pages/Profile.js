@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import { Form, Col, Button, Card } from 'react-bootstrap';
 import './basic.css';
+import UserPlanDisplay from './UserPlanDisplay'; 
 
 const Profile = props => {
   //internal change functions
@@ -60,6 +61,7 @@ const Profile = props => {
             
                 <div class="col-lg">
                     <h4>Saved Academic Success Plans</h4>
+                    UserPlanDisplay
                     <span className='fa-stack fa-2x'>
                     <i className='fa fa-circle fa-stack-2x text-primary'></i>
                     <i className='fa fa-graduation-cap fa-stack-1x fa-inverse'></i>

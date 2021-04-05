@@ -134,7 +134,7 @@ const Four_Year = props => {
 
 
     <Card>
-    <Form>
+    <Form onSubmit={props.saveSchedule}>
     <Row>
     <Col>
       <Form.Group controlId="exampleForm.SelectCustom">
@@ -238,7 +238,7 @@ const Four_Year = props => {
     <button class="btn btn-primary" type="submit" onClick = {SubmitClicked}>Save Semester</button>
     </Col>
     <Col>
-    <button class="btn btn-primary" type="submit"  onClick = {LoadClicked}>Load Semester</button>
+    <button class="btn btn-primary" type=""  onClick = {LoadClicked}>Load Semester</button>
     </Col>
     <Col>
     <input class="btn btn-primary" type="reset" value="Reset"  onClick = {ResetClicked}></input>

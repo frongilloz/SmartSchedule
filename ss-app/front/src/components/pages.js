@@ -293,6 +293,7 @@ export const Home = () => (
     );
   };
 
+
 export const Four_Year = props => {
   const [SemCAdd, setSemC] = useState('');
   const [yearAdd, setYearC] = useState('');
@@ -314,6 +315,7 @@ export const Four_Year = props => {
   const [CCred4, setCCred4] = useState('');
   const [CCred5, setCCred5] = useState('');
   const [CCred6, setCCred6] = useState('');
+
   const SemChoice = value => {
     setSemC(value);
     console.log('SemChoice() called, value: ', value);
@@ -394,86 +396,106 @@ export const Four_Year = props => {
     setCCred6(value); 
     console.log('addCCRED6Update() called, value: ', value);
   };
+  
   const saveSchedule = async event => {
-  event.preventDefault(); 
-  console.log('saveSchedule() called');
-  console.log('Save CourseName1: ', CName1); 
-  console.log('Save CourseName2: ', CName2); 
-  console.log('Save CourseName3: ', CName3); 
-  console.log('Save CourseName4: ', CName4); 
-  console.log('Save CourseName5: ', CName5); 
-  console.log('Save CourseName6: ', CName6); 
-  console.log('Save CourseNum1: ', CNum1); 
-  console.log('Save CourseNum2: ', CNum2); 
-  console.log('Save CourseNum3: ', CNum3); 
-  console.log('Save CourseNum4: ', CNum4); 
-  console.log('Save CourseNum5: ', CNum5); 
-  console.log('Save CourseNum6: ', CNum6); 
-  console.log('Save CourseCred1: ', CCred1);
-  console.log('Save CourseCred2: ', CCred2);
-  console.log('Save CourseCred3: ', CCred3);
-  console.log('Save CourseCred4: ', CCred4);
-  console.log('Save CourseCred5: ', CCred5);
-  console.log('Save CourseCred6: ', CCred6);
-  console.log('Year save: ', yearAdd); 
-  console.log('Semester save: ', SemCAdd); 
-  let newSemester = {
-    year: yearAdd, 
-    semester: SemCAdd,
-    course1:
-    {
-      number: CNum1,
-      name: CName1,
-      credits: CCred1
-    },
-    course2:
-    {
-      number: CNum2,
-      name: CName2,
-      credits: CCred2
-    },
-    course3:
-    {
-      number: CNum3,
-      name: CName3,
-      credits: CCred3
-    },
-    course4:
-    {
-      number: CNum4,
-      name: CName4,
-      credits: CCred4
-    },
-    course5:
-    {
-      number: CNum5,
-      name: CName5,
-      credits: CCred5
-    },
-    course6:
-    {
-      number: CNum6,
-      name: CName6,
-      credits: CCred6
-    },
-  };
-
-  let curr_email =  props.email;
-
-  console.log("POST sent for 4 Year", newSemester, curr_email);
-
-  try {
-    console.log('Post Semester sent');
-    const s = await axios.post('/api/users/', (newSemester, curr_email));
+    event.preventDefault(); 
     /*
-    if (s.status == 200) {
-      setReload(true);
-    }*/
-  } catch (err) {
-    return false;
-  }
-  console.log('trying reload');
-  } ;
+    console.log('saveSchedule() called');
+    console.log('Save CourseName1: ', CName1); 
+    console.log('Save CourseName2: ', CName2); 
+    console.log('Save CourseName3: ', CName3); 
+    console.log('Save CourseName4: ', CName4); 
+    console.log('Save CourseName5: ', CName5); 
+    console.log('Save CourseName6: ', CName6); 
+    console.log('Save CourseNum1: ', CNum1); 
+    console.log('Save CourseNum2: ', CNum2); 
+    console.log('Save CourseNum3: ', CNum3); 
+    console.log('Save CourseNum4: ', CNum4); 
+    console.log('Save CourseNum5: ', CNum5); 
+    console.log('Save CourseNum6: ', CNum6); 
+    console.log('Save CourseCred1: ', CCred1);
+    console.log('Save CourseCred2: ', CCred2);
+    console.log('Save CourseCred3: ', CCred3);
+    console.log('Save CourseCred4: ', CCred4);
+    console.log('Save CourseCred5: ', CCred5);
+    console.log('Save CourseCred6: ', CCred6);
+    console.log('Year save: ', yearAdd); 
+    */
+
+    let newSemester = {
+      year: yearAdd, 
+      semester: SemCAdd,
+      course1:
+      {
+        number: CNum1,
+        name: CName1,
+        credits: CCred1
+      },
+      course2:
+      {
+        number: CNum2,
+        name: CName2,
+        credits: CCred2
+      },
+      course3:
+      {
+        number: CNum3,
+        name: CName3,
+        credits: CCred3
+      },
+      course4:
+      {
+        number: CNum4,
+        name: CName4,
+        credits: CCred4
+      },
+      course5:
+      {
+        number: CNum5,
+        name: CName5,
+        credits: CCred5
+      },
+      course6:
+      {
+        number: CNum6,
+        name: CName6,
+        credits: CCred6
+      },
+    }
+
+    
+    console.log('Semester save: ', newSemester); 
+
+    let curr_email =  props.email;
+
+    console.log("POST sent for 4 Year", newSemester);
+    console.log("curr_email", curr_email);
+
+    // TBD A not logged in error
+
+    let putObj ={
+      newSemester: newSemester,
+      email: curr_email
+    }
+
+    //POST
+    try {
+      console.log('Post Semester sent');
+      const s = await axios.put('/api/users/post_plan/', putObj);
+      /*
+      if (s.status == 200) {
+        setReload(true);
+      }*/
+    } catch (err) {
+      return false;
+    }
+
+    console.log('trying reload');
+    
+
+  };// end submit method
+
+  
 /*
   if (reload) {
     console.log('caught redirect');
@@ -564,6 +586,8 @@ export const Sign_Up = () => {
     console.log('save() email: ', emailAdd);
     console.log('save() pass: ', passAdd);
     console.log('save() passC: ', passCAdd);
+
+    // @TO DO: All 4 year plan objects need to be initialized
 
     //2) and will need to check is the email already exists in the database
 

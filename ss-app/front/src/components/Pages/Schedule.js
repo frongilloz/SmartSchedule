@@ -122,7 +122,7 @@ const Schedule = props => {
 
 
   // Color classes; Main schedule table grid
-  const generate_colored_sched_cells = curr_row => {
+  const generate_colored_sched_cells = (curr_row, curr_row_idx, curr_sched_idx )=> {
     //console.log("curr_row", curr_row)
 
     // init
@@ -136,26 +136,74 @@ const Schedule = props => {
       }
       else{
         // Go through the courseNums submitted, and match to print the color
-        if(curr_row[i] == props.courseNums[0].toUpperCase()){
+
+        /*if(curr_row[i] == props.courseNums[0].toUpperCase()){
           array_ret.push(<td class='color_class_1' 
             onMouseEnter={() => props.setHover(true)}
             onMouseLeave={() => props.setHover(false)}
               >{curr_row[i]}</td>)
         }
+        */
+
+        // Fetch Conflict info (separate table)
+        let currPotConflict = ' ';
+        try{
+          currPotConflict = props.conflictSchedules[curr_sched_idx][curr_row_idx][i];
+        }
+        catch{
+          currPotConflict = ' ';
+        }
+        //console.log("CONF: ", currPotConflict)
+
+
+        // Generate table rows based on course, and display the conflict if valid
+        if(curr_row[i] == props.courseNums[0].toUpperCase()){
+          if(currPotConflict != ' '){
+            array_ret.push(<td class='color_class_CONF'>{curr_row[i]} | {currPotConflict}</td>)
+          }
+          else{
+            array_ret.push(<td class='color_class_1'>{curr_row[i]}</td>)
+          }
+        }
         else if(curr_row[i] == props.courseNums[1].toUpperCase()){
-          array_ret.push(<td class='color_class_2'>{curr_row[i]}</td>)
+          if(currPotConflict != ' '){
+            array_ret.push(<td class='color_class_CONF'>{curr_row[i]} | {currPotConflict}</td>)
+          }
+          else{
+            array_ret.push(<td class='color_class_2'>{curr_row[i]}</td>)
+          }
         }
         else if(curr_row[i] == props.courseNums[2].toUpperCase()){
-          array_ret.push(<td class='color_class_3'>{curr_row[i]}</td>)
+          if(currPotConflict != ' '){
+            array_ret.push(<td class='color_class_CONF'>{curr_row[i]} | {currPotConflict}</td>)
+          }
+          else{
+            array_ret.push(<td class='color_class_3'>{curr_row[i]}</td>)
+          }
         }
         else if(curr_row[i] == props.courseNums[3].toUpperCase()){
-          array_ret.push(<td class='color_class_4'>{curr_row[i]}</td>)
+          if(currPotConflict != ' '){
+            array_ret.push(<td class='color_class_CONF'>{curr_row[i]} | {currPotConflict}</td>)
+          }
+          else{
+            array_ret.push(<td class='color_class_4'>{curr_row[i]}</td>)
+          }
         }
         else if(curr_row[i] == props.courseNums[4].toUpperCase()){
-          array_ret.push(<td class='color_class_5'>{curr_row[i]}</td>)
+          if(currPotConflict != ' '){
+            array_ret.push(<td class='color_class_CONF'>{curr_row[i]} | {currPotConflict}</td>)
+          }
+          else{
+            array_ret.push(<td class='color_class_5'>{curr_row[i]}</td>)
+          }
         }
         else if(curr_row[i] == props.courseNums[5].toUpperCase()){
-          array_ret.push(<td class='color_class_6'>{curr_row[i]}</td>)
+          if(currPotConflict != ' '){
+            array_ret.push(<td class='color_class_CONF'>{curr_row[i]} | {currPotConflict}</td>)
+          }
+          else{
+            array_ret.push(<td class='color_class_6'>{curr_row[i]}</td>)
+          }
         }
         else{
           array_ret.push(<td class='def_color_table'>{curr_row[i]}</td>)
@@ -362,11 +410,11 @@ const Schedule = props => {
       return (
         <div>
 
-        {/* Generate the detail submenu */ }
+        {/* Generate the detail submenu in a collapsible form*/ }
         
         <Accordion>
             <Card.Header>
-              <Accordion.Toggle as={Button} variant="link" eventKey={curr_sc_index_string}>
+              <Accordion.Toggle as={Button} variant="info" eventKey={curr_sc_index_string}>
               Schedule: {curr_sc_index} Info
               </Accordion.Toggle>
             </Card.Header>
@@ -431,7 +479,7 @@ const Schedule = props => {
                           <td class='def_color_table'>{times[index]}</td>
                           
                           {/* Generate the Colored cells*/ }
-                          {generate_colored_sched_cells(row)}
+                          {generate_colored_sched_cells(row, index, curr_sc_index)}
 
                         </tr>
                       );

@@ -153,3 +153,9 @@ table.table-bordered > tbody > tr > td{
   color: white;
   font-weight: bold;
 }
+
+.color_class_CONF {
+  background-color: #b30f18;
+  color: white;
+  font-weight: bold;
+}

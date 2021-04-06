@@ -132,9 +132,14 @@ export function generateSchedule(responseData) {
                 let curr_Conf = newSchedule[period_index1][day_index]
                 console.log("CONFLICT 1: ", curr_Conf)
                 int_conflictSchedules[period_index1][day_index] = curr_Conf
+
+                // NEW
+                //newSchedule[period_index1][day_index] = responseData[k].code + ' '+ curr_Conf
               }
-              newSchedule[period_index1][day_index] = responseData[k].code
-              //dummySchedule[period_index1][day_index] = responseData[k].code
+              //else{
+                newSchedule[period_index1][day_index] = responseData[k].code
+                //dummySchedule[period_index1][day_index] = responseData[k].code
+              //}
             }
             else {
               if (newSchedule[period_index1][day_index] != " " || newSchedule[period_index2][day_index] != " "){
@@ -149,12 +154,28 @@ export function generateSchedule(responseData) {
                 // Append to conflict schedule
                 int_conflictSchedules[period_index1][day_index] = newSchedule[period_index1][day_index]
                 int_conflictSchedules[period_index2][day_index] = newSchedule[period_index2][day_index]
-               
+
+                // NEW
+                /*
+                let curr_Conf = newSchedule[period_index1][day_index]
+                let curr_Conf2 = newSchedule[period_index2][day_index]
+
+                if(newSchedule[period_index1][day_index] != " "){
+                  newSchedule[period_index1][day_index] = responseData[k].code + ' '+ curr_Conf
+                }
+                if(newSchedule[period_index2][day_index] != " "){
+                  newSchedule[period_index2][day_index] = responseData[k].code + ' ' + curr_Conf2
+                }
+               */
               }
-              newSchedule[period_index1][day_index] = responseData[k].code
-              newSchedule[period_index2][day_index] = responseData[k].code
-              //dummySchedule[period_index1][day_index] = responseData[k].code
-              //dummySchedule[period_index2][day_index] = responseData[k].code
+
+              //else{  
+                newSchedule[period_index1][day_index] = responseData[k].code
+                newSchedule[period_index2][day_index] = responseData[k].code
+                //dummySchedule[period_index1][day_index] = responseData[k].code
+                //dummySchedule[period_index2][day_index] = responseData[k].code
+
+              // }
             }
 
           }

@@ -10,6 +10,7 @@ import Login_Content from './Pages/Login';
 import Sign_Up_Content from './Pages/Sign_Up';
 import Forgot_Password_Content from './Pages/Forgot_Password';
 import Profile_Content from './Pages/Profile';
+import Four_Year_User_Disp_Content from './Pages/Four_Year_User_Disp';
 
 // import the generate schedule function
 import { generateSchedule } from './generate_schedule.js';
@@ -362,198 +363,186 @@ export const Home = () => (
     );
   };
 
-  export const Four_Year = () => {
-    const [SemCAdd, setSemC] = useState('');
-    const [yearAdd, setYearC] = useState('');
+export const Four_Year = props => {
+  const [SemCAdd, setSemC] = useState('');
+  const [yearAdd, setYearC] = useState('');
+  const [CNum1, setCNum1] = useState('');
+  const [CNum2, setCNum2] = useState('');
+  const [CNum3, setCNum3] = useState('');
+  const [CNum4, setCNum4] = useState('');
+  const [CNum5, setCNum5] = useState('');
+  const [CNum6, setCNum6] = useState('');
+  const [CName1, setCName1] = useState('');
+  const [CName2, setCName2] = useState('');
+  const [CName3, setCName3] = useState('');
+  const [CName4, setCName4] = useState('');
+  const [CName5, setCName5] = useState('');
+  const [CName6, setCName6] = useState('');
+  const [CCred1, setCCred1] = useState('');
+  const [CCred2, setCCred2] = useState('');
+  const [CCred3, setCCred3] = useState('');
+  const [CCred4, setCCred4] = useState('');
+  const [CCred5, setCCred5] = useState('');
+  const [CCred6, setCCred6] = useState('');
 
-    const [CNum1, setCNum1] = useState('');
-    const [CNum2, setCNum2] = useState('');
-    const [CNum3, setCNum3] = useState('');
-    const [CNum4, setCNum4] = useState('');
-    const [CNum5, setCNum5] = useState('');
-    const [CNum6, setCNum6] = useState('');
+  const SemChoice = value => {
+    setSemC(value);
+    console.log('SemChoice() called, value: ', value);
+  };
+  const YChoice = value => {
+    setYearC(value);
+    console.log('YChoice() called, value: ', value);
+  };
+  const addCNUM1Update = value => {
+    setCNum1(value);
+    console.log('addCNUM1Update() called, value: ', value);
+  };
+  const addCNUM2Update = value => {
+    setCNum2(value);
+    console.log('addCNUM2Update() called, value: ', value);
+  };
+  const addCNUM3Update = value => {
+    setCNum3(value);
+    console.log('addCNUM3Update() called, value: ', value);
+  };
+  const addCNUM4Update = value => {
+    setCNum4(value);
+    console.log('addCNUM4Update() called, value: ', value);
+  };
+  const addCNUM5Update = value => {
+    setCNum5(value);
+    console.log('addCNUM5Update() called, value: ', value);
+  };
+  const addCNUM6Update = value => {
+    setCNum6(value);
+    console.log('addCNUM6Update() called, value: ', value);
+  };
+  const addCNAME1Update = value => {
+    setCName1(value);
+    console.log('addCName1Update() called, value: ', value);
+  };
+  const addCNAME2Update = value => {
+    setCName2(value);
+    console.log('addCName2Update() called, value: ', value);
+  };
+  const addCNAME3Update = value => {
+    setCName3(value);
+    console.log('addCName3Update() called, value: ', value);
+  };
+  const addCNAME4Update = value => {
+    setCName4(value);
+    console.log('addCName4Update() called, value: ', value);
+  };
+  const addCNAME5Update = value => {
+    setCName5(value);
+    console.log('addCName5Update() called, value: ', value);
+  };
+  const addCNAME6Update = value => {
+    setCName6(value);
+    console.log('addCName6Update() called, value: ', value);
+  };
+  const addCCRED1Update = value => {
+    setCCred1(value);
+    console.log('addCCRED1Update() called, value: ', value);
+  };
+  const addCCRED2Update = value => {
+    setCCred2(value);
+    console.log('addCCRED2Update() called, value: ', value);
+  };
+  const addCCRED3Update = value => {
+    setCCred3(value);
+    console.log('addCCRED3Update() called, value: ', value);
+  };
+  const addCCRED4Update = value => {
+    setCCred4(value);
+    console.log('addCCRED4Update() called, value: ', value);
+  };
+  const addCCRED5Update = value => {
+    setCCred5(value);
+    console.log('addCCRED5Update() called, value: ', value);
+  };
+  const addCCRED6Update = value => {
+    setCCred6(value);
+    console.log('addCCRED6Update() called, value: ', value);
+  };
 
-    const [CName1, setCName1] = useState('');
-    const [CName2, setCName2] = useState('');
-    const [CName3, setCName3] = useState('');
-    const [CName4, setCName4] = useState('');
-    const [CName5, setCName5] = useState('');
-    const [CName6, setCName6] = useState('');
-
-    const [CCred1, setCCred1] = useState('');
-    const [CCred2, setCCred2] = useState('');
-    const [CCred3, setCCred3] = useState('');
-    const [CCred4, setCCred4] = useState('');
-    const [CCred5, setCCred5] = useState('');
-    const [CCred6, setCCred6] = useState('');
-
-    
-    const SemChoice = value => {
-      setSemC(value);
-      console.log('SemChoice() called, value: ', value);
-    };
-    const YChoice = value => {
-      setYearC(value);
-      console.log('YChoice() called, value: ', value);
-    };
-  
-    const addCNUM1Update = value => {
-      setCNum1(value); 
-      console.log('addCNUM1Update() called, value: ', value);
-    };
-    const addCNUM2Update = value => {
-      setCNum2(value); 
-      console.log('addCNUM2Update() called, value: ', value);
-    };
-    const addCNUM3Update = value => {
-      setCNum3(value); 
-      console.log('addCNUM3Update() called, value: ', value);
-    };
-    const addCNUM4Update = value => {
-      setCNum4(value); 
-      console.log('addCNUM4Update() called, value: ', value);
-    };
-    const addCNUM5Update = value => {
-      setCNum5(value); 
-      console.log('addCNUM5Update() called, value: ', value);
-    };
-    const addCNUM6Update = value => {
-      setCNum6(value); 
-      console.log('addCNUM6Update() called, value: ', value);
-    };
-
-    const addCNAME1Update = value => {
-      setCName1(value); 
-      console.log('addCName1Update() called, value: ', value);
-    };
-    const addCNAME2Update = value => {
-      setCName2(value); 
-      console.log('addCName2Update() called, value: ', value);
-    };
-    const addCNAME3Update = value => {
-      setCName3(value); 
-      console.log('addCName3Update() called, value: ', value);
-    };
-    const addCNAME4Update = value => {
-      setCName4(value); 
-      console.log('addCName4Update() called, value: ', value);
-    };
-    const addCNAME5Update = value => {
-      setCName5(value); 
-      console.log('addCName5Update() called, value: ', value);
-    };
-    const addCNAME6Update = value => {
-      setCName6(value); 
-      console.log('addCName6Update() called, value: ', value);
-    };
-
-    const addCCRED1Update = value => {
-      setCCred1(value); 
-      console.log('addCCRED1Update() called, value: ', value);
-    };
-    const addCCRED2Update = value => {
-      setCCred2(value); 
-      console.log('addCCRED2Update() called, value: ', value);
-    };
-    const addCCRED3Update = value => {
-      setCCred3(value); 
-      console.log('addCCRED3Update() called, value: ', value);
-    };
-    const addCCRED4Update = value => {
-      setCCred4(value); 
-      console.log('addCCRED4Update() called, value: ', value);
-    };
-    const addCCRED5Update = value => {
-      setCCred5(value); 
-      console.log('addCCRED5Update() called, value: ', value);
-    };
-    const addCCRED6Update = value => {
-      setCCred6(value); 
-      console.log('addCCRED6Update() called, value: ', value);
-    };
-
-    const saveSchedule = async event => {
-    event.preventDefault(); 
-    console.log('saveSchedule() called');
-    console.log('Save CourseName1: ', CName1); 
-    console.log('Save CourseName2: ', CName2); 
-    console.log('Save CourseName3: ', CName3); 
-    console.log('Save CourseName4: ', CName4); 
-    console.log('Save CourseName5: ', CName5); 
-    console.log('Save CourseName6: ', CName6); 
-    console.log('Save CourseNum1: ', CNum1); 
-    console.log('Save CourseNum2: ', CNum2); 
-    console.log('Save CourseNum3: ', CNum3); 
-    console.log('Save CourseNum4: ', CNum4); 
-    console.log('Save CourseNum5: ', CNum5); 
-    console.log('Save CourseNum6: ', CNum6); 
-    console.log('Save CourseCred1: ', CCred1);
-    console.log('Save CourseCred2: ', CCred2);
-    console.log('Save CourseCred3: ', CCred3);
-    console.log('Save CourseCred4: ', CCred4);
-    console.log('Save CourseCred5: ', CCred5);
-    console.log('Save CourseCred6: ', CCred6);
-
-    console.log('Year save: ', yearAdd); 
-    console.log('Semester save: ', SemCAdd); 
+  const saveSchedule = async event => {
+    event.preventDefault();
 
     let newSemester = {
-      year: yearAdd, 
+      year: yearAdd,
       semester: SemCAdd,
       course1:
-      {
-        number: CNum1,
-        name: CName1,
-        credits: CCred1
-      },
+          {
+            number: CNum1,
+            name: CName1,
+            credits: CCred1
+          },
       course2:
-      {
-        number: CNum2,
-        name: CName2,
-        credits: CCred2
-      },
+          {
+            number: CNum2,
+            name: CName2,
+            credits: CCred2
+          },
       course3:
-      {
-        number: CNum3,
-        name: CName3,
-        credits: CCred3
-      },
+          {
+            number: CNum3,
+            name: CName3,
+            credits: CCred3
+          },
       course4:
-      {
-        number: CNum4,
-        name: CName4,
-        credits: CCred4
-      },
+          {
+            number: CNum4,
+            name: CName4,
+            credits: CCred4
+          },
       course5:
-      {
-        number: CNum5,
-        name: CName5,
-        credits: CCred5
-      },
+          {
+            number: CNum5,
+            name: CName5,
+            credits: CCred5
+          },
       course6:
-      {
-        number: CNum6,
-        name: CName6,
-        credits: CCred6
-      },
-      
-    };
-    console.log(newSemester);
+          {
+            number: CNum6,
+            name: CName6,
+            credits: CCred6
+          },
+    }
+
+
+    console.log('Semester save: ', newSemester);
+
+    let curr_email =  props.email;
+
+    console.log("POST sent for 4 Year", newSemester);
+    console.log("curr_email", curr_email);
+
+    // @TODO A not logged in error
+
+    let putObj ={
+      newSemester: newSemester,
+      email: curr_email
+    }
+
+    //POST
+    try {
+      console.log('Post Semester sent');
+      const s = await axios.put('/api/users/post_plan/', putObj);
       /*
-      try {
-        console.log('Post Semester sent');
-        const s = await axios.post('/api/users/', newSemester);
-        if (s.status == 200) {
-          setReload(true);
-        }
-      } catch (err) {
-        return false;
-      }
-      */
+      if (s.status == 200) {
+        setReload(true);
+      }*/
+    } catch (err) {
+      return false;
+    }
 
     console.log('trying reload');
-    } ;
-    
+
+
+  };// end submit method
+
+
   /*
     if (reload) {
       console.log('caught redirect');
@@ -562,33 +551,93 @@ export const Home = () => (
       }, 10000);
       return <Redirect to='/login' />;
     } */
-
-    return (
-      <Four_Year_Content 
-      saveSchedule = {saveSchedule}
-      SemChoice = {SemChoice}
-      YChoice = {YChoice}
-      addCNUM1Update = {addCNUM1Update}
-      addCNUM2Update = {addCNUM2Update}
-      addCNUM3Update = {addCNUM3Update}
-      addCNUM4Update = {addCNUM4Update}
-      addCNUM5Update = {addCNUM5Update}
-      addCNUM6Update = {addCNUM6Update}
-      addCNAME1Update = {addCNAME1Update}
-      addCNAME2Update = {addCNAME2Update}
-      addCNAME3Update = {addCNAME3Update}
-      addCNAME4Update = {addCNAME4Update}
-      addCNAME5Update = {addCNAME5Update}
-      addCNAME6Update = {addCNAME6Update}
-      addCCRED1Update = {addCCRED1Update}
-      addCCRED2Update = {addCCRED2Update}
-      addCCRED3Update = {addCCRED3Update}
-      addCCRED4Update = {addCCRED4Update}
-      addCCRED5Update = {addCCRED5Update}
-      addCCRED6Update = {addCCRED6Update}
+  return (
+      <Four_Year_Content
+          saveSchedule = {saveSchedule}
+          SemChoice = {SemChoice}
+          YChoice = {YChoice}
+          addCNUM1Update = {addCNUM1Update}
+          addCNUM2Update = {addCNUM2Update}
+          addCNUM3Update = {addCNUM3Update}
+          addCNUM4Update = {addCNUM4Update}
+          addCNUM5Update = {addCNUM5Update}
+          addCNUM6Update = {addCNUM6Update}
+          addCNAME1Update = {addCNAME1Update}
+          addCNAME2Update = {addCNAME2Update}
+          addCNAME3Update = {addCNAME3Update}
+          addCNAME4Update = {addCNAME4Update}
+          addCNAME5Update = {addCNAME5Update}
+          addCNAME6Update = {addCNAME6Update}
+          addCCRED1Update = {addCCRED1Update}
+          addCCRED2Update = {addCCRED2Update}
+          addCCRED3Update = {addCCRED3Update}
+          addCCRED4Update = {addCCRED4Update}
+          addCCRED5Update = {addCCRED5Update}
+          addCCRED6Update = {addCCRED6Update}
       />
-    );
-  };
+  );
+
+};
+
+// Display the 4 year plan specific to user
+export const Four_Year_User_Disp = props => {
+  const [initVar, setInitVar] = useState(false);
+  let [responseData, setResponseData] = useState('')
+
+  // Send GET request to get the current user logged in
+  //Get user currently logged in (sessions), then get information from the user db
+  console.log("Profile Email: ", props.email)
+  console.log("Profile Name: ", props.userName)
+
+  // Object to pass to req
+  let passObj ={
+    email: props.email
+  }
+  let print_warn = 0;
+
+
+  let init = 0;
+  // Call get request
+  const getInfo = async () => {
+    try {
+      console.log("GET axios called")
+      await axios.put('/api/users/four-year-user-info/', passObj)
+          .then((response) => {
+            setResponseData(response.data);
+            console.log("GET resp data", responseData);
+            setInitVar(true)
+          });
+
+    } catch (err) {
+      // TODO: do something
+      console.log('error')
+    }
+  }
+
+  // If a user isn't logged in, can't display this page
+  if (props.email == ''){
+    print_warn = 1;
+  }
+  else{
+    // Trigger the get info to display
+    if(!initVar){
+      getInfo();
+    }
+  }
+
+  return (
+      <div>
+        <Four_Year_User_Disp_Content
+            userName={props.userName}
+            email={props.email}
+            user={responseData}
+            print_warn={print_warn}
+            initVar = {initVar}
+        />
+      </div>
+  );
+
+};
 
 export const About_Us = () => (
   <div>

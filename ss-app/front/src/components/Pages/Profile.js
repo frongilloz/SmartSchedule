@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Form, Col, Button, Card } from 'react-bootstrap';
 import './basic.css';
 
+
 const Profile = props => {
   //internal change functions
 
@@ -79,7 +80,7 @@ const Profile = props => {
             <tbody>
                 <tr>
                     <td><a href="url">Schedule1</a></td>
-                    <td><a href="url">Plan 1</a></td>
+                    <td><a href="/four-year-user-disp">Plan 1</a></td>
                 </tr>
                 <tr>
                     <td><a href="url">Schedule2</a></td>

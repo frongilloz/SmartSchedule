@@ -541,28 +541,22 @@ export const Four_Year_User_Disp = props => {
   console.log("Profile Email: ", props.email)
   console.log("Profile Name: ", props.userName)
 
+  // Object to pass to req
   let passObj ={
     email: props.email
   }
-  console.log(passObj)
+  let print_warn = 0;
 
   let respData;
 
-  // @TODO if a user isn't logged in, can't display this page
-
   // Call get request 
   const getInfo = async () => {
-    //event.preventDefault();
-
     try {
       console.log("GET axios called")
-      await axios.get('/api/users/four-year-user-info/', passObj)
+      await axios.put('/api/users/four-year-user-info/', passObj)
         .then((response) => {
-          console.log("GET resp data", response.data);
-
           respData = response.data;
-
-          console.log('GET DATA', respData)
+          console.log("GET resp data", response.data);
         });
 
     } catch (err) {
@@ -571,26 +565,17 @@ export const Four_Year_User_Disp = props => {
     }
   }
 
-  /*
-  axios.get('/api/users/four-year-user-info/', props.email)
-      .then(resp => {
-        console.log("GET axios called")
-        console.log("GET resp data", resp.data);
-
-        respData = resp.data;
-
-        console.log('GET DATA', respData)
-    })
-    .catch(err => {
-        // Handle Error Here
-        console.error(err);
-    });
-    */
-
-  // Trigger the get info to display
-  getInfo();
+  // If a user isn't logged in, can't display this page
+  if (props.email == ''){
+    print_warn = 1;
+  }
+  else{
+    // Trigger the get info to display
+    getInfo();
+  }
   
-  // Within Four_Year_User_Disp_Content
+  
+  // Within Four_Year_User_Disp_Content, access via: 
   //props.user.fullName
   
   //props.user.y1_sp[0].year
@@ -606,6 +591,7 @@ export const Four_Year_User_Disp = props => {
         userName={props.userName}
         email={props.email}
         user={respData}
+        print_warn={print_warn}
       />
     </div>
   );

@@ -120,6 +120,7 @@ export const Home = () => (
     // Relevant initializations
     let courseData = [];
     let conflicts = [];
+    let conflictSchedules = Array(14).fill(0).map(row => new Array(6).fill(" "));
     let conflicts_print = [];
     let final_schedule_info = [];
     let final_lab_lecture_info = [];
@@ -218,10 +219,12 @@ export const Home = () => (
           //deconstruct returned object into the components we need to use
           testSc = gen_schedule_return.finalSchedules;
           conflicts = gen_schedule_return.conflicts;
+          conflictSchedules = gen_schedule_return.conflictSchedules;
           final_schedule_info = gen_schedule_return.finalSchedule_Info;
           final_lab_lecture_info = gen_schedule_return.finalsectionInfo;
           console.log("Test Schedule(s) Received, ",testSc)
           console.log("Conflict(s) Received, ",conflicts)
+          console.log("conflictSchedules Received, ", conflictSchedules)
           console.log("final_schedule_info(s) Received, ", final_schedule_info)
           console.log("final_lab_lecture_info(s) Received, ", final_lab_lecture_info)
 
@@ -297,6 +300,7 @@ export const Home = () => (
           walking_Durs={walking_Durs}
           reset_button={reset_button}
           findBuildingByCode={findBuildingByCode}
+          conflictSchedules={conflictSchedules}
       />
     </div>
     );

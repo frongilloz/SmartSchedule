@@ -349,6 +349,7 @@ const Schedule = props => {
       //console.log("curr_schedule: ", curr_schedule)
 
       let temp_r1;
+      let curr_sc_index_string = curr_sc_index.toString(); // Use for Accordion (ID needs to be a str)
 
       // if schedule does not exist, do not render table and just return nothing
       if(!props.final_schedule_info[0]){
@@ -362,28 +363,44 @@ const Schedule = props => {
         <div>
 
         {/* Generate the detail submenu */ }
-          <div class='card_blue' id='sched_detail'>
+        
+        <Accordion>
+            <Card.Header>
+              <Accordion.Toggle as={Button} variant="link" eventKey={curr_sc_index_string}>
+              Schedule: {curr_sc_index} Info
+              </Accordion.Toggle>
+            </Card.Header>
+            
+            <Accordion.Collapse eventKey={curr_sc_index_string}>
+            <Card.Body>
+
+            <div class='card_blue' id='sched_detail'>
             {props.final_schedule_info.slice(0, props.final_schedule_info.length).map((curr_class_obj, curr_idx) => {
               return (
-              <div class='left_align'>
-              
-                <div class='center_align'>
-                  <p><b>Course Name:</b> {curr_class_obj[curr_sc_index].course_code} - {curr_class_obj[curr_sc_index].course_name}</p>
+                <div class='left_align'>
+                
+                  <div class='center_align'>
+                    <p><b>Course Name:</b> {curr_class_obj[curr_sc_index].course_code} - {curr_class_obj[curr_sc_index].course_name}</p>
+                  </div>
+
+                  <p><b>Class Number:</b> {curr_class_obj[curr_sc_index].section_c_num}</p>
+                  <p><b>Course Instructor:</b> {curr_class_obj[curr_sc_index].section_inst[0].name}</p>
+                  <p><b>Course Description:</b> {curr_class_obj[curr_sc_index].course_desc}</p>
+                  <p><b>Course Credits:</b> {curr_class_obj[curr_sc_index].section_credits}</p>
+                  <p><b>Class Format:</b> {get_online_status(curr_class_obj[curr_sc_index].section_web)}</p>
+                  <p><b>Location:</b>{print_meeting_locations(curr_class_obj[curr_sc_index].section_mT, curr_class_obj[curr_sc_index].section_web)}</p>
+
+                  {map_Button(curr_class_obj[curr_sc_index].section_mT, curr_class_obj[curr_sc_index].section_web)}
                 </div>
-
-                <p><b>Class Number:</b> {curr_class_obj[curr_sc_index].section_c_num}</p>
-                <p><b>Course Instructor:</b> {curr_class_obj[curr_sc_index].section_inst[0].name}</p>
-                <p><b>Course Description:</b> {curr_class_obj[curr_sc_index].course_desc}</p>
-                <p><b>Course Credits:</b> {curr_class_obj[curr_sc_index].section_credits}</p>
-                <p><b>Class Format:</b> {get_online_status(curr_class_obj[curr_sc_index].section_web)}</p>
-                <p><b>Location:</b>{print_meeting_locations(curr_class_obj[curr_sc_index].section_mT, curr_class_obj[curr_sc_index].section_web)}</p>
-
-                {map_Button(curr_class_obj[curr_sc_index].section_mT, curr_class_obj[curr_sc_index].section_web)}
-              </div>
+                  
               );
             })}
+            </div>
 
-          </div>
+            </Card.Body>
+        </Accordion.Collapse>
+        </Accordion>
+
 
           {/* Print any conflicts warnings (if they exist) */ }
           {print_conflict(curr_sc_index)}
@@ -661,8 +678,8 @@ const print_schedule_lab_lecture = props.final_lab_lecture_info.map((curr_class_
               
             </Card.Body>
         </Accordion.Collapse>
+
       </Card>
-  
 
       </div>
         );

@@ -318,7 +318,7 @@ const Schedule = props => {
     //console.log('PROPS', props[0].meetBuilding)
     
     /// RN based on 1st building only
-    console.log('PROPS', props[0].meetBuilding)
+    //console.log('PROPS', props[0].meetBuilding)
 
     let queriedBldg;
 

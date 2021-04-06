@@ -8,7 +8,8 @@ import {
   Login,
   Sign_Up,
   Forgot_Password,
-  Profile
+  Profile,
+  Four_Year_User_Disp
 } from './pages'; // import our pages
 
 //Purpose: This routes the links of our application, and the subsequent pages that will display
@@ -42,6 +43,15 @@ const Main = props => (
         component={() => (
           <Profile
             setToken={props.setToken}
+            email={props.email}
+            userName={props.userName}
+          />
+        )} />
+
+        <Route 
+        exact path='/four-year-user-disp' 
+        component={() => (
+          <Four_Year_User_Disp
             email={props.email}
             userName={props.userName}
           />

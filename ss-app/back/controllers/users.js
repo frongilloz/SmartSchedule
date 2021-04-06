@@ -63,7 +63,36 @@ router.get('/:email', async(req, res) => {
   try {
     console.log('GET: ', req.params.email)
     const user = await User.findOne({email: req.params.email});
+
+
     res.status(200).send(user);
+  }
+  catch (err) {
+      res.json({message: err});
+  }
+});
+
+// Get 4 year plan info for render
+router.get('/four-year-user-info', async(req, res) => {
+  const user = await User.findOne({email: req.body.email});
+  console.log("User found:", user)
+
+  try {
+    console.log('GET /:four-year-user-info called')
+    console.log('GET: ', req.body)
+    const user = await User.findOne({email: req.body.email});
+    
+    console.log("User found:", user)
+
+    // @TODO Get rid of pw if you have time
+    let respData ={
+      FullName : user.fullName,
+      //y1_sp = user.y1_sp,
+      y1_su : user.y1_su,
+      //schedule info etc.
+    }
+
+    res.status(200).send(respData);
   }
   catch (err) {
       res.json({message: err});
@@ -93,7 +122,7 @@ router.put('/post_plan', async(req, res) => {
     fullName: user.fullName,
     email: user.email,
     password: req.body.newPass,
-    // Save the plan info stuff too
+    // @TODO: Save the plan info stuff too ??
   });
 
   // Else get the returned user's credentials
@@ -144,10 +173,6 @@ router.put('/post_plan', async(req, res) => {
 
 
 }) // End Update 4 year
-
-
-// Get 4 year plan info for render
-
 
 
 //Added update functionality to update pw

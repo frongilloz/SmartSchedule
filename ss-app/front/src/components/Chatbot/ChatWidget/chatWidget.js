@@ -6,6 +6,8 @@ import Message from './Message';
 import './chatWidget.css';
 
 var count = 0;
+var dataReady = false;
+const userAccountInfo = [];
 
 function ChatWidget() {
 
@@ -14,6 +16,23 @@ function ChatWidget() {
 
     //State for the ChatWindow: Closed(false)/Open(true)
     const [chatWindow, setChatWindow] = useState(false);
+
+    //Password Reset route
+    const resetPassword = async (email, password) => {
+
+        //Message sent by the user
+        let userData = {
+            email: email,
+            newPass: password
+        }
+    
+        try {
+            //Query to the Dialogflow API
+            const response = await axios.put('api/users/forgot', userData)
+            
+          } catch (error) {    
+        }
+    }
 
     //TextQuery Route for user input
     const textQuery = async (text) => {
@@ -31,8 +50,19 @@ function ChatWidget() {
             date: `${d.getHours()}:${d.getMinutes()}`,
             isBot: false
         }
-
-        // console.log(conversation);
+        if(dataReady){
+            userAccountInfo.push(conversation.content.text.text);
+            dataReady = !dataReady;
+            console.log(`User Info Array: ${userAccountInfo}`);
+            // console.log(userAccountInfo.length);
+        }
+        if(userAccountInfo.length == 2){
+            resetPassword(userAccountInfo[0], userAccountInfo[1]);
+            userAccountInfo.pop();
+            userAccountInfo.pop();
+        }
+        console.log(dataReady);
+        console.log(conversation.content.text.text[0]);
         dispatch(saveMessage(conversation));
     
         const textQueryVariables = {
@@ -52,8 +82,18 @@ function ChatWidget() {
                     date: `${d.getHours()}:${d.getMinutes()}`,
                     isBot: true
                 }
-    
-                // console.log(conversation);
+                
+                if(conversation.content.text.text[0] == 'Please enter the email for your account.'){
+                    console.log('WE NEED TO SAVE THE USER INPUT NOW');
+                    dataReady = true;
+                    console.log(dataReady);
+                }
+                if(conversation.content.text.text[0] == 'Please enter your new password.'){
+                    console.log('WE NEED TO SAVE THE USER INPUT NOW');
+                    dataReady = true;
+                    console.log(dataReady);
+                }
+                console.log(conversation.content.text.text[0]);
                 dispatch(saveMessage(conversation));
             }
       
@@ -95,7 +135,7 @@ function ChatWidget() {
                     isBot: true
                 }
     
-                // console.log(conversation);
+                console.log(conversation.content.text.text[0]);
                 // console.log(conversation.content.text.text[0]);
                 dispatch(saveMessage(conversation));
             }
@@ -143,7 +183,7 @@ function ChatWidget() {
     }
 
     const renderOneMessage = (message, i) => {
-        console.log('message', message)
+        // console.log('message', message)
  
         //Template for normal text 
         if (message.content && message.content.text && message.content.text.text) {

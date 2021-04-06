@@ -16,6 +16,7 @@ import { generateSchedule } from './generate_schedule.js';
 import { get_mapping_distance } from './get_mapping_distance.js';
 
 import { getWalkingDurationBetweenMins } from './data/building_data.js';
+import { findBuildingByCode } from './data/building_data.js';
 
 import { Redirect } from 'react-router-dom';
 
@@ -129,6 +130,7 @@ export const Home = () => (
     let final_schedule_info = [];
     let final_lab_lecture_info = [];
     let walking_Durs = [];
+    let conflictSchedules = Array(14).fill(0).map(row => new Array(6).fill(" "));
     let emptyArray = Array(14).fill(0).map(row => new Array(6).fill(" "))
   
     let emptyArrays = [emptyArray, emptyArray];
@@ -185,10 +187,12 @@ export const Home = () => (
         //deconstruct returned object into the components we need to use
         testSc = gen_schedule_return.finalSchedules;
         conflicts = gen_schedule_return.conflicts;
+        conflictSchedules = gen_schedule_return.conflictSchedules;
         final_schedule_info = gen_schedule_return.finalSchedule_Info;
         final_lab_lecture_info = gen_schedule_return.finalsectionInfo;
         console.log("Test Schedule(s) Received, ", testSc)
         console.log("Conflict(s) Received, ", conflicts)
+        console.log("conflictSchedules Received, ", conflictSchedules)
         console.log("final_schedule_info(s) Received, ", final_schedule_info)
         console.log("final_lab_lecture_info(s) Received, ", final_lab_lecture_info)
 
@@ -251,11 +255,11 @@ export const Home = () => (
           // Create a query string based on if a class Number was submitted or not
           //Check to see if the course had a corresponding class number submitted
           if(classNums[courseNumCounter] != ''){
-            console.log("TRUE")
-            queryString = '/api/courses/find/' + courseNum + '/' + classNums[courseNumCounter] + '/' + SemAdd;
+            console.log("Class Num Submitted")
+            queryString = '/api/courses/findCS/' + courseNum + '/' + classNums[courseNumCounter] + '/' + SemAdd;
             console.log("Step 1")
           }else{
-            queryString = '/api/courses/find/'  + courseNum + '/'
+            queryString = '/api/courses/findC/'  + courseNum + '/'
               + SemAdd;
             console.log("Step 1")
           }
@@ -275,7 +279,6 @@ export const Home = () => (
     async function check3() {
       console.log("start of check3")
 
-      console.log("st")
       console.log("queryStrings is: ", queryStrings)
 
       // Get the number of courses submitted
@@ -352,6 +355,8 @@ export const Home = () => (
           setHover={setHover}
           walking_Durs={walking_Durs}
           reset_button={reset_button}
+          findBuildingByCode={findBuildingByCode}
+          conflictSchedules={conflictSchedules}
       />
     </div>
     );

@@ -1,4 +1,8 @@
-export default [
+/*
+Cite: This building data was provided and used from the bootcamps of course CEN3031.
+*/
+
+export const building_data = [
     {
         id: 1,
         code: 'AAF',
@@ -1428,3 +1432,44 @@ export default [
         address: 'Gainesville, FL 32608, United States'
     }
 ];
+
+export const findBuildingByCode = (code) => {
+    return building_data.find(building => building.code === code);
+}
+
+const getHaversine = (lat1, lon1, lat2, lon2) => {
+    if ((lat1 == lat2) && (lon1 == lon2)) {
+        return 0;
+    }
+
+    const radlat1 = Math.PI * lat1/180;
+    const radlat2 = Math.PI * lat2/180;
+    const theta = lon1-lon2;
+    const radtheta = Math.PI * theta/180;
+
+    let dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+
+    if (dist > 1) {
+        dist = 1;
+    }
+
+    dist = Math.acos(dist);
+    dist = (dist * 180) / Math.PI;
+    dist = dist * 60 * 1.1515;
+
+    return dist;
+}
+
+const AVG_HUMAN_WALKING_SPEED_MPH   =   3.5;
+const MINS_PER_HOUR                 =   60;
+
+const TOLERANCE_MINS                =   3;
+
+export const getWalkingDurationBetweenMins = (fromBuildingCode, toBuildingCode) => {
+    const fromCoordinates = findBuildingByCode(fromBuildingCode).coordinates;
+    const toCoordinates = findBuildingByCode(toBuildingCode).coordinates;
+
+    const distanceMiles = getHaversine(fromCoordinates.latitude, fromCoordinates.longitude, toCoordinates.latitude, toCoordinates.longitude);
+
+    return (distanceMiles * AVG_HUMAN_WALKING_SPEED_MPH * MINS_PER_HOUR / 10) + TOLERANCE_MINS;
+}

@@ -35,25 +35,6 @@
     padding-top: 50px;
   }
   
-  ul.Article {
-    font-weight: bold;
-    min-height: 2pc;
-    box-shadow: 0.25rem 0.25rem 0.6rem lightgray, 0 0.5rem 1.125rem lightgray;
-  }
-  
-  ul.Article:hover {
-    background-color: rgb(211, 234, 241);
-  }
-  
-  .AdminForm {
-    margin-top: 6pc;
-    width: 75pc;
-    position: relative;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-  }
   .inputLabel {
     padding-top: 1rem;
     font-weight: bold;
@@ -66,13 +47,19 @@
   
   .sticky-menu {
     top: 2em;
-    width: 25pc;
+    width: 30pc;
     padding-right: 1rem;
+  }
+
+
+  .form-group.required .control-label:after {
+    content:"*";
+    color:red;
   }
   
   .color_table_hd_row{
-    background-color:#c0c4cf;
-    color:#4a4e67;
+    background-color:#646d85;
+    color:white;
   }
 
   .color_table_bd_row{
@@ -89,3 +76,80 @@
     
     border: 1px #737d96;
   }
+
+  .left_align{
+      text-align: left;
+      padding-left: 2%;
+      padding-right: 2%;
+      padding-bottom: 1%;
+      padding-top: 1%;
+  }
+
+  .center_align{
+    text-align: center;
+}
+
+.card_blue {
+  background-color: #c0c4cf;
+  border:3px solid rgb(115, 125, 150);
+}
+
+.card_blue_light {
+  background-color: rgb(247, 247, 247);
+  padding: 3%;
+}
+
+.simple_border{
+  border: 4px #737d96;
+}
+
+.def_color_table{
+  background-color: #e8e8e8;
+}
+
+table.table-bordered{
+  border:3px solid rgb(115, 125, 150);
+}
+table.table-bordered > thead > tr > th{
+  border:3px solid rgb(115, 125, 150);
+}
+table.table-bordered > tbody > tr > td{
+  border:3px solid rgb(115, 125, 150);
+}
+
+
+.color_class_1 {
+  background-color: #2a75a9;
+  color: white;
+  font-weight: bold;
+}
+
+.color_class_2 {
+  background-color: #896723; 
+  color: white;
+  font-weight: bold;
+}
+
+.color_class_3 {
+  background-color: #bc3062;
+  color: white;
+  font-weight: bold;
+}
+
+.color_class_4 {
+  background-color: #274257;
+  color: white;
+  font-weight: bold;
+}
+
+.color_class_5 {
+  background-color: #1d39af;
+  color: white;
+  font-weight: bold;
+}
+
+.color_class_6 {
+  background-color: #654334;
+  color: white;
+  font-weight: bold;
+}

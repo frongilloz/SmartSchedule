@@ -229,10 +229,17 @@ const Schedule = props => {
         </div>
       )
     }
-    else if(props.final_schedule_info){
-      return(<div></div> )
+    else{
+      return(<div></div>)
     }
+  };
 
+  // Print the getting started method
+  const print_welcome_message = responseData => {
+    // Only print the welcome message if final_schedules isn't done
+    if(responseData.length !== 0){
+      return(<div></div>)
+    }
     else{
       return(
         <div>
@@ -243,7 +250,6 @@ const Schedule = props => {
       )
     }
   };
-
 
   //Print a general warning of the conflict indices
   const print_conflict = curr_sc_idx => {
@@ -956,6 +962,7 @@ const print_schedule_lab_lecture = props.final_lab_lecture_info.map((curr_class_
               {/* {scheduleGrids}*/}
               {scheduleGrids}
 
+              {print_welcome_message(props.responseData)}
               {print_conflicts(props.conflicts_print)}
 
               {/* 

@@ -156,10 +156,10 @@ export const Home = () => (
           // Create a query string based on if a class Number was submitted or not
           //Check to see if the course had a corresponding class number submitted
           if(classNums[courseNumCounter] != ''){
-            console.log("TRUE")
-            queryString = '/api/courses/find/'  + courseNum + '/' + classNums[courseNumCounter] + '/' + SemAdd;
+            console.log("Class Num Submitted")
+            queryString = '/api/courses/findCS/'  + courseNum + '/' + classNums[courseNumCounter] + '/' + SemAdd;
           }else{
-            queryString = '/api/courses/find/'  + courseNum + '/'
+            queryString = '/api/courses/findC/'  + courseNum + '/'
                                                     + SemAdd;
           }
 

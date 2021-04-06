@@ -247,7 +247,6 @@ const Four_Year = props => {
   </Row>
 </Form>  
     </Card>
-    <UserPlanDisplay />
   </div>
   );
 };

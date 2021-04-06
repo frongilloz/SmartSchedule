@@ -548,7 +548,7 @@ export const Four_Year_User_Disp = props => {
   let print_warn = 0;
 
   let respData;
-
+  let init = 0; 
   // Call get request 
   const getInfo = async () => {
     try {
@@ -557,6 +557,7 @@ export const Four_Year_User_Disp = props => {
         .then((response) => {
           respData = response.data;
           console.log("GET resp data", response.data);
+          init = 1; 
         });
 
     } catch (err) {
@@ -592,9 +593,11 @@ export const Four_Year_User_Disp = props => {
         email={props.email}
         user={respData}
         print_warn={print_warn}
+        initVar = {init}
       />
     </div>
   );
+
 };
 
 export const About_Us = () => (

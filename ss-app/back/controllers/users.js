@@ -181,9 +181,231 @@ router.put('/post_plan', async(req, res) => {
     } 
   }
 
-  // Continue for all 5 years
+  else if(req.body.newSemester.year == '2021' && req.body.newSemester.semester == 'Fall'){
+    try{
+      await User.updateOne({_id: curr_user_id },{y1_fl: req.body.newSemester }, function (err, docs){
+            if (err){
+              console.log(err)
+          }
+          else{
+              console.log("Updated Docs : ", docs);
+              console.log("Updated User 4 Year Plan success!")
+              res.status(200).send();
+          }
+      });
+      
+      }catch (err) {
+      res.json({message: err});
+    } 
+  }
+  else if(req.body.newSemester.year == '2022' && req.body.newSemester.semester == 'Spring'){
+    try{
+      await User.updateOne({_id: curr_user_id },{y2_sp: req.body.newSemester }, function (err, docs){
+            if (err){
+              console.log(err)
+          }
+          else{
+              console.log("Updated Docs : ", docs);
+              console.log("Updated User 4 Year Plan success!")
+              res.status(200).send();
+          }
+      });
+      
+      }catch (err) {
+      res.json({message: err});
+    } 
+  }
+  else if(req.body.newSemester.year == '2022' && req.body.newSemester.semester == 'Summer'){
+    try{
+      await User.updateOne({_id: curr_user_id },{y2_su: req.body.newSemester }, function (err, docs){
+            if (err){
+              console.log(err)
+          }
+          else{
+              console.log("Updated Docs : ", docs);
+              console.log("Updated User 4 Year Plan success!")
+              res.status(200).send();
+          }
+      });
+      
+      }catch (err) {
+      res.json({message: err});
+    } 
+  }
 
+  else if(req.body.newSemester.year == '2022' && req.body.newSemester.semester == 'Fall'){
+    try{
+      await User.updateOne({_id: curr_user_id },{y2_fl: req.body.newSemester }, function (err, docs){
+            if (err){
+              console.log(err)
+          }
+          else{
+              console.log("Updated Docs : ", docs);
+              console.log("Updated User 4 Year Plan success!")
+              res.status(200).send();
+          }
+      });
+      
+      }catch (err) {
+      res.json({message: err});
+    } 
+  }
+  else if(req.body.newSemester.year == '2023' && req.body.newSemester.semester == 'Spring'){
+    try{
+      await User.updateOne({_id: curr_user_id },{y3_sp: req.body.newSemester }, function (err, docs){
+            if (err){
+              console.log(err)
+          }
+          else{
+              console.log("Updated Docs : ", docs);
+              console.log("Updated User 4 Year Plan success!")
+              res.status(200).send();
+          }
+      });
+      
+      }catch (err) {
+      res.json({message: err});
+    } 
+  }
+  else if(req.body.newSemester.year == '2023' && req.body.newSemester.semester == 'Summer'){
+    try{
+      await User.updateOne({_id: curr_user_id },{y3_su: req.body.newSemester }, function (err, docs){
+            if (err){
+              console.log(err)
+          }
+          else{
+              console.log("Updated Docs : ", docs);
+              console.log("Updated User 4 Year Plan success!")
+              res.status(200).send();
+          }
+      });
+      
+      }catch (err) {
+      res.json({message: err});
+    } 
+  }
 
+  else if(req.body.newSemester.year == '2023' && req.body.newSemester.semester == 'Fall'){
+    try{
+      await User.updateOne({_id: curr_user_id },{y3_fl: req.body.newSemester }, function (err, docs){
+            if (err){
+              console.log(err)
+          }
+          else{
+              console.log("Updated Docs : ", docs);
+              console.log("Updated User 4 Year Plan success!")
+              res.status(200).send();
+          }
+      });
+      
+      }catch (err) {
+      res.json({message: err});
+    } 
+  }
+  else if(req.body.newSemester.year == '2024' && req.body.newSemester.semester == 'Spring'){
+    try{
+      await User.updateOne({_id: curr_user_id },{y4_sp: req.body.newSemester }, function (err, docs){
+            if (err){
+              console.log(err)
+          }
+          else{
+              console.log("Updated Docs : ", docs);
+              console.log("Updated User 4 Year Plan success!")
+              res.status(200).send();
+          }
+      });
+      
+      }catch (err) {
+      res.json({message: err});
+    } 
+  }
+  else if(req.body.newSemester.year == '2024' && req.body.newSemester.semester == 'Summer'){
+    try{
+      await User.updateOne({_id: curr_user_id },{y4_su: req.body.newSemester }, function (err, docs){
+            if (err){
+              console.log(err)
+          }
+          else{
+              console.log("Updated Docs : ", docs);
+              console.log("Updated User 4 Year Plan success!")
+              res.status(200).send();
+          }
+      });
+      
+      }catch (err) {
+      res.json({message: err});
+    } 
+  }
+
+  else if(req.body.newSemester.year == '2024' && req.body.newSemester.semester == 'Fall'){
+    try{
+      await User.updateOne({_id: curr_user_id },{y4_fl: req.body.newSemester }, function (err, docs){
+            if (err){
+              console.log(err)
+          }
+          else{
+              console.log("Updated Docs : ", docs);
+              console.log("Updated User 4 Year Plan success!")
+              res.status(200).send();
+          }
+      });
+      
+      }catch (err) {
+      res.json({message: err});
+    } 
+  }
+  else if(req.body.newSemester.year == '2025' && req.body.newSemester.semester == 'Spring'){
+    try{
+      await User.updateOne({_id: curr_user_id },{y5_sp: req.body.newSemester }, function (err, docs){
+            if (err){
+              console.log(err)
+          }
+          else{
+              console.log("Updated Docs : ", docs);
+              console.log("Updated User 4 Year Plan success!")
+              res.status(200).send();
+          }
+      });
+      
+      }catch (err) {
+      res.json({message: err});
+    } 
+  }
+  else if(req.body.newSemester.year == '2025' && req.body.newSemester.semester == 'Summer'){
+    try{
+      await User.updateOne({_id: curr_user_id },{y5_su: req.body.newSemester }, function (err, docs){
+            if (err){
+              console.log(err)
+          }
+          else{
+              console.log("Updated Docs : ", docs);
+              console.log("Updated User 4 Year Plan success!")
+              res.status(200).send();
+          }
+      });
+      
+      }catch (err) {
+      res.json({message: err});
+    } 
+  }
+
+  else if(req.body.newSemester.year == '2025' && req.body.newSemester.semester == 'Fall'){
+    try{
+      await User.updateOne({_id: curr_user_id },{y5_fl: req.body.newSemester }, function (err, docs){
+            if (err){
+              console.log(err)
+          }
+          else{
+              console.log("Updated Docs : ", docs);
+              console.log("Updated User 4 Year Plan success!")
+              res.status(200).send();
+          }
+      });
+      
+      }catch (err) {
+      res.json({message: err});
+    } 
+  }
 
 }) // End Update 4 year
 

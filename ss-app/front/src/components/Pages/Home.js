@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Button, Card } from 'react-bootstrap';
-import ChatWidget  from '../chatWidget.js'
+import ChatWidget  from '../Chatbot/ChatWidget/chatWidget.js'
 import './basic.css';
 
 const Home = props => {

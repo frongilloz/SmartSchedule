@@ -10,6 +10,7 @@ import Login_Content from './Pages/Login';
 import Sign_Up_Content from './Pages/Sign_Up';
 import Forgot_Password_Content from './Pages/Forgot_Password';
 import Profile_Content from './Pages/Profile';
+import Four_Year_User_Disp_Content from './Pages/Four_Year_User_Disp';
 
 // import the generate schedule function
 import { generateSchedule } from './generate_schedule.js';
@@ -471,7 +472,7 @@ export const Four_Year = props => {
     console.log("POST sent for 4 Year", newSemester);
     console.log("curr_email", curr_email);
 
-    // TBD A not logged in error
+    // @TODO A not logged in error
 
     let putObj ={
       newSemester: newSemester,
@@ -530,6 +531,84 @@ export const Four_Year = props => {
     />
   );
 
+};
+
+
+// Display the 4 year plan specific to user
+export const Four_Year_User_Disp = props => {
+  // Send GET request to get the current user logged in
+  //Get user currently logged in (sessions), then get information from the user db
+  console.log("Profile Email: ", props.email)
+  console.log("Profile Name: ", props.userName)
+
+  let passObj ={
+    email: props.email
+  }
+  console.log(passObj)
+
+  let respData;
+
+  // @TODO if a user isn't logged in, can't display this page
+
+  // Call get request 
+  const getInfo = async () => {
+    //event.preventDefault();
+
+    try {
+      console.log("GET axios called")
+      await axios.get('/api/users/four-year-user-info/', passObj)
+        .then((response) => {
+          console.log("GET resp data", response.data);
+
+          respData = response.data;
+
+          console.log('GET DATA', respData)
+        });
+
+    } catch (err) {
+      // TODO: do something
+      console.log('error')
+    }
+  }
+
+  /*
+  axios.get('/api/users/four-year-user-info/', props.email)
+      .then(resp => {
+        console.log("GET axios called")
+        console.log("GET resp data", resp.data);
+
+        respData = resp.data;
+
+        console.log('GET DATA', respData)
+    })
+    .catch(err => {
+        // Handle Error Here
+        console.error(err);
+    });
+    */
+
+  // Trigger the get info to display
+  getInfo();
+  
+  // Within Four_Year_User_Disp_Content
+  //props.user.fullName
+  
+  //props.user.y1_sp[0].year
+  //props.user.y1_sp[0].semester
+
+  //props.user.y1_sp[0].course1.number
+  //props.user.y1_sp[0].course1.name
+  //props.user.y1_sp[0].course1.credits
+
+  return (
+    <div>
+      <Four_Year_User_Disp_Content
+        userName={props.userName}
+        email={props.email}
+        user={respData}
+      />
+    </div>
+  );
 };
 
 export const About_Us = () => (

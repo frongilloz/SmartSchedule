@@ -536,6 +536,9 @@ export const Four_Year = props => {
 
 // Display the 4 year plan specific to user
 export const Four_Year_User_Disp = props => {
+  const [initVar, setInitVar] = useState(false);
+  let [responseData, setResponseData] = useState('')
+
   // Send GET request to get the current user logged in
   //Get user currently logged in (sessions), then get information from the user db
   console.log("Profile Email: ", props.email)
@@ -547,7 +550,7 @@ export const Four_Year_User_Disp = props => {
   }
   let print_warn = 0;
 
-  let respData;
+
   let init = 0; 
   // Call get request 
   const getInfo = async () => {
@@ -555,9 +558,9 @@ export const Four_Year_User_Disp = props => {
       console.log("GET axios called")
       await axios.put('/api/users/four-year-user-info/', passObj)
         .then((response) => {
-          respData = response.data;
-          console.log("GET resp data", response.data);
-          init = 1; 
+          setResponseData(response.data);
+          console.log("GET resp data", responseData);
+          setInitVar(true)
         });
 
     } catch (err) {
@@ -572,28 +575,19 @@ export const Four_Year_User_Disp = props => {
   }
   else{
     // Trigger the get info to display
-    getInfo();
+    if(!initVar){
+      getInfo();
+    }
   }
-  
-  
-  // Within Four_Year_User_Disp_Content, access via: 
-  //props.user.fullName
-  
-  //props.user.y1_sp[0].year
-  //props.user.y1_sp[0].semester
-
-  //props.user.y1_sp[0].course1.number
-  //props.user.y1_sp[0].course1.name
-  //props.user.y1_sp[0].course1.credits
 
   return (
     <div>
       <Four_Year_User_Disp_Content
         userName={props.userName}
         email={props.email}
-        user={respData}
+        user={responseData}
         print_warn={print_warn}
-        initVar = {init}
+        initVar = {initVar}
       />
     </div>
   );

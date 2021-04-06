@@ -33,4 +33,6 @@ npm run dev
 mongoose-unique-validator
 argon2
 @material-ui/core
+xlsx
+file-saver
 ```

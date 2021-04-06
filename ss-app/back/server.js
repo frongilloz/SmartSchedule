@@ -1,7 +1,7 @@
 'use strict';
 import express from 'express';
 //import dotenv from 'dotenv';
-import bodyParser from 'body-parser';
+//import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 
 //Import config
@@ -27,8 +27,11 @@ const main = async () => {
     // declare the express app
     const app = express();
     
-    //Bodyparser Middlewar
-    app.use(bodyParser.json());
+    //Bodyparser Middleware
+    app.use(express.json());
+    app.use(express.urlencoded({
+      extended: true
+    }));
 
     //NEW define the api routes in a more dynamic file
     app.use('/api', routes);

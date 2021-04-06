@@ -69,6 +69,7 @@ const isSameSemester = (semester, course) => {
 // Find the course section with the class number queried for, and return the reduced object
 const find_section = (course, query_class_num) => {
     let ret_Course;
+    let course_found = false;
 
     //For the sections array, go through each section in the array
     for (let i = 0; i < course.sections.length; i++) {  
@@ -87,6 +88,9 @@ const find_section = (course, query_class_num) => {
                 course : ret_Course,
                 course_found : true
             }
+            
+            // update
+            course_found = true;
 
             // Return 
             return ret_obj;
@@ -94,15 +98,18 @@ const find_section = (course, query_class_num) => {
 
     }
 
-    // NOT found in this class section
-    // Construct a return object
-    let ret_obj = {
-        ret_Course : ret_Course,
-        course_found : false
-    }
+    if(course_found == false){
+        // NOT found in this class section
+        // Construct a return object
+        let ret_obj = {
+            ret_Course : ret_Course,
+            course_found : false
+        }
 
-    // Return 
-    return ret_obj;
+        // Return 
+        return ret_obj;
+    }
+    
 }
 
 //@route  GET api/courses
@@ -140,7 +147,7 @@ router.get('/:sectionNum', (req, res) => {
 });
 
 
-router.get('/find/:code/:classNum/:semester', (req, res) => {
+router.get('/findCS/:code/:classNum/:semester', (req, res) => {
     console.log(req)
     console.log("be courses")
 
@@ -187,6 +194,7 @@ router.get('/find/:code/:classNum/:semester', (req, res) => {
 
                     // 3) Return
                     res.json(course);
+                    res.status(200).send();
                     return;
                 }
 
@@ -204,13 +212,12 @@ router.get('/find/:code/:classNum/:semester', (req, res) => {
             return;
         }
 
-        res.status(200).send();
 
     })
 });
 
 
-router.get('/find/:code/:semester', (req, res) => {
+router.get('/findC/:code/:semester', (req, res) => {
     console.log(req)
     console.log("be courses")
 

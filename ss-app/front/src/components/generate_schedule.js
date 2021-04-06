@@ -7,6 +7,8 @@ export function generateSchedule(responseData) {
   let finalsectionInfo = []
 
   let finalSchedules = []
+  let conflictSchedules = []
+  let int_conflictSchedules = []
 
   let checkArray = [1]
   //console.log('Before: ', scheduleArray)
@@ -46,7 +48,9 @@ export function generateSchedule(responseData) {
     //fill the final schedule array with empty arrays 
     for (let c = 0; c < totalScheduleCount; c++) {
       let emptySchedule = Array(14).fill(0).map(row => new Array(6).fill(" "))
+      let emptySchedule2 = Array(14).fill(0).map(row => new Array(6).fill(" "))
       finalSchedules.push(emptySchedule)
+      conflictSchedules.push(emptySchedule2)
     }
 
     //console.log('finalSchedules initial status: ', finalSchedules)
@@ -110,18 +114,32 @@ export function generateSchedule(responseData) {
 
             // Store meeting info into 2D array 
             newSchedule = finalSchedules[count]
+            int_conflictSchedules = conflictSchedules[count]
             //dummySchedule = Array(14).fill(0).map(row => new Array(6).fill(" "))
 
             //console.log('newSchedule is: ', newSchedule)
+
+            // reset every loop
+            let currConflictCode = " ";
 
             if (period_index1 === period_index2) {
               if (newSchedule[period_index1][day_index] != " "){
                 console.log("uh oh, there are two classes that could be here")
                 //add the index of the conflicts
                 conflicts.push(count);
+
+                // Print conflicts
+                let curr_Conf = newSchedule[period_index1][day_index]
+                console.log("CONFLICT 1: ", curr_Conf)
+                int_conflictSchedules[period_index1][day_index] = curr_Conf
+
+                // NEW
+                //newSchedule[period_index1][day_index] = responseData[k].code + ' '+ curr_Conf
               }
-              newSchedule[period_index1][day_index] = responseData[k].code
-              //dummySchedule[period_index1][day_index] = responseData[k].code
+              //else{
+                newSchedule[period_index1][day_index] = responseData[k].code
+                //dummySchedule[period_index1][day_index] = responseData[k].code
+              //}
             }
             else {
               if (newSchedule[period_index1][day_index] != " " || newSchedule[period_index2][day_index] != " "){
@@ -130,12 +148,34 @@ export function generateSchedule(responseData) {
                 conflicts.push(count);
 
                 //Print our the 2 conflicting classes
-                //console.log("CONFLICT: ", )
+                console.log("CONFLICT 2a: ", newSchedule[period_index1][day_index] )
+                console.log("CONFLICT 2b: ", newSchedule[period_index2][day_index] )
+
+                // Append to conflict schedule
+                int_conflictSchedules[period_index1][day_index] = newSchedule[period_index1][day_index]
+                int_conflictSchedules[period_index2][day_index] = newSchedule[period_index2][day_index]
+
+                // NEW
+                /*
+                let curr_Conf = newSchedule[period_index1][day_index]
+                let curr_Conf2 = newSchedule[period_index2][day_index]
+
+                if(newSchedule[period_index1][day_index] != " "){
+                  newSchedule[period_index1][day_index] = responseData[k].code + ' '+ curr_Conf
+                }
+                if(newSchedule[period_index2][day_index] != " "){
+                  newSchedule[period_index2][day_index] = responseData[k].code + ' ' + curr_Conf2
+                }
+               */
               }
-              newSchedule[period_index1][day_index] = responseData[k].code
-              newSchedule[period_index2][day_index] = responseData[k].code
-              //dummySchedule[period_index1][day_index] = responseData[k].code
-              //dummySchedule[period_index2][day_index] = responseData[k].code
+
+              //else{  
+                newSchedule[period_index1][day_index] = responseData[k].code
+                newSchedule[period_index2][day_index] = responseData[k].code
+                //dummySchedule[period_index1][day_index] = responseData[k].code
+                //dummySchedule[period_index2][day_index] = responseData[k].code
+
+              // }
             }
 
           }
@@ -167,6 +207,7 @@ export function generateSchedule(responseData) {
 
           // Schedule Generation things
           finalSchedules[count] = newSchedule
+          conflictSchedules[count] =int_conflictSchedules 
           count++
 
         } // end for loop "i" sections
@@ -278,7 +319,8 @@ export function generateSchedule(responseData) {
 
   console.log("conflicts: ", conflicts)
   console.log("sectionInfo objects are: ", finalsectionInfo)
+  //console.log("conflictSchedules: ", conflictSchedules)
 
   //return finalSchedules
-  return {finalSchedules, conflicts, finalSchedule_Info, finalsectionInfo};
+  return {finalSchedules, conflicts, finalSchedule_Info, finalsectionInfo, conflictSchedules};
 }

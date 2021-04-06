@@ -2,6 +2,7 @@ import React, { Component, useState } from 'react';
 
 import { Form, Col, Card, Button, Container, Row , Table, Alert, Collapse, Accordion} from 'react-bootstrap';
 import './basic.css';
+import { findBuildingByCode } from '../data/building_data.js';
 
 const periods = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "E1", "E2", "E3"];
 const daysShort = ["M", "T", "W", "R", "F"]
@@ -118,75 +119,10 @@ const Schedule = props => {
       //change by calling App external function
       props.reset_button(event.target.value);
       };
-    
-
-    // Print Online Classes for table
-    /*
-    const generate_colored_sched_cells = curr_row => {
-      return(
-
-    {props.final_schedule_info.slice(0, props.final_schedule_info.length).map((curr_class_obj, curr_idx) => {
-
-      // For each index, check to see if it is online (AD = Online); (PC = In person)
-      if(curr_class_obj[curr_sc_index].section_web == "AD"){
-        // define a temp var
-        let curr_cl_code = curr_class_obj[curr_sc_index].course_code;
-
-        // Then check against the responseData for coloring
-        if(curr_cl_code == props.courseNums[0].toUpperCase()){
-          return (
-            <tr>
-              <td class='def_color_table' colSpan="2">Online (100%)</td>
-              <td class='color_class_1' colSpan="6">{curr_class_obj[curr_sc_index].course_code} | {curr_class_obj[curr_sc_index].course_name}</td>
-            </tr>);
-        }else if(curr_cl_code== props.courseNums[1].toUpperCase()){
-          return (
-            <tr>
-              <td class='def_color_table' colSpan="2">Online (100%)</td>
-              <td class='color_class_2' colSpan="6">{curr_class_obj[curr_sc_index].course_code} | {curr_class_obj[curr_sc_index].course_name}</td>
-            </tr>);
-        }else if(curr_cl_code== props.courseNums[2].toUpperCase()){
-          return (
-            <tr>
-              <td class='def_color_table' colSpan="2">Online (100%)</td>
-              <td class='color_class_3' colSpan="6">{curr_class_obj[curr_sc_index].course_code} | {curr_class_obj[curr_sc_index].course_name}</td>
-            </tr>);
-        }else if(curr_cl_code== props.courseNums[3].toUpperCase()){
-          return (
-            <tr>
-              <td class='def_color_table' colSpan="2">Online (100%)</td>
-              <td class='color_class_4' colSpan="6">{curr_class_obj[curr_sc_index].course_code} | {curr_class_obj[curr_sc_index].course_name}</td>
-            </tr>);
-        }else if(curr_cl_code== props.courseNums[4].toUpperCase()){
-          return (
-            <tr>
-              <td class='def_color_table' colSpan="2">Online (100%)</td>
-              <td class='color_class_5' colSpan="6">{curr_class_obj[curr_sc_index].course_code} | {curr_class_obj[curr_sc_index].course_name}</td>
-            </tr>);
-        }else if(curr_cl_code== props.courseNums[5].toUpperCase()){
-          return (
-            <tr>
-              <td class='def_color_table' colSpan="2">Online (100%)</td>
-              <td class='color_class_6' colSpan="6">{curr_class_obj[curr_sc_index].course_code} | {curr_class_obj[curr_sc_index].course_name}</td>
-            </tr>);
-        }else {
-          return (
-            <tr>
-              <td class='def_color_table' colSpan="2">Online (100%)</td>
-              <td class='def_color_table' colSpan="6">{curr_class_obj[curr_sc_index].course_code} | {curr_class_obj[curr_sc_index].course_name}</td>
-            </tr>);
-        }
-
-      }
-      
-    })}
-);
-  }
-  */
 
 
-  // Color classes
-  const generate_colored_sched_cells = curr_row => {
+  // Color classes; Main schedule table grid
+  const generate_colored_sched_cells = (curr_row, curr_row_idx, curr_sched_idx )=> {
     //console.log("curr_row", curr_row)
 
     // init
@@ -200,26 +136,74 @@ const Schedule = props => {
       }
       else{
         // Go through the courseNums submitted, and match to print the color
-        if(curr_row[i] == props.courseNums[0].toUpperCase()){
+
+        /*if(curr_row[i] == props.courseNums[0].toUpperCase()){
           array_ret.push(<td class='color_class_1' 
             onMouseEnter={() => props.setHover(true)}
             onMouseLeave={() => props.setHover(false)}
               >{curr_row[i]}</td>)
         }
+        */
+
+        // Fetch Conflict info (separate table)
+        let currPotConflict = ' ';
+        try{
+          currPotConflict = props.conflictSchedules[curr_sched_idx][curr_row_idx][i];
+        }
+        catch{
+          currPotConflict = ' ';
+        }
+        //console.log("CONF: ", currPotConflict)
+
+
+        // Generate table rows based on course, and display the conflict if valid
+        if(curr_row[i] == props.courseNums[0].toUpperCase()){
+          if(currPotConflict != ' '){
+            array_ret.push(<td class='color_class_CONF'>{curr_row[i]} | {currPotConflict}</td>)
+          }
+          else{
+            array_ret.push(<td class='color_class_1'>{curr_row[i]}</td>)
+          }
+        }
         else if(curr_row[i] == props.courseNums[1].toUpperCase()){
-          array_ret.push(<td class='color_class_2'>{curr_row[i]}</td>)
+          if(currPotConflict != ' '){
+            array_ret.push(<td class='color_class_CONF'>{curr_row[i]} | {currPotConflict}</td>)
+          }
+          else{
+            array_ret.push(<td class='color_class_2'>{curr_row[i]}</td>)
+          }
         }
         else if(curr_row[i] == props.courseNums[2].toUpperCase()){
-          array_ret.push(<td class='color_class_3'>{curr_row[i]}</td>)
+          if(currPotConflict != ' '){
+            array_ret.push(<td class='color_class_CONF'>{curr_row[i]} | {currPotConflict}</td>)
+          }
+          else{
+            array_ret.push(<td class='color_class_3'>{curr_row[i]}</td>)
+          }
         }
         else if(curr_row[i] == props.courseNums[3].toUpperCase()){
-          array_ret.push(<td class='color_class_4'>{curr_row[i]}</td>)
+          if(currPotConflict != ' '){
+            array_ret.push(<td class='color_class_CONF'>{curr_row[i]} | {currPotConflict}</td>)
+          }
+          else{
+            array_ret.push(<td class='color_class_4'>{curr_row[i]}</td>)
+          }
         }
         else if(curr_row[i] == props.courseNums[4].toUpperCase()){
-          array_ret.push(<td class='color_class_5'>{curr_row[i]}</td>)
+          if(currPotConflict != ' '){
+            array_ret.push(<td class='color_class_CONF'>{curr_row[i]} | {currPotConflict}</td>)
+          }
+          else{
+            array_ret.push(<td class='color_class_5'>{curr_row[i]}</td>)
+          }
         }
         else if(curr_row[i] == props.courseNums[5].toUpperCase()){
-          array_ret.push(<td class='color_class_6'>{curr_row[i]}</td>)
+          if(currPotConflict != ' '){
+            array_ret.push(<td class='color_class_CONF'>{curr_row[i]} | {currPotConflict}</td>)
+          }
+          else{
+            array_ret.push(<td class='color_class_6'>{curr_row[i]}</td>)
+          }
         }
         else{
           array_ret.push(<td class='def_color_table'>{curr_row[i]}</td>)
@@ -245,10 +229,17 @@ const Schedule = props => {
         </div>
       )
     }
-    else if(props.final_schedule_info){
-      return(<div></div> )
+    else{
+      return(<div></div>)
     }
+  };
 
+  // Print the getting started method
+  const print_welcome_message = responseData => {
+    // Only print the welcome message if final_schedules isn't done
+    if(responseData.length !== 0){
+      return(<div></div>)
+    }
     else{
       return(
         <div>
@@ -259,7 +250,6 @@ const Schedule = props => {
       )
     }
   };
-
 
   //Print a general warning of the conflict indices
   const print_conflict = curr_sc_idx => {
@@ -321,6 +311,44 @@ const Schedule = props => {
 
   };
 
+  // Display a google map of the building location
+  const displayOnMap = props => {
+    //let coords = geoController.getPosition().coords;
+    // Handler needs to be made to get the current building in buildingdata.js, and then return the coordinates info
+    //console.log('PROPS', props[0].meetBuilding)
+    
+    /// RN based on 1st building only
+    console.log('PROPS', props[0].meetBuilding)
+
+    let queriedBldg;
+
+    // Call the handler to fetch the coordinates
+    try{
+      queriedBldg = findBuildingByCode(props[0].meetBuilding)
+    }
+    catch{
+      return
+    }
+    //console.log('PROPS', queriedBldg.coordinates)
+
+    //console.log("MAP was called, coordinates received: ", coords)
+    let queryStr = 'https://google.com/maps?q=' + queriedBldg.coordinates.latitude + ' ' + queriedBldg.coordinates.longitude
+    // Open a new tab
+    //window.open(queryStr);
+  }
+
+  // Map button object
+  const map_Button = (sched_info, online) => {
+    // only make a button if an in person course
+    // Displaying all at once
+
+    if(online == "AD"){
+      return(<div></div>)
+    }
+    else{
+      return(<button onClick={displayOnMap(sched_info)}>View on Map</button>)
+    }
+  }
 
   // Determine Class format
   const get_online_status = curr_sect => {
@@ -375,6 +403,7 @@ const Schedule = props => {
       //console.log("curr_schedule: ", curr_schedule)
 
       let temp_r1;
+      let curr_sc_index_string = curr_sc_index.toString(); // Use for Accordion (ID needs to be a str)
 
       // if schedule does not exist, do not render table and just return nothing
       if(!props.final_schedule_info[0]){
@@ -387,29 +416,45 @@ const Schedule = props => {
       return (
         <div>
 
-        {/* Generate the detail submenu */ }
-          <div class='card_blue' id='sched_detail'>
+        {/* Generate the detail submenu in a collapsible form*/ }
+        
+        <Accordion>
+            <Card.Header>
+              <Accordion.Toggle as={Button} variant="info" eventKey={curr_sc_index_string}>
+              Schedule: {curr_sc_index} Info
+              </Accordion.Toggle>
+            </Card.Header>
+            
+            <Accordion.Collapse eventKey={curr_sc_index_string}>
+            <Card.Body>
+
+            <div class='card_blue' id='sched_detail'>
             {props.final_schedule_info.slice(0, props.final_schedule_info.length).map((curr_class_obj, curr_idx) => {
               return (
-              <div class='left_align'>
-              
-                <div class='center_align'>
-                  <p><b>Course Name:</b> {curr_class_obj[curr_sc_index].course_code} - {curr_class_obj[curr_sc_index].course_name}</p>
+                <div class='left_align'>
+                
+                  <div class='center_align'>
+                    <p><b>Course Name:</b> {curr_class_obj[curr_sc_index].course_code} - {curr_class_obj[curr_sc_index].course_name}</p>
+                  </div>
+
+                  <p><b>Class Number:</b> {curr_class_obj[curr_sc_index].section_c_num}</p>
+                  <p><b>Course Instructor:</b> {curr_class_obj[curr_sc_index].section_inst[0].name}</p>
+                  <p><b>Course Description:</b> {curr_class_obj[curr_sc_index].course_desc}</p>
+                  <p><b>Course Credits:</b> {curr_class_obj[curr_sc_index].section_credits}</p>
+                  <p><b>Class Format:</b> {get_online_status(curr_class_obj[curr_sc_index].section_web)}</p>
+                  <p><b>Location:</b>{print_meeting_locations(curr_class_obj[curr_sc_index].section_mT, curr_class_obj[curr_sc_index].section_web)}</p>
+
+                  {map_Button(curr_class_obj[curr_sc_index].section_mT, curr_class_obj[curr_sc_index].section_web)}
                 </div>
-
-                <p><b>Class Number:</b> {curr_class_obj[curr_sc_index].section_c_num}</p>
-                <p><b>Course Instructor:</b> {curr_class_obj[curr_sc_index].section_inst[0].name}</p>
-                <p><b>Course Description:</b> {curr_class_obj[curr_sc_index].course_desc}</p>
-                <p><b>Course Credits:</b> {curr_class_obj[curr_sc_index].section_credits}</p>
-                <p><b>Class Format:</b> {get_online_status(curr_class_obj[curr_sc_index].section_web)}</p>
-                <p><b>Location:</b>{print_meeting_locations(curr_class_obj[curr_sc_index].section_mT, curr_class_obj[curr_sc_index].section_web)}</p>
-
-                <p>TBD: Add a "Route" button that routes the walk to front end</p>
-              </div>
+                  
               );
             })}
+            </div>
 
-          </div>
+            </Card.Body>
+        </Accordion.Collapse>
+        </Accordion>
+
 
           {/* Print any conflicts warnings (if they exist) */ }
           {print_conflict(curr_sc_index)}
@@ -440,7 +485,7 @@ const Schedule = props => {
                           <td class='def_color_table'>{times[index]}</td>
                           
                           {/* Generate the Colored cells*/ }
-                          {generate_colored_sched_cells(row)}
+                          {generate_colored_sched_cells(row, index, curr_sc_index)}
 
                         </tr>
                       );
@@ -687,8 +732,8 @@ const print_schedule_lab_lecture = props.final_lab_lecture_info.map((curr_class_
               
             </Card.Body>
         </Accordion.Collapse>
+
       </Card>
-  
 
       </div>
         );
@@ -917,6 +962,7 @@ const print_schedule_lab_lecture = props.final_lab_lecture_info.map((curr_class_
               {/* {scheduleGrids}*/}
               {scheduleGrids}
 
+              {print_welcome_message(props.responseData)}
               {print_conflicts(props.conflicts_print)}
 
               {/* 
@@ -927,6 +973,7 @@ const print_schedule_lab_lecture = props.final_lab_lecture_info.map((curr_class_
             
               { props.inHover && <p>Hi!</p>}
               }*/}
+
 
           </Card>
         </div>

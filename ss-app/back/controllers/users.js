@@ -72,24 +72,37 @@ router.get('/:email', async(req, res) => {
   }
 });
 
-// Get 4 year plan info for render
-router.get('/four-year-user-info', async(req, res) => {
-  const user = await User.findOne({email: req.body.email});
-  console.log("User found:", user)
+// Get 4 year plan info for render in front end
+router.put('/four-year-user-info', async(req, res) => {
+  console.log('GET /four-year-user-info called')
 
   try {
-    console.log('GET /:four-year-user-info called')
-    console.log('GET: ', req.body)
+    console.log('GET: DAN', req.body)
     const user = await User.findOne({email: req.body.email});
-    
     console.log("User found:", user)
 
-    // @TODO Get rid of pw if you have time
+    // Construct the object to return
     let respData ={
       FullName : user.fullName,
-      //y1_sp = user.y1_sp,
+      y1_sp : user.y1_sp,
       y1_su : user.y1_su,
-      //schedule info etc.
+      y1_fl : user.y1_fl,
+      
+      y2_sp : user.y2_sp,
+      y2_su : user.y2_su,
+      y2_fl : user.y2_fl,
+      
+      y3_sp : user.y3_sp,
+      y3_su : user.y3_su,
+      y3_fl : user.y3_fl,
+
+      y4_sp : user.y4_sp,
+      y4_su : user.y4_su,
+      y4_fl : user.y4_fl,
+
+      y5_sp : user.y5_sp,
+      y5_su : user.y5_su,
+      y5_fl : user.y5_fl,
     }
 
     res.status(200).send(respData);

@@ -1,6 +1,6 @@
 'use strict';
 import express from 'express';
-import dialogflow from 'dialogflow';
+import dialogflow from '@google-cloud/dialogflow';
 import config from '../config/keys.js'
 
 const router = express.Router();
@@ -12,7 +12,7 @@ const languageCode = config.dialogFlowSessionLanguageCode;
 
 // Create a new session
 const sessionClient = new dialogflow.SessionsClient();
-const sessionPath = sessionClient.sessionPath(projectId, sessionId);
+const sessionPath = sessionClient.projectAgentSessionPath(projectId, sessionId);
 
 
 //Text Query Route

@@ -4,29 +4,28 @@ import { Card } from 'react-bootstrap';
 import './basic.css';
 import { ExportReactCSV } from './ExportReactCSV'
 
+const Four_Year_Disp = props => {
+    // Print a general warning if user isn't logged in
+    const print_warnings = props => {
+        if(props == 1){
+        return(
+            <div className='alert alert-danger' id='conflicts_div'>
+                <strong>Please log in to view this page.</strong>
+            </div>
+        )
+        }
+        else{
+        return(<div></div> )
+        }
+    };
 
-// Print a general warning if user isn't logged in
 
-const print_warnings = props => {
-  if(props == 1){
-    return(
-      <div className='alert alert-danger' id='conflicts_div'>
-          <strong>Please log in to view this page.</strong>
-      </div>
-    )
-  }
-  else{
-    return(<div></div> )
-  }
-}
-
-const Four_Year_Disp= props => {
-  console.log(props.initVar);
-  var data = []; 
+  let data = []; 
   if(props.initVar)
   {
-      var UserName = props.user.fullName; 
-      console.log(UserName); 
+      let UserName = props.user.FullName; 
+      //console.log(UserName); 
+      if(props.user.y1_sp.length != 0){
       var Y1_Sp_C1_Num = props.user.y1_sp[0].course1.number; 
       var Y1_Sp_C1_Name = props.user.y1_sp[0].course1.name; 
       var Y1_Sp_C1_Credit = props.user.y1_sp[0].course1.credits; 
@@ -45,6 +44,8 @@ const Four_Year_Disp= props => {
       var Y1_Sp_C6_Num = props.user.y1_sp[0].course6.number; 
       var Y1_Sp_C6_Name = props.user.y1_sp[0].course6.name; 
       var Y1_Sp_C6_Credit = props.user.y1_sp[0].course6.credits;  
+      }
+      if(props.user.y1_su.length != 0){
       var Y1_Su_C1_Num = props.user.y1_su[0].course1.number; 
       var Y1_Su_C1_Name = props.user.y1_su[0].course1.name; 
       var Y1_Su_C1_Credit = props.user.y1_su[0].course1.credits; 
@@ -63,6 +64,8 @@ const Four_Year_Disp= props => {
       var Y1_Su_C6_Num = props.user.y1_su[0].course6.number; 
       var Y1_Su_C6_Name = props.user.y1_su[0].course6.name; 
       var Y1_Su_C6_Credit = props.user.y1_su[0].course6.credits;
+      }
+      if(props.user.y1_fl.length != 0){
       var Y1_Fa_C1_Num = props.user.y1_fl[0].course1.number; 
       var Y1_Fa_C1_Name = props.user.y1_fl[0].course1.name; 
       var Y1_Fa_C1_Credit = props.user.y1_fl[0].course1.credits; 
@@ -81,7 +84,9 @@ const Four_Year_Disp= props => {
       var Y1_Fa_C6_Num = props.user.y1_fl[0].course6.number; 
       var Y1_Fa_C6_Name = props.user.y1_fl[0].course6.name; 
       var Y1_Fa_C6_Credit = props.user.y1_fl[0].course6.credits;
+      }
   
+      if(props.user.y2_sp.length != 0){
       var Y2_Sp_C1_Num = props.user.y2_sp[0].course1.number; 
       var Y2_Sp_C1_Name = props.user.y2_sp[0].course1.name; 
       var Y2_Sp_C1_Credit = props.user.y2_sp[0].course1.credits; 
@@ -100,24 +105,28 @@ const Four_Year_Disp= props => {
       var Y2_Sp_C6_Num = props.user.y2_sp[0].course6.number; 
       var Y2_Sp_C6_Name = props.user.y2_sp[0].course6.name; 
       var Y2_Sp_C6_Credit = props.user.y2_sp[0].course6.credits;  
-      var Y2_Su_C1_Num = props.user.y2_su[0].course1.number; 
-      var Y2_Su_C1_Name = props.user.y2_su[0].course1.name; 
-      var Y2_Su_C1_Credit = props.user.y2_su[0].course1.credits; 
-      var Y2_Su_C2_Num = props.user.y2_su[0].course2.number; 
-      var Y2_Su_C2_Name = props.user.y2_su[0].course2.name; 
-      var Y2_Su_C2_Credit = props.user.y2_su[0].course2.credits; 
-      var Y2_Su_C3_Num = props.user.y2_su[0].course3.number; 
-      var Y2_Su_C3_Name = props.user.y2_su[0].course3.name; 
-      var Y2_Su_C3_Credit = props.user.y2_su[0].course3.credits;  
-      var Y2_Su_C4_Num = props.user.y2_su[0].course4.number; 
-      var Y2_Su_C4_Name = props.user.y2_su[0].course4.name; 
-      var Y2_Su_C4_Credit = props.user.y2_su[0].course4.credits;  
-      var Y2_Su_C5_Num = props.user.y2_su[0].course5.number; 
-      var Y2_Su_C5_Name = props.user.y2_su[0].course5.name; 
-      var Y2_Su_C5_Credit = props.user.y2_su[0].course5.credits;  
-      var Y2_Su_C6_Num = props.user.y2_su[0].course6.number; 
-      var Y2_Su_C6_Name = props.user.y2_su[0].course6.name; 
-      var Y2_Su_C6_Credit = props.user.y2_su[0].course6.credits;
+      }
+      if(props.user.y2_su.length != 0){
+        var Y2_Su_C1_Num = props.user.y2_su[0].course1.number; 
+        var Y2_Su_C1_Name = props.user.y2_su[0].course1.name; 
+        var Y2_Su_C1_Credit = props.user.y2_su[0].course1.credits; 
+        var Y2_Su_C2_Num = props.user.y2_su[0].course2.number; 
+        var Y2_Su_C2_Name = props.user.y2_su[0].course2.name; 
+        var Y2_Su_C2_Credit = props.user.y2_su[0].course2.credits; 
+        var Y2_Su_C3_Num = props.user.y2_su[0].course3.number; 
+        var Y2_Su_C3_Name = props.user.y2_su[0].course3.name; 
+        var Y2_Su_C3_Credit = props.user.y2_su[0].course3.credits;  
+        var Y2_Su_C4_Num = props.user.y2_su[0].course4.number; 
+        var Y2_Su_C4_Name = props.user.y2_su[0].course4.name; 
+        var Y2_Su_C4_Credit = props.user.y2_su[0].course4.credits;  
+        var Y2_Su_C5_Num = props.user.y2_su[0].course5.number; 
+        var Y2_Su_C5_Name = props.user.y2_su[0].course5.name; 
+        var Y2_Su_C5_Credit = props.user.y2_su[0].course5.credits;  
+        var Y2_Su_C6_Num = props.user.y2_su[0].course6.number; 
+        var Y2_Su_C6_Name = props.user.y2_su[0].course6.name; 
+        var Y2_Su_C6_Credit = props.user.y2_su[0].course6.credits;
+      }
+      if(props.user.y2_fl.length != 0){
       var Y2_Fa_C1_Num = props.user.y2_fl[0].course1.number; 
       var Y2_Fa_C1_Name = props.user.y2_fl[0].course1.name; 
       var Y2_Fa_C1_Credit = props.user.y2_fl[0].course1.credits; 
@@ -136,7 +145,9 @@ const Four_Year_Disp= props => {
       var Y2_Fa_C6_Num = props.user.y2_fl[0].course6.number; 
       var Y2_Fa_C6_Name = props.user.y2_fl[0].course6.name; 
       var Y2_Fa_C6_Credit = props.user.y2_fl[0].course6.credits;
+      }
   
+      if(props.user.y3_sp.length != 0){
       var Y3_Sp_C1_Num = props.user.y3_sp[0].course1.number; 
       var Y3_Sp_C1_Name = props.user.y3_sp[0].course1.name; 
       var Y3_Sp_C1_Credit = props.user.y3_sp[0].course1.credits; 
@@ -155,6 +166,8 @@ const Four_Year_Disp= props => {
       var Y3_Sp_C6_Num = props.user.y3_sp[0].course6.number; 
       var Y3_Sp_C6_Name = props.user.y3_sp[0].course6.name; 
       var Y3_Sp_C6_Credit = props.user.y3_sp[0].course6.credits;  
+      }
+      if(props.user.y3_su.length != 0){
       var Y3_Su_C1_Num = props.user.y3_su[0].course1.number; 
       var Y3_Su_C1_Name = props.user.y3_su[0].course1.name; 
       var Y3_Su_C1_Credit = props.user.y3_su[0].course1.credits; 
@@ -173,6 +186,8 @@ const Four_Year_Disp= props => {
       var Y3_Su_C6_Num = props.user.y3_su[0].course6.number; 
       var Y3_Su_C6_Name = props.user.y3_su[0].course6.name; 
       var Y3_Su_C6_Credit = props.user.y3_su[0].course6.credits;
+      }
+      if(props.user.y3_fl.length != 0){
       var Y3_Fa_C1_Num = props.user.y3_fl[0].course1.number; 
       var Y3_Fa_C1_Name = props.user.y3_fl[0].course1.name; 
       var Y3_Fa_C1_Credit = props.user.y3_fl[0].course1.credits; 
@@ -191,7 +206,9 @@ const Four_Year_Disp= props => {
       var Y3_Fa_C6_Num = props.user.y3_fl[0].course6.number; 
       var Y3_Fa_C6_Name = props.user.y3_fl[0].course6.name; 
       var Y3_Fa_C6_Credit = props.user.y3_fl[0].course6.credits;
+      }
   
+      if(props.user.y4_sp.length != 0){
       var Y4_Sp_C1_Num = props.user.y4_sp[0].course1.number; 
       var Y4_Sp_C1_Name = props.user.y4_sp[0].course1.name; 
       var Y4_Sp_C1_Credit = props.user.y4_sp[0].course1.credits; 
@@ -210,6 +227,8 @@ const Four_Year_Disp= props => {
       var Y4_Sp_C6_Num = props.user.y4_sp[0].course6.number; 
       var Y4_Sp_C6_Name = props.user.y4_sp[0].course6.name; 
       var Y4_Sp_C6_Credit = props.user.y4_sp[0].course6.credits;  
+      }
+      if(props.user.y4_su.length != 0){
       var Y4_Su_C1_Num = props.user.y4_su[0].course1.number; 
       var Y4_Su_C1_Name = props.user.y4_su[0].course1.name; 
       var Y4_Su_C1_Credit = props.user.y4_su[0].course1.credits; 
@@ -228,6 +247,8 @@ const Four_Year_Disp= props => {
       var Y4_Su_C6_Num = props.user.y4_su[0].course6.number; 
       var Y4_Su_C6_Name = props.user.y4_su[0].course6.name; 
       var Y4_Su_C6_Credit = props.user.y4_su[0].course6.credits;
+      }
+      if(props.user.y4_fl.length != 0){
       var Y4_Fa_C1_Num = props.user.y4_fl[0].course1.number; 
       var Y4_Fa_C1_Name = props.user.y4_fl[0].course1.name; 
       var Y4_Fa_C1_Credit = props.user.y4_fl[0].course1.credits; 
@@ -246,7 +267,9 @@ const Four_Year_Disp= props => {
       var Y4_Fa_C6_Num = props.user.y4_fl[0].course6.number; 
       var Y4_Fa_C6_Name = props.user.y4_fl[0].course6.name; 
       var Y4_Fa_C6_Credit = props.user.y4_fl[0].course6.credits;
+      }
   
+      if(props.user.y5_sp.length != 0){
       var Y5_Sp_C1_Num = props.user.y5_sp[0].course1.number; 
       var Y5_Sp_C1_Name = props.user.y5_sp[0].course1.name; 
       var Y5_Sp_C1_Credit = props.user.y5_sp[0].course1.credits; 
@@ -265,6 +288,8 @@ const Four_Year_Disp= props => {
       var Y5_Sp_C6_Num = props.user.y5_sp[0].course6.number; 
       var Y5_Sp_C6_Name = props.user.y5_sp[0].course6.name; 
       var Y5_Sp_C6_Credit = props.user.y5_sp[0].course6.credits;  
+      }
+      if(props.user.y5_su.length != 0){
       var Y5_Su_C1_Num = props.user.y5_su[0].course1.number; 
       var Y5_Su_C1_Name = props.user.y5_su[0].course1.name; 
       var Y5_Su_C1_Credit = props.user.y5_su[0].course1.credits; 
@@ -283,6 +308,8 @@ const Four_Year_Disp= props => {
       var Y5_Su_C6_Num = props.user.y5_su[0].course6.number; 
       var Y5_Su_C6_Name = props.user.y5_su[0].course6.name; 
       var Y5_Su_C6_Credit = props.user.y5_su[0].course6.credits;
+      }
+      if(props.user.y5_fl.length != 0){
       var Y5_Fa_C1_Num = props.user.y5_fl[0].course1.number; 
       var Y5_Fa_C1_Name = props.user.y5_fl[0].course1.name; 
       var Y5_Fa_C1_Credit = props.user.y5_fl[0].course1.credits; 
@@ -301,7 +328,8 @@ const Four_Year_Disp= props => {
       var Y5_Fa_C6_Num = props.user.y5_fl[0].course6.number; 
       var Y5_Fa_C6_Name = props.user.y5_fl[0].course6.name; 
       var Y5_Fa_C6_Credit = props.user.y5_fl[0].course6.credits;
-  
+      }
+
       data = [
         ["Student:", UserName],
         [" "],
@@ -630,8 +658,8 @@ const Four_Year_Disp= props => {
     document.getElementById('Y5_Fa_C6_Name').innerHTML = Y5_Fa_C6_Name;
     document.getElementById('Y5_Fa_C6_Credit').innerHTML = Y5_Fa_C6_Credit;
 
+    }// end if 
 
-}
   return(
   <div className='App'>
     <header className='masthead'>

@@ -54,8 +54,8 @@ const Home = props => {
                 </span>
                 <h4 className='service-heading'>Valid Timing Options</h4>
                 <p className='text-muted'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+                Enter your desired courses, and view an organized grid of the classes you would like to take based on
+                the official ONE.UF course catalog.
                 </p>
               </div>
               <div className='col-md-4'>
@@ -65,8 +65,8 @@ const Home = props => {
                 </span>
                 <h4 className='service-heading'>Map Your Schedule</h4>
                 <p className='text-muted'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+                Based on your class's location, our application will allow you to view where your classes are located 
+                and give you a walking time estimation for back to back classes.
                 </p>
               </div>
               <div className='col-md-4'>
@@ -76,8 +76,8 @@ const Home = props => {
                 </span>
                 <h4 className='service-heading'>Plan for Graduation</h4>
                 <p className='text-muted'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+                Plan out your four or five year plan to organize your schedule, and ensure you are on track
+                to graduate.
                 </p>
               </div>
             </div>

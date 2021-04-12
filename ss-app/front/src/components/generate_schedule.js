@@ -15,6 +15,8 @@ export function generateSchedule(responseData) {
   //console.log(checkArray.length)
 
   let day_index = 0;
+  let day_index1 = 0;
+  let day_index2 = 0;
   let period_index1 = 0;
   let period_index2 = 0;
   let totalScheduleCount = 1;
@@ -96,15 +98,29 @@ export function generateSchedule(responseData) {
 
           //console.log('meetTArray is: ', meetTArray)
           for (let j = 0; j < meetTArray.length; j++) {
-            day_index = daysShort.indexOf(meetTArray[j].meetDays[0])
-            //console.log('day_index is: ', day_index)
+            let MWF = false;
 
+            // Tues/Thurs
+            if(meetTArray[j].meetDays.length == 1){
+              day_index = daysShort.indexOf(meetTArray[j].meetDays[0])
+            }
+            // MWF
+            else{
+              day_index = daysShort.indexOf(meetTArray[j].meetDays[0])
+              day_index1 = daysShort.indexOf(meetTArray[j].meetDays[1])
+              day_index2 = daysShort.indexOf(meetTArray[j].meetDays[2])
+              MWF = true
+              console.log("MWF TRUE")
+              //console.log('day_index is: ', day_index)
+            }
+            
             period_index1 = periods.indexOf(meetTArray[j].meetPeriodBegin)
             //console.log('period_index1 is: ', period_index1)
 
             period_index2 = periods.indexOf(meetTArray[j].meetPeriodEnd)
             //console.log('period_index2 is: ', period_index2)
 
+            // TODO: to be updated
             let sectionInfo_Indexes = []
             sectionInfo_Indexes.push(day_index)
             sectionInfo_Indexes.push(period_index1)
@@ -119,68 +135,107 @@ export function generateSchedule(responseData) {
 
             //console.log('newSchedule is: ', newSchedule)
 
-            // reset every loop
-            let currConflictCode = " ";
+            // Schedule Code Generation and Conflict Schedule
+            // Tues/ Thurs
+            if(MWF == false){
+              if (period_index1 === period_index2) {
+                if (newSchedule[period_index1][day_index] != " "){
+                  console.log("uh oh, there are two classes that could be here")
+                  //add the index of the conflicts
+                  conflicts.push(count);
 
-            if (period_index1 === period_index2) {
-              if (newSchedule[period_index1][day_index] != " "){
-                console.log("uh oh, there are two classes that could be here")
-                //add the index of the conflicts
-                conflicts.push(count);
-
-                // Print conflicts
-                let curr_Conf = newSchedule[period_index1][day_index]
-                console.log("CONFLICT 1: ", curr_Conf)
-                int_conflictSchedules[period_index1][day_index] = curr_Conf
-
-                // NEW
-                //newSchedule[period_index1][day_index] = responseData[k].code + ' '+ curr_Conf
-              }
-              //else{
+                  // Print conflicts
+                  let curr_Conf = newSchedule[period_index1][day_index]
+                  console.log("CONFLICT 1: ", curr_Conf)
+                  int_conflictSchedules[period_index1][day_index] = curr_Conf
+                }
+                  
                 newSchedule[period_index1][day_index] = responseData[k].code
                 //dummySchedule[period_index1][day_index] = responseData[k].code
-              //}
-            }
-            else {
-              if (newSchedule[period_index1][day_index] != " " || newSchedule[period_index2][day_index] != " "){
-                console.log("uh oh, there are two classes that could be here")
-                //add the index of the conflicts
-                conflicts.push(count);
+                
+              }
+              else {
+                if (newSchedule[period_index1][day_index] != " " || newSchedule[period_index2][day_index] != " "){
+                  console.log("uh oh, there are two classes that could be here")
+                  //add the index of the conflicts
+                  conflicts.push(count);
 
-                //Print our the 2 conflicting classes
-                console.log("CONFLICT 2a: ", newSchedule[period_index1][day_index] )
-                console.log("CONFLICT 2b: ", newSchedule[period_index2][day_index] )
+                  //Print our the 2 conflicting classes
+                  console.log("CONFLICT 2a: ", newSchedule[period_index1][day_index] )
+                  console.log("CONFLICT 2b: ", newSchedule[period_index2][day_index] )
 
-                // Append to conflict schedule
-                int_conflictSchedules[period_index1][day_index] = newSchedule[period_index1][day_index]
-                int_conflictSchedules[period_index2][day_index] = newSchedule[period_index2][day_index]
-
-                // NEW
-                /*
-                let curr_Conf = newSchedule[period_index1][day_index]
-                let curr_Conf2 = newSchedule[period_index2][day_index]
-
-                if(newSchedule[period_index1][day_index] != " "){
-                  newSchedule[period_index1][day_index] = responseData[k].code + ' '+ curr_Conf
+                  // Append to conflict schedule
+                  int_conflictSchedules[period_index1][day_index] = newSchedule[period_index1][day_index]
+                  int_conflictSchedules[period_index2][day_index] = newSchedule[period_index2][day_index]
                 }
-                if(newSchedule[period_index2][day_index] != " "){
-                  newSchedule[period_index2][day_index] = responseData[k].code + ' ' + curr_Conf2
-                }
-               */
+
+                  newSchedule[period_index1][day_index] = responseData[k].code
+                  newSchedule[period_index2][day_index] = responseData[k].code
+                  //dummySchedule[period_index1][day_index] = responseData[k].code
+                  //dummySchedule[period_index2][day_index] = responseData[k].code
+
               }
 
-              //else{  
+            }// End MWF==false
+            else{
+              if (period_index1 === period_index2) {
+                if (newSchedule[period_index1][day_index] != " "){
+                  console.log("uh oh, there are two classes that could be here")
+                  //add the index of the conflicts
+                  conflicts.push(count);
+
+                  // Print conflicts
+                  let curr_Conf = newSchedule[period_index1][day_index]
+                  console.log("CONFLICT 1: ", curr_Conf)
+                  int_conflictSchedules[period_index1][day_index] = curr_Conf
+                  int_conflictSchedules[period_index1][day_index1] = curr_Conf
+                  int_conflictSchedules[period_index1][day_index2] = curr_Conf
+                }
+                  
                 newSchedule[period_index1][day_index] = responseData[k].code
-                newSchedule[period_index2][day_index] = responseData[k].code
-                //dummySchedule[period_index1][day_index] = responseData[k].code
-                //dummySchedule[period_index2][day_index] = responseData[k].code
+                newSchedule[period_index1][day_index1] = responseData[k].code
+                newSchedule[period_index1][day_index2] = responseData[k].code
+                
+              }
+              else {
+                if (newSchedule[period_index1][day_index] != " " || newSchedule[period_index2][day_index] != " "){
+                  console.log("uh oh, there are two classes that could be here")
+                  //add the index of the conflicts
+                  conflicts.push(count);
 
-              // }
-            }
+                  //Print our the 2 conflicting classes
+                  console.log("CONFLICT 2a: ", newSchedule[period_index1][day_index] )
+                  console.log("CONFLICT 2b: ", newSchedule[period_index2][day_index] )
 
-          }
-          //console.log('what should be added in this itteration: ', dummySchedule)
-          //console.log('what does new schedule look like: ', newSchedule)
+                  // Append to conflict schedule
+                  int_conflictSchedules[period_index1][day_index] = newSchedule[period_index1][day_index]
+                  int_conflictSchedules[period_index2][day_index] = newSchedule[period_index2][day_index]
+                  
+                  int_conflictSchedules[period_index1][day_index1] = newSchedule[period_index1][day_index]
+                  int_conflictSchedules[period_index2][day_index1] = newSchedule[period_index2][day_index]
+                  
+                  int_conflictSchedules[period_index1][day_index2] = newSchedule[period_index1][day_index]
+                  int_conflictSchedules[period_index2][day_index2] = newSchedule[period_index2][day_index]
+                }
+
+                  // No error schedules
+                  newSchedule[period_index1][day_index] = responseData[k].code
+                  newSchedule[period_index2][day_index] = responseData[k].code
+                  
+                  newSchedule[period_index1][day_index1] = responseData[k].code
+                  newSchedule[period_index2][day_index1] = responseData[k].code
+
+                  newSchedule[period_index1][day_index2] = responseData[k].code
+                  newSchedule[period_index2][day_index2] = responseData[k].code
+              }
+
+            }//End MWF == true 
+
+            //console.log('what should be added in this itteration: ', dummySchedule)
+            //console.log('what does new schedule look like: ', newSchedule)
+
+
+        } // End for Meet array
 
 
           // NEW

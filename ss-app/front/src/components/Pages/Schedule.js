@@ -334,7 +334,7 @@ const Schedule = props => {
     //console.log("MAP was called, coordinates received: ", coords)
     let queryStr = 'https://google.com/maps?q=' + queriedBldg.coordinates.latitude + ' ' + queriedBldg.coordinates.longitude
     // Open a new tab
-    //window.open(queryStr);
+    return (queryStr)
   }
 
   // Map button object
@@ -346,7 +346,8 @@ const Schedule = props => {
       return(<div></div>)
     }
     else{
-      return(<button onClick={displayOnMap(sched_info)}>View on Map</button>)
+      let queryStr = displayOnMap(sched_info)
+      return(<a href={queryStr} target="_blank" class="btn btn-primary" >View on Map</a>)
     }
   }
 

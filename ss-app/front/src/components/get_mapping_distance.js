@@ -90,8 +90,89 @@ export function get_mapping_distance(final_schedule_info, testSc) {
         }
 
         // NEED to change; RN getting the building location from the FIRST building, not the actual one
-        fromCode = earlierCourseInfo.section_mT[0].meetBuilding;
-        toCode = laterCourseInfo.section_mT[0].meetBuilding;
+
+        const DAY_MAP = [
+            "M",
+            "T",
+            "W",
+            "R",
+            "F"
+        ];
+
+        let meetDay;
+        let meetTime;
+
+        let earlierCourseSection;
+        let laterCourseSection;
+
+        let foundEarlier = false;
+        let foundLater = false;
+
+        let idx;
+
+        const earlierMeetTimes = earlierCourseInfo.section_mT;
+        const laterMeetTimes = laterCourseInfo.section_mT;
+
+        let meetDayIdx;
+
+        for (idx = 0; idx < earlierMeetTimes.length; idx++) {
+            meetTime = earlierMeetTimes[idx];
+
+            meetDayIdx = meetTime.meetDays.findIndex(dayChar => dayChar === DAY_MAP[dayIdx]);
+
+            if (meetDayIdx !== -1) {
+                meetDay = meetTime;
+                if (parseInt(meetDay.meetPeriodBegin) === hourIdx) {
+                    foundEarlier = true;
+                    earlierCourseSection = meetTime;
+                }
+            }
+        }
+
+        for (idx = 0; idx < laterMeetTimes.length; idx++) {
+            meetTime = laterMeetTimes[idx];
+
+            meetDayIdx = meetTime.meetDays.findIndex(dayChar => dayChar === DAY_MAP[dayIdx]);
+
+            if (meetDayIdx !== -1) {
+                meetDay = meetTime;
+                if (parseInt(meetDay.meetPeriodBegin) === hourIdx) {
+                    foundLater = true;
+                    laterCourseSection = meetTime;
+                }
+            }
+        }
+
+        /* for each section meet time */
+        // earlierCourseInfo.section_mT.forEach(meetTime => {
+        //     meetDay = meetTime.meetDays.find(DAY_MAP[dayIdx])
+
+        //     if (meetDay) {
+        //         if (meetDay.meetPeriodBegin.parseInt() === hourIdx) {
+        //             foundEarlier = true;
+        //             earlierCourseSection = meetTime;
+        //         }
+        //     }
+        // })
+
+        // laterCourseInfo.section_mT.forEach((meetTime) => {
+        //     meetDay = meetTime.meetDays.find(DAY_MAP[dayIdx])
+
+        //     if (meetDay) {
+        //         if (meetDay.meetPeriodBegin.parseInt() === hourIdx) {
+        //             foundLater = true;
+        //             laterCourseSection = meetTime;
+        //         }
+        //     }
+        // })
+
+        if (!(foundEarlier && foundLater)) {
+            return [];
+        }
+            
+            /*  */
+        fromCode = earlierCourseSection.meetBuilding;
+        toCode = laterCourseSection.meetBuilding;
 
         walkingDurationMins = getWalkingDurationBetweenMins(fromCode, toCode);
 

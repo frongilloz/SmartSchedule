@@ -22,8 +22,6 @@ export function get_mapping_distance(final_schedule_info, testSc) {
         return courseIterators.find(courseIterator => (courseIterator.courseCode === courseCode));
     }
 
-    console.log(courseIterators);
-
     let fromCode;
     let toCode;
     let dayIdx;
@@ -42,7 +40,7 @@ export function get_mapping_distance(final_schedule_info, testSc) {
 
     for (scheduleIdx = 0; scheduleIdx < testSc.length; scheduleIdx++) {
         schedule = testSc[scheduleIdx];
-        console.log(schedule);
+        console.log(`scheduleIdx = ${scheduleIdx}`);
         for (dayIdx = 0; dayIdx < schedule[0].length; dayIdx++) {
             for (hourIdx = 0; hourIdx < (schedule.length - 1); hourIdx++) {
                 earlierScheduleEntry = schedule[hourIdx][dayIdx];
@@ -123,10 +121,12 @@ export function get_mapping_distance(final_schedule_info, testSc) {
 
                     if (meetDayChar) {
                         meetDay = meetTime;
-                        if (parseInt(meetDay.meetPeriodBegin) === hourIdx) {
-                            foundEarlier = true;
-                            earlierCourseSection = meetTime;
-                            break;
+                        if (    parseInt(meetDay.meetPeriodBegin) === hourIdx ||
+                                parseInt(meetDay.meetPeriodBegin) === (hourIdx + 1)
+                            ) {
+                                foundEarlier = true;
+                                earlierCourseSection = meetTime;
+                                break;
                         }
                     }
                 }
@@ -135,7 +135,7 @@ export function get_mapping_distance(final_schedule_info, testSc) {
                     continue;
                 }
 
-                let newHourIdx = hourIdx + (parseInt(earlierCourseSection.meetPeriodEnd) - parseInt(earlierCourseSection.meetPeriodBegin)) + 1;
+                let newHourIdx = parseInt(earlierCourseSection.meetPeriodEnd);
 
                 for (idx = 0; idx < laterMeetTimes.length; idx++) {
                     meetTime = laterMeetTimes[idx];
@@ -144,10 +144,12 @@ export function get_mapping_distance(final_schedule_info, testSc) {
 
                     if (meetDayChar) {
                         meetDay = meetTime;
-                        if (parseInt(meetDay.meetPeriodBegin) === newHourIdx) {
-                            foundLater = true;
-                            laterCourseSection = meetTime;
-                            break;
+                        if (    parseInt(meetDay.meetPeriodBegin) === newHourIdx ||
+                                parseInt(meetDay.meetPeriodBegin) === (newHourIdx + 1)
+                            ) {
+                                foundLater = true;
+                                laterCourseSection = meetTime;
+                                break;
                         }
                     }
                 }
@@ -214,10 +216,10 @@ export function get_mapping_distance(final_schedule_info, testSc) {
                 }
 
                 // front end object
+                console.log(wlk_object);
                 walking_Durs.push(wlk_object)
             }
         }
-        console.log("got here");
     }
     
     console.log("conflictingDayHourPairs", conflictingDayHourPairs);

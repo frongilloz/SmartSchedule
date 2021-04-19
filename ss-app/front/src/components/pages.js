@@ -66,61 +66,61 @@ export const Home = () => (
     //external change functions
     const SemUpdate = value => {
       setSem(value);
-      console.log('SemUpdate() called, value: ', value);
+      //console.log('SemUpdate() called, value: ', value);
     };
     const C_NumUpdate1 = value => {
       setC_Num1(value);
-      console.log('CNumUpdate1() called, value: ', value);
+      //console.log('CNumUpdate1() called, value: ', value);
     };
     const C_NumUpdate2 = value => {
       setC_Num2(value);
-      console.log('CNumUpdate2() called, value: ', value);
+      //console.log('CNumUpdate2() called, value: ', value);
     };
     const C_NumUpdate3 = value => {
       setC_Num3(value);
-      console.log('CNumUpdate3() called, value: ', value);
+      //console.log('CNumUpdate3() called, value: ', value);
     };
     const C_NumUpdate4 = value => {
       setC_Num4(value);
-      console.log('CNumUpdate4() called, value: ', value);
+      //console.log('CNumUpdate4() called, value: ', value);
     };
     const C_NumUpdate5 = value => {
       setC_Num5(value);
-      console.log('CNumUpdate5() called, value: ', value);
+      //console.log('CNumUpdate5() called, value: ', value);
     };
     const C_NumUpdate6 = value => {
       setC_Num6(value);
-      console.log('CNumUpdate6() called, value: ', value);
+      //console.log('CNumUpdate6() called, value: ', value);
     };
     const CL_NumUpdate1 = value => {
       setCL_Num1(value);
-      console.log('CL_NumUpdate1() called, value: ', value);
+      //console.log('CL_NumUpdate1() called, value: ', value);
     };
     const CL_NumUpdate2 = value => {
       setCL_Num2(value);
-      console.log('CL_NumUpdate2() called, value: ', value);
+      //console.log('CL_NumUpdate2() called, value: ', value);
     };
     const CL_NumUpdate3 = value => {
       setCL_Num3(value);
-      console.log('CL_NumUpdate3() called, value: ', value);
+      //console.log('CL_NumUpdate3() called, value: ', value);
     };
     const CL_NumUpdate4 = value => {
       setCL_Num4(value);
-      console.log('CL_NumUpdate4() called, value: ', value);
+      //console.log('CL_NumUpdate4() called, value: ', value);
     };
     const CL_NumUpdate5 = value => {
       setCL_Num5(value);
-      console.log('CL_NumUpdate5() called, value: ', value);
+      //console.log('CL_NumUpdate5() called, value: ', value);
     };
     const CL_NumUpdate6 = value => {
       setCL_Num6(value);
-      console.log('CL_NumUpdate6() called, value: ', value);
+      //console.log('CL_NumUpdate6() called, value: ', value);
     };
 
     const reset_button = async event => {
       
       event.preventDefault();
-      console.log('RSESET');
+      //console.log('RSESET');
     };
     
     // Relevant initializations
@@ -147,19 +147,19 @@ export const Home = () => (
     //    try {
     //      await axios.get(query)
     //        .then((response) => {
-    //          console.log("GET axios called")
-    //          console.log("GET resp data", response.data);
+    //          //console.log("GET axios called")
+    //          //console.log("GET resp data", response.data);
     //          courseData.push(response.data);
 
     //          // Prev
     //          setResponseData(courseData)
 
-    //          console.log("Step 2")
+    //          //console.log("Step 2")
     //        });
 
     //    } catch (err) {
     //      // TODO: do something
-    //      console.log("the axios try catch block caught something... is it a bug?")
+    //      //console.log("the axios try catch block caught something... is it a bug?")
     //    }
     //  }
     //}
@@ -170,14 +170,14 @@ export const Home = () => (
       // prevent the refresh of page on submit
       //event.preventDefault();
 
-      console.log("start of check2")
-      console.log('Pages.js length of resposneData is: ', responseData.length)
-      console.log("responseData length is:", responseData.length)
-      console.log("callCounter:", callCounter_r)
-      if (responseData.length === callCounter_r)
-        console.log("responseData length and num of courses from form match")
-      else
-        console.log("responseData length and num of courses from form do not match")
+      // //console.log("start of check2")
+      // //console.log('Pages.js length of resposneData is: ', responseData.length)
+      // //console.log("responseData length is:", responseData.length)
+      // //console.log("callCounter:", callCounter_r)
+      // if (responseData.length === callCounter_r)
+      //   // //console.log("responseData length and num of courses from form match")
+      // else
+      //   // //console.log("responseData length and num of courses from form do not match")
     }
     // only generate the new schedule once all the course requests have been completed
     if (responseData.length !== 0) {
@@ -191,15 +191,15 @@ export const Home = () => (
         conflictSchedules = gen_schedule_return.conflictSchedules;
         final_schedule_info = gen_schedule_return.finalSchedule_Info;
         final_lab_lecture_info = gen_schedule_return.finalsectionInfo;
-        console.log("Test Schedule(s) Received, ", testSc)
-        console.log("Conflict(s) Received, ", conflicts)
-        console.log("conflictSchedules Received, ", conflictSchedules)
-        console.log("final_schedule_info(s) Received, ", final_schedule_info)
-        console.log("final_lab_lecture_info(s) Received, ", final_lab_lecture_info)
+        // //console.log("Test Schedule(s) Received, ", testSc)
+        // //console.log("Conflict(s) Received, ", conflicts)
+        // //console.log("conflictSchedules Received, ", conflictSchedules)
+        // //console.log("final_schedule_info(s) Received, ", final_schedule_info)
+        // //console.log("final_lab_lecture_info(s) Received, ", final_lab_lecture_info)
 
         // Parse out the confilcts
         for (let i = 0; i < conflicts.length; i++) {
-          //console.log("conflicts[i],",conflicts[i])
+          ////console.log("conflicts[i],",conflicts[i])
           let temp_st = conflicts[i].toString()
           conflicts_print.push(temp_st)
           conflicts_print.push(',')
@@ -208,27 +208,27 @@ export const Home = () => (
         // Spencer Additions
         walking_Durs = get_mapping_distance(final_schedule_info, testSc)
 
-        //console.log("conflicts_print ",conflicts_print)
+        ////console.log("conflicts_print ",conflicts_print)
 
         //Parse out the info based on length of responsData (# of courses)
         //If the testSc has not been changed, don't do anything
-        if (testSc === emptyArrays) { console.log("nothing has happened here. testSc is: ", testSc) }
+        if (testSc === emptyArrays) { }
         // Based on if the update state is T/F
         else if (update_sc === false) {
           // Update the schedule state variable w/ the generate Scheudle if they are NOT the same
           set_test_sc(testSc)
-          console.log("UPDATE", update_sc)
+          // //console.log("UPDATE", update_sc)
           // Set the flag that this has been updated so it doesn't re-render
           set_update_sc(true);
         }
         else {
-          console.log("testSc and test_sc are the same, no update performed")
+          // //console.log("testSc and test_sc are the same, no update performed")
         }
 
         //Delay on submit error checks
-        console.log("bool", update_sc)
-        console.log("testSc", testSc)
-        console.log("test_sc", test_sc)
+        // //console.log("bool", update_sc)
+        // //console.log("testSc", testSc)
+        // //console.log("test_sc", test_sc)
 
       } // end of outer else
     }
@@ -246,7 +246,7 @@ export const Home = () => (
         if (courseNum){
           //Reset
           set_update_sc(false);
-          console.log("what is course number here:", courseNum)
+          // //console.log("what is course number here:", courseNum)
           // update counter
           courseNumCounter++;
 
@@ -256,21 +256,21 @@ export const Home = () => (
           // Create a query string based on if a class Number was submitted or not
           //Check to see if the course had a corresponding class number submitted
           if(classNums[courseNumCounter] != ''){
-            console.log("Class Num Submitted")
+            //console.log("Class Num Submitted")
             queryString = '/api/courses/findCS/' + courseNum + '/' + classNums[courseNumCounter] + '/' + SemAdd;
-            console.log("Step 1")
+            //console.log("Step 1")
           }else{
             queryString = '/api/courses/findC/'  + courseNum + '/'
               + SemAdd;
-            console.log("Step 1")
+            //console.log("Step 1")
           }
 
-          console.log("QUERY CALLED: ", queryString)
+          //console.log("QUERY CALLED: ", queryString)
           queryStrings.push(queryString)
         }
       }) // end for each
 
-      console.log("does this show up after every query call?")
+      //console.log("does this show up after every query call?")
       check3()
       //check2()
 
@@ -278,9 +278,9 @@ export const Home = () => (
 
     //Troubleshoot attempt #3 : use check3 after the forEach is finished within the async call, then call check2
     async function check3() {
-      console.log("start of check3")
+      //console.log("start of check3")
 
-      console.log("queryStrings is: ", queryStrings)
+      //console.log("queryStrings is: ", queryStrings)
 
       // Get the number of courses submitted
       for (let i = 0; i < courseNums.length; i++) {
@@ -289,15 +289,15 @@ export const Home = () => (
         }
       }
 
-      console.log('Pages.js num_courses_sub is: ', num_courses_sub)
+      //console.log('Pages.js num_courses_sub is: ', num_courses_sub)
 
       let callCounter = 0
       for (const query of queryStrings) {
         try {
           await axios.get(query)
             .then((response) => {
-              console.log("GET axios called")
-              console.log("GET resp data", response.data);
+              //console.log("GET axios called")
+              //console.log("GET resp data", response.data);
               courseData.push(response.data);
 
               //// Prev
@@ -309,24 +309,24 @@ export const Home = () => (
                 setcallCounter_r(callCounter)
               }
 
-              console.log("Step 2")
-              console.log("show me courseData", courseData)
-              console.log("what is callCounter", callCounter)
+              //console.log("Step 2")
+              //console.log("show me courseData", courseData)
+              //console.log("what is callCounter", callCounter)
 
             });
 
         } catch (err) {
           // TODO: do something
-          console.log("the axios try catch block caught something... is it a bug?")
+          //console.log("the axios try catch block caught something... is it a bug?")
         }
       }
     }
       //Troubleshoot attempt #3 : call check2 (which calls generateSchedule and mapping function) after check3
       check2()
 
-      console.log("conflicts_print", conflicts_print)
-      console.log("walking_Durs", walking_Durs)
-      console.log("fin")
+      //console.log("conflicts_print", conflicts_print)
+      //console.log("walking_Durs", walking_Durs)
+      //console.log("fin")
   
     return (
     <div>
@@ -387,83 +387,83 @@ export const Four_Year = props => {
 
   const SemChoice = value => {
     setSemC(value);
-    console.log('SemChoice() called, value: ', value);
+    //console.log('SemChoice() called, value: ', value);
   };
   const YChoice = value => {
     setYearC(value);
-    console.log('YChoice() called, value: ', value);
+    //console.log('YChoice() called, value: ', value);
   };
   const addCNUM1Update = value => {
     setCNum1(value);
-    console.log('addCNUM1Update() called, value: ', value);
+    //console.log('addCNUM1Update() called, value: ', value);
   };
   const addCNUM2Update = value => {
     setCNum2(value);
-    console.log('addCNUM2Update() called, value: ', value);
+    //console.log('addCNUM2Update() called, value: ', value);
   };
   const addCNUM3Update = value => {
     setCNum3(value);
-    console.log('addCNUM3Update() called, value: ', value);
+    //console.log('addCNUM3Update() called, value: ', value);
   };
   const addCNUM4Update = value => {
     setCNum4(value);
-    console.log('addCNUM4Update() called, value: ', value);
+    //console.log('addCNUM4Update() called, value: ', value);
   };
   const addCNUM5Update = value => {
     setCNum5(value);
-    console.log('addCNUM5Update() called, value: ', value);
+    //console.log('addCNUM5Update() called, value: ', value);
   };
   const addCNUM6Update = value => {
     setCNum6(value);
-    console.log('addCNUM6Update() called, value: ', value);
+    //console.log('addCNUM6Update() called, value: ', value);
   };
   const addCNAME1Update = value => {
     setCName1(value);
-    console.log('addCName1Update() called, value: ', value);
+    //console.log('addCName1Update() called, value: ', value);
   };
   const addCNAME2Update = value => {
     setCName2(value);
-    console.log('addCName2Update() called, value: ', value);
+    //console.log('addCName2Update() called, value: ', value);
   };
   const addCNAME3Update = value => {
     setCName3(value);
-    console.log('addCName3Update() called, value: ', value);
+    //console.log('addCName3Update() called, value: ', value);
   };
   const addCNAME4Update = value => {
     setCName4(value);
-    console.log('addCName4Update() called, value: ', value);
+    //console.log('addCName4Update() called, value: ', value);
   };
   const addCNAME5Update = value => {
     setCName5(value);
-    console.log('addCName5Update() called, value: ', value);
+    //console.log('addCName5Update() called, value: ', value);
   };
   const addCNAME6Update = value => {
     setCName6(value);
-    console.log('addCName6Update() called, value: ', value);
+    //console.log('addCName6Update() called, value: ', value);
   };
   const addCCRED1Update = value => {
     setCCred1(value);
-    console.log('addCCRED1Update() called, value: ', value);
+    //console.log('addCCRED1Update() called, value: ', value);
   };
   const addCCRED2Update = value => {
     setCCred2(value);
-    console.log('addCCRED2Update() called, value: ', value);
+    //console.log('addCCRED2Update() called, value: ', value);
   };
   const addCCRED3Update = value => {
     setCCred3(value);
-    console.log('addCCRED3Update() called, value: ', value);
+    //console.log('addCCRED3Update() called, value: ', value);
   };
   const addCCRED4Update = value => {
     setCCred4(value);
-    console.log('addCCRED4Update() called, value: ', value);
+    //console.log('addCCRED4Update() called, value: ', value);
   };
   const addCCRED5Update = value => {
     setCCred5(value);
-    console.log('addCCRED5Update() called, value: ', value);
+    //console.log('addCCRED5Update() called, value: ', value);
   };
   const addCCRED6Update = value => {
     setCCred6(value);
-    console.log('addCCRED6Update() called, value: ', value);
+    //console.log('addCCRED6Update() called, value: ', value);
   };
 
   const saveSchedule = async event => {
@@ -511,12 +511,12 @@ export const Four_Year = props => {
     }
 
 
-    console.log('Semester save: ', newSemester);
+    //console.log('Semester save: ', newSemester);
 
     let curr_email =  props.email;
 
-    console.log("POST sent for 4 Year", newSemester);
-    console.log("curr_email", curr_email);
+    //console.log("POST sent for 4 Year", newSemester);
+    //console.log("curr_email", curr_email);
 
     // @TODO A not logged in error
 
@@ -527,7 +527,7 @@ export const Four_Year = props => {
 
     //POST
     try {
-      console.log('Post Semester sent');
+      //console.log('Post Semester sent');
       const s = await axios.put('/api/users/post_plan/', putObj);
       /*
       if (s.status == 200) {
@@ -537,7 +537,7 @@ export const Four_Year = props => {
       return false;
     }
 
-    console.log('trying reload');
+    //console.log('trying reload');
 
 
   };// end submit method
@@ -545,7 +545,7 @@ export const Four_Year = props => {
 
   /*
     if (reload) {
-      console.log('caught redirect');
+      //console.log('caught redirect');
       setTimeout(() => {
         setReload(false);
       }, 10000);
@@ -586,8 +586,8 @@ export const Four_Year_User_Disp = props => {
 
   // Send GET request to get the current user logged in
   //Get user currently logged in (sessions), then get information from the user db
-  console.log("Profile Email: ", props.email)
-  console.log("Profile Name: ", props.userName)
+  //console.log("Profile Email: ", props.email)
+  //console.log("Profile Name: ", props.userName)
 
   // Object to pass to req
   let passObj ={
@@ -600,17 +600,17 @@ export const Four_Year_User_Disp = props => {
   // Call get request
   const getInfo = async () => {
     try {
-      console.log("GET axios called")
+      //console.log("GET axios called")
       await axios.put('/api/users/four-year-user-info/', passObj)
           .then((response) => {
             setResponseData(response.data);
-            console.log("GET resp data", responseData);
+            //console.log("GET resp data", responseData);
             setInitVar(true)
           });
 
     } catch (err) {
       // TODO: do something
-      console.log('error')
+      //console.log('error')
     }
   }
 
@@ -658,27 +658,27 @@ export const Sign_Up = () => {
   //the update functions update the current states
   const addFNameUpdate = value => {
     setFName(value);
-    console.log('addFNameUpdate() called, value: ', value);
+    //console.log('addFNameUpdate() called, value: ', value);
   };
 
   const addLNameUpdate = value => {
     setLName(value);
-    console.log('addLNameUpdate() called, value: ', value);
+    //console.log('addLNameUpdate() called, value: ', value);
   };
 
   const addEmailUpdate = value => {
     setEmail(value);
-    console.log('addEmailUpdate() called, value: ', value);
+    //console.log('addEmailUpdate() called, value: ', value);
   };
 
   const addPassUpdate = value => {
     setPass(value);
-    //console.log('addPassUpdate() called, value: ', value);
+    ////console.log('addPassUpdate() called, value: ', value);
   };
 
   const addPassConfUpdate = value => {
     setCPass(value);
-    //console.log('addPassConfUpdate() called, value: ', value);
+    ////console.log('addPassConfUpdate() called, value: ', value);
   };
 
   //the save function to the database
@@ -687,12 +687,12 @@ export const Sign_Up = () => {
     event.preventDefault();
 
     //log
-    console.log('save() Sign Up called');
-    console.log('save() FName: ', FNameAdd);
-    console.log('save() LName: ', LNameAdd);
-    console.log('save() email: ', emailAdd);
-    console.log('save() pass: ', passAdd);
-    console.log('save() passC: ', passCAdd);
+    //console.log('save() Sign Up called');
+    //console.log('save() FName: ', FNameAdd);
+    //console.log('save() LName: ', LNameAdd);
+    //console.log('save() email: ', emailAdd);
+    //console.log('save() pass: ', passAdd);
+    //console.log('save() passC: ', passCAdd);
 
     //2) and will need to check is the email already exists in the database
 
@@ -707,7 +707,7 @@ export const Sign_Up = () => {
 
 
     try {
-      console.log('Post User sent');
+      //console.log('Post User sent');
       const s = await axios.post('/api/users/', newUser);
       if (s.status == 200) {
         setReload(true);
@@ -715,11 +715,11 @@ export const Sign_Up = () => {
     } catch (err) {
       return false;
     }
-    console.log('trying reload');
+    //console.log('trying reload');
   };
 
   if (reload) {
-    console.log('caught redirect');
+    //console.log('caught redirect');
     setTimeout(() => {
       setReload(false);
     }, 10000);
@@ -748,12 +748,12 @@ export const Login = props => {
   //take in the email from the form and check to see if it exists in the database
   const checkEmail = value => {
     setEmail(value);
-    console.log('checkEmail() called, value: ', value);
+    //console.log('checkEmail() called, value: ', value);
   };
 
   const checkPass = value => {
     setPass(value);
-    //console.log('checkPass() called, value: ', value);
+    ////console.log('checkPass() called, value: ', value);
   };
 
   //the check function to the database
@@ -762,9 +762,9 @@ export const Login = props => {
     event.preventDefault();
 
     //log
-    console.log('check() called');
-    console.log('check() email: ', emailAdd);
-    //console.log('check() pass: ', passAdd);
+    //console.log('check() called');
+    //console.log('check() email: ', emailAdd);
+    ////console.log('check() pass: ', passAdd);
 
     // data sent in to post request
     const loginData = { email: emailAdd, password: passAdd };
@@ -779,13 +779,13 @@ export const Login = props => {
     } catch (err) {
       // TODO: do something
       setDisplayMsg(true);
-      console.log(err);
+      //console.log(err);
     }
   };
 
   // If the props has 
   if (props.email) {
-    console.log("Login user email: ", props.email)
+    //console.log("Login user email: ", props.email)
     
     //navigate( pathname: '/user-profile' , state: {email: props.email}})
     return <Redirect to={{pathname: '/user-profile' , state: {email: props.email}}}/>;
@@ -826,11 +826,11 @@ export const Forgot_Password = () => {
     event.preventDefault();
 
     //log
-    console.log('save Forgot Password() called');
-    console.log('email: ', email);
-    console.log('name: ', name);
-    //console.log('newPass: ', newPass);
-    //console.log('newPassC: ', newPassC);
+    //console.log('save Forgot Password() called');
+    //console.log('email: ', email);
+    //console.log('name: ', name);
+    ////console.log('newPass: ', newPass);
+    ////console.log('newPassC: ', newPassC);
 
     let User = {
       FNme: name,
@@ -839,7 +839,7 @@ export const Forgot_Password = () => {
     };
 
     try {
-      console.log('PW reset sent');
+      //console.log('PW reset sent');
       const s = await axios.put('/api/users/forgot', User);
       if (s.status == 200) {
         setReload(true);
@@ -847,7 +847,7 @@ export const Forgot_Password = () => {
     } catch (err) {
       return false;
     }
-    console.log('trying reload');
+    //console.log('trying reload');
 
     //TODO: need to query the database based on the email
     //then update the user schema with the new password
@@ -855,7 +855,7 @@ export const Forgot_Password = () => {
 
   // redirect to login once password reset
   if (reload) {
-    console.log('caught redirect');
+    //console.log('caught redirect');
     setTimeout(() => {
       setReload(false);
     }, 10000);
@@ -878,8 +878,8 @@ export const Forgot_Password = () => {
 export const Profile = props => {
   // Send GET request to get the current user logged in
   //Get user currently logged in (sessions), then get information from the user db
-  console.log("Profile Email: ", props.email)
-  console.log("Profile Name: ", props.userName)
+  //console.log("Profile Email: ", props.email)
+  //console.log("Profile Name: ", props.userName)
 
   return (
     <div>

@@ -132,7 +132,7 @@ export function get_mapping_distance(final_schedule_info, testSc) {
                 }
 
                 if (!foundEarlier) {
-                    return [];
+                    continue;
                 }
 
                 let newHourIdx = hourIdx + (parseInt(earlierCourseSection.meetPeriodEnd) - parseInt(earlierCourseSection.meetPeriodBegin)) + 1;
@@ -153,7 +153,7 @@ export function get_mapping_distance(final_schedule_info, testSc) {
                 }
 
                 if (!foundLater) {
-                    return [];
+                    continue;
                 }
                     
                 fromCode = earlierCourseSection.meetBuilding;

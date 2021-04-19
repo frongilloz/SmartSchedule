@@ -9,17 +9,17 @@ export function get_mapping_distance(final_schedule_info, testSc) {
     let finalScheduleInfoIdx;
 
     for (finalScheduleInfoIdx = 0; finalScheduleInfoIdx < final_schedule_info.length; finalScheduleInfoIdx++) {
-    courseIterator = {
-        courseCode: final_schedule_info[finalScheduleInfoIdx][0].course_code,
-        offsetIntoFinalScheduleInfo: finalScheduleInfoIdx,
-        currCount:  0
-    };
+        courseIterator = {
+            courseCode: final_schedule_info[finalScheduleInfoIdx][0].course_code,
+            offsetIntoFinalScheduleInfo: finalScheduleInfoIdx,
+            currCount:  0
+        };
 
-    courseIterators.push(courseIterator);
+        courseIterators.push(courseIterator);
     }
 
     const getIterator = (courseCode) => {
-    return courseIterators.find(courseIterator => (courseIterator.courseCode === courseCode));
+        return courseIterators.find(courseIterator => (courseIterator.courseCode === courseCode));
     }
 
     console.log(courseIterators);
@@ -40,11 +40,9 @@ export function get_mapping_distance(final_schedule_info, testSc) {
     let schedule;
     let scheduleIdx;
 
-    
     for (scheduleIdx = 0; scheduleIdx < testSc.length; scheduleIdx++) {
-        console.log(`scheduleIdx = ${scheduleIdx}`);
         schedule = testSc[scheduleIdx];
-
+        console.log(schedule);
         for (dayIdx = 0; dayIdx < schedule[0].length; dayIdx++) {
             for (hourIdx = 0; hourIdx < (schedule.length - 1); hourIdx++) {
                 earlierScheduleEntry = schedule[hourIdx][dayIdx];
@@ -219,10 +217,10 @@ export function get_mapping_distance(final_schedule_info, testSc) {
                 walking_Durs.push(wlk_object)
             }
         }
+        console.log("got here");
     }
     
     console.log("conflictingDayHourPairs", conflictingDayHourPairs);
-    
 
     return walking_Durs
 }

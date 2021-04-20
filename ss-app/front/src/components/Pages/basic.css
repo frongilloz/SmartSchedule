@@ -10,6 +10,10 @@
     padding-top: 10px;
   }
   
+  .h_c2 {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
   
   .video_p {
     padding-left: 20px;
@@ -44,6 +48,14 @@
     font-size: 3pc;
     margin-bottom: 5rem;
   }
+  .title_year {
+    font-size: 2pc;
+    margin-bottom: 5rem;
+  }
+  .title_sem {
+    font-size: 1.5pc;
+    margin-bottom: 5rem;
+  }
   
   .sticky-menu {
     top: 2em;
@@ -73,7 +85,6 @@
 
 
   .table_custom{
-    
     border: 1px #737d96;
   }
 
@@ -158,4 +169,8 @@ table.table-bordered > tbody > tr > td{
   background-color: #da0000;
   color: white;
   font-weight: bold;
+}
+
+.table-no-padding td {
+  padding: 0px;
 }

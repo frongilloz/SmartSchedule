@@ -670,12 +670,13 @@ const Four_Year_Disp = props => {
       </div>
     </header>
 
-    <Card body>
+     <div class="row col justify-content-center">
+        <Card body style={{ height: '10%' }}>
       {print_warnings(props.print_warn)}
       <table>
             <thead>
                 <tr>
-                    <th>2021</th>
+                    <th class = "title_year">2021</th>
                 </tr>
             </thead>
             <tbody>
@@ -683,7 +684,7 @@ const Four_Year_Disp = props => {
                     <td>
                         <thead>
                             <tr>
-                                <th>Spring</th>
+                                <th class = "title_sem" >Spring</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -728,7 +729,7 @@ const Four_Year_Disp = props => {
                     <td>
                         <thead>
                             <tr>
-                                <th>Summer</th>
+                                <th class = "title_sem" >Summer</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -773,7 +774,7 @@ const Four_Year_Disp = props => {
                     <td>
                     <thead>
                             <tr>
-                                <th>Fall</th>
+                                <th class = "title_sem" >Fall</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -821,7 +822,7 @@ const Four_Year_Disp = props => {
         <table>
             <thead>
                 <tr>
-                    <th>2022</th>
+                    <th class = "title_year">2022</th>
                 </tr>
             </thead>
             <tbody>
@@ -829,7 +830,7 @@ const Four_Year_Disp = props => {
                     <td>
                         <thead>
                             <tr>
-                                <th>Spring</th>
+                                <th class = "title_sem" >Spring</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -874,7 +875,7 @@ const Four_Year_Disp = props => {
                     <td>
                         <thead>
                             <tr>
-                                <th>Summer</th>
+                                <th class = "title_sem" >Summer</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -919,7 +920,7 @@ const Four_Year_Disp = props => {
                     <td>
                     <thead>
                             <tr>
-                                <th>Fall</th>
+                                <th class = "title_sem" >Fall</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -967,7 +968,7 @@ const Four_Year_Disp = props => {
         <table>
             <thead>
                 <tr>
-                    <th>2023</th>
+                    <th class = "title_year">2023</th>
                 </tr>
             </thead>
             <tbody>
@@ -975,7 +976,7 @@ const Four_Year_Disp = props => {
                     <td>
                         <thead>
                             <tr>
-                                <th>Spring</th>
+                                <th class = "title_sem" >Spring</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -1020,7 +1021,7 @@ const Four_Year_Disp = props => {
                     <td>
                         <thead>
                             <tr>
-                                <th>Summer</th>
+                                <th class = "title_sem" >Summer</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -1065,7 +1066,7 @@ const Four_Year_Disp = props => {
                     <td>
                     <thead>
                             <tr>
-                                <th>Fall</th>
+                                <th class = "title_sem" >Fall</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -1113,7 +1114,7 @@ const Four_Year_Disp = props => {
         <table>
             <thead>
                 <tr>
-                    <th>2024</th>
+                    <th class = "title_year">2024</th>
                 </tr>
             </thead>
             <tbody>
@@ -1121,7 +1122,7 @@ const Four_Year_Disp = props => {
                     <td>
                         <thead>
                             <tr>
-                                <th>Spring</th>
+                                <th class = "title_sem" >Spring</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -1166,7 +1167,7 @@ const Four_Year_Disp = props => {
                     <td>
                         <thead>
                             <tr>
-                                <th>Summer</th>
+                                <th class = "title_sem" >Summer</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -1211,7 +1212,7 @@ const Four_Year_Disp = props => {
                     <td>
                     <thead>
                             <tr>
-                                <th>Fall</th>
+                                <th class = "title_sem" >Fall</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -1259,7 +1260,7 @@ const Four_Year_Disp = props => {
         <table>
             <thead>
                 <tr>
-                    <th>2025</th>
+                    <th class = "title_year">2025</th>
                 </tr>
             </thead>
             <tbody>
@@ -1267,7 +1268,7 @@ const Four_Year_Disp = props => {
                     <td>
                         <thead>
                             <tr>
-                                <th>Spring</th>
+                                <th class = "title_sem" >Spring</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -1312,7 +1313,7 @@ const Four_Year_Disp = props => {
                     <td>
                         <thead>
                             <tr>
-                                <th>Summer</th>
+                                <th class = "title_sem" >Summer</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -1357,7 +1358,7 @@ const Four_Year_Disp = props => {
                     <td>
                     <thead>
                             <tr>
-                                <th>Fall</th>
+                                <th class = "title_sem" >Fall</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -1409,6 +1410,7 @@ const Four_Year_Disp = props => {
             </div>  
 
     </Card>
+    </div>
   </div>
   );
 };

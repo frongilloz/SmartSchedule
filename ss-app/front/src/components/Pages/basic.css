@@ -44,6 +44,14 @@
     font-size: 3pc;
     margin-bottom: 5rem;
   }
+  .title_year {
+    font-size: 2pc;
+    margin-bottom: 5rem;
+  }
+  .title_sem {
+    font-size: 1.5pc;
+    margin-bottom: 5rem;
+  }
   
   .sticky-menu {
     top: 2em;
@@ -158,4 +166,8 @@ table.table-bordered > tbody > tr > td{
   background-color: #da0000;
   color: white;
   font-weight: bold;
+}
+
+.table-no-padding td {
+  padding: 0px;
 }

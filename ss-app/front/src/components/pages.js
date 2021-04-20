@@ -366,24 +366,24 @@ export const Home = () => (
 export const Four_Year = props => {
   const [SemCAdd, setSemC] = useState('');
   const [yearAdd, setYearC] = useState('');
-  const [CNum1, setCNum1] = useState('');
-  const [CNum2, setCNum2] = useState('');
-  const [CNum3, setCNum3] = useState('');
-  const [CNum4, setCNum4] = useState('');
-  const [CNum5, setCNum5] = useState('');
-  const [CNum6, setCNum6] = useState('');
-  const [CName1, setCName1] = useState('');
-  const [CName2, setCName2] = useState('');
-  const [CName3, setCName3] = useState('');
-  const [CName4, setCName4] = useState('');
-  const [CName5, setCName5] = useState('');
-  const [CName6, setCName6] = useState('');
-  const [CCred1, setCCred1] = useState('');
-  const [CCred2, setCCred2] = useState('');
-  const [CCred3, setCCred3] = useState('');
-  const [CCred4, setCCred4] = useState('');
-  const [CCred5, setCCred5] = useState('');
-  const [CCred6, setCCred6] = useState('');
+  var [CNum1, setCNum1] = useState('');
+  var [CNum2, setCNum2] = useState('');
+  var [CNum3, setCNum3] = useState('');
+  var [CNum4, setCNum4] = useState('');
+  var [CNum5, setCNum5] = useState('');
+  var [CNum6, setCNum6] = useState('');
+  var [CName1, setCName1] = useState('');
+  var [CName2, setCName2] = useState('');
+  var [CName3, setCName3] = useState('');
+  var [CName4, setCName4] = useState('');
+  var [CName5, setCName5] = useState('');
+  var [CName6, setCName6] = useState('');
+  var [CCred1, setCCred1] = useState('');
+  var [CCred2, setCCred2] = useState('');
+  var [CCred3, setCCred3] = useState('');
+  var [CCred4, setCCred4] = useState('');
+  var [CCred5, setCCred5] = useState('');
+  var [CCred6, setCCred6] = useState('');
 
   const SemChoice = value => {
     setSemC(value);
@@ -468,6 +468,79 @@ export const Four_Year = props => {
 
   const saveSchedule = async event => {
     event.preventDefault();
+
+    if(CNum1 == "")
+    {
+      CNum1 = " "; 
+    }
+    if(CNum2 == "")
+    {
+      CNum2 = " "; 
+    }
+    if(CNum3 == "")
+    {
+      CNum3 = " "; 
+    }
+    if(CNum4 == "")
+    {
+      CNum4 = " "; 
+    }
+    if(CNum5 == "")
+    {
+      CNum5 = " "; 
+    }
+    if(CNum6 == "")
+    {
+      CNum6 = " "; 
+    }
+    if(CName1 == "")
+    {
+      CName1 = " "; 
+    }
+    if(CName2 == "")
+    {
+      CName2 = " "; 
+    }
+    if(CName3 == "")
+    {
+      CName3 = " "; 
+    }
+    if(CName4 == "")
+    {
+      CName4 = " "; 
+    }
+    if(CName5 == "")
+    {
+      CName5 = " "; 
+    }
+    if(CName6 == "")
+    {
+      CName6 = " "; 
+    }
+    if(CCred1 == "")
+    {
+      CCred1 = 0; 
+    }
+    if(CCred2 == "")
+    {
+      CCred2 = 0; 
+    }
+    if(CCred3 == "")
+    {
+      CCred3 = 0; 
+    }
+    if(CCred4 == "")
+    {
+      CCred4 = 0; 
+    }
+    if(CCred5 == "")
+    {
+      CCred5 = 0; 
+    }
+    if(CCred6 == "")
+    {
+      CCred6 = 0; 
+    }
 
     let newSemester = {
       year: yearAdd,
@@ -702,7 +775,627 @@ export const Sign_Up = () => {
       LName: LNameAdd,
       fullName: FNameAdd + ' ' + LNameAdd,
       email: emailAdd,
-      password: passAdd
+      password: passAdd,
+      y1_sp: [{
+        year: " ", 
+        semester: " ",
+          course1:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course2:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course3:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course4:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course5:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course6:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+      }] ,// end of y1_sp
+    
+      y1_su: [{
+        year: " ", 
+        semester: " ",
+          course1:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course2:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course3:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course4:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course5:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course6:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+      }] ,// end of y1_su
+    
+      y1_fl: [{
+        year: " ", 
+        semester: " ",
+          course1:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course2:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course3:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course4:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course5:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course6:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+      }] ,// end of y1_fl
+    
+      // YEAR 2
+      y2_sp: [{
+        year: " ", 
+        semester: " ",
+          course1:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course2:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course3:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course4:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course5:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course6:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+      }] ,// end of y2_sp
+    
+      y2_su: [{
+        year: " ", 
+        semester: " ",
+          course1:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course2:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course3:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course4:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course5:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course6:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+      }] ,// end of y2_su
+    
+      y2_fl: [{
+        year: " ", 
+        semester: " ",
+          course1:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course2:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course3:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course4:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course5:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course6:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+      }] ,// end of y2_fl
+    
+    // YEAR 3
+      y3_sp: [{
+        year: " ", 
+        semester: " ",
+          course1:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course2:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course3:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course4:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course5:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course6:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+      }] ,// end of y3_sp
+    
+      y3_su: [{
+        year: " ", 
+        semester: " ",
+          course1:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course2:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course3:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course4:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course5:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course6:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+      }] ,// end of y3_su
+    
+      y3_fl: [{
+        year: " ", 
+        semester: " ",
+          course1:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course2:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course3:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course4:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course5:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course6:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+      }] ,// end of y3_fl
+    
+      // YEAR 4
+      y4_sp: [{
+        year: " ", 
+        semester: " ",
+          course1:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course2:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course3:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course4:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course5:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course6:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+      }] ,// end of y4_sp
+    
+      y4_su: [{
+        year: " ", 
+        semester: " ",
+          course1:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course2:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course3:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course4:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course5:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course6:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+      }] ,// end of y4_su
+    
+      y4_fl: [{
+        year: " ", 
+        semester: " ",
+          course1:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course2:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course3:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course4:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course5:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course6:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+      }] ,// end of y4_fl
+    
+      // YEAR 5
+      y5_sp: [{
+        year: " ", 
+        semester: " ",
+          course1:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course2:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course3:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course4:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course5:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course6:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+      }] ,// end of y5_sp
+    
+      y5_su: [{
+        year: " ", 
+        semester: " ",
+          course1:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course2:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course3:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course4:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course5:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course6:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+      }] ,// end of y5_su
+    
+      y5_fl: [{
+        year: " ", 
+        semester: " ",
+          course1:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course2:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course3:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course4:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course5:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+          course6:
+          {
+            number: " ",
+            name: " ",
+            credits: 0
+          },
+      }]
+    
+    
     };
 
 

@@ -51,16 +51,10 @@ const Profile = props => {
         <div className='h1_p_1'>
         <hr></hr>
             <div class="row" >
-                <div class="col-lg">
-                    <h4>Saved Schedules</h4>
-                    <span className='fa-stack fa-2x'>
-                        <i className='fa fa-circle fa-stack-2x text-primary'></i>
-                        <i className='fa fa-calendar fa-stack-1x fa-inverse'></i>
-                    </span>
-                </div>
+            
             
                 <div class="col-lg">
-                    <h4>Saved Academic Success Plans</h4>
+                    <h4><a href="/four-year-user-disp">Saved Academic Success Plan</a></h4>
                     <span className='fa-stack fa-2x'>
                     <i className='fa fa-circle fa-stack-2x text-primary'></i>
                     <i className='fa fa-graduation-cap fa-stack-1x fa-inverse'></i>
@@ -70,28 +64,7 @@ const Profile = props => {
             
         <hr></hr>
 
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                <th scope="col">Schedules</th>
-                <th scope="col">Plans</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><a href="url">Schedule1</a></td>
-                    <td><a href="/four-year-user-disp">Plan 1</a></td>
-                </tr>
-                <tr>
-                    <td><a href="url">Schedule2</a></td>
-                    <td><a href="url">Plan 2</a></td>
-                </tr>
-                <tr>
-                    <td><a href="url">Schedule3</a></td>
-                    <td><a href="url">Plan 3</a></td>
-                </tr>
-            </tbody>
-            </table>
+        
 
             </div>
           </div>

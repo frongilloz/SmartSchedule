@@ -1,7 +1,6 @@
 import React , { Component } from 'react';
 import { Form, Col, Card, Button, Row, Container} from 'react-bootstrap';
 import './basic.css';
-import UserPlanDisplay from './UserPlanDisplay'; 
 
 const Four_Year = props => {
 
@@ -9,6 +8,7 @@ const Four_Year = props => {
     /* console.log('CourseNum1 Triggered');
     console.log('C_Num1: ', event.target.value); */
     props.addCNUM1Update(event.target.value); 
+   
   };
 
   const CourseNum2 = event => {
@@ -134,9 +134,10 @@ const Four_Year = props => {
     </header>
 
 
-    <Card>
+    <div class="row col justify-content-center">
+        <Card body style={{ height: '10%' }}>
     <Form onSubmit={props.saveSchedule}>
-    <Row>
+    <Form.Row>
     <Col>
       <Form.Group controlId="exampleForm.SelectCustom">
          <Form.Label>Select Year</Form.Label>
@@ -161,77 +162,77 @@ const Four_Year = props => {
     </Form.Control>
     </Form.Group>
     </Col>
-  </Row>
+  </Form.Row>
   <div class="row justify-content-center">
-  <div class="col-10">
-  <Form.Group>
-    <Row>
-      <Col xs={3}>
-      <Form.Control size="sm" type="text" placeholder="Course Number" id = 'CourseNum1' onChange = {CourseNum1} />
+  <div >
+  <table class = "table_custom">
+    <Form.Row >
+      <Col>
+      <input size="sm" type="text" placeholder="Course Number" id = 'CourseNum1' onChange = {CourseNum1} />
       </Col>
       <Col>
-      <Form.Control size="sm" type="text" placeholder="Class Name" id = 'CourseName1' onChange = {CourseName1}/>
-      </Col>
-      <Col xs={2}>
-      <Form.Control size="sm" type="text" placeholder="Credits" id = 'CourseCred1' onChange = {CourseCred1} />
-      </Col>
-    </Row>
-    <Row>
-      <Col xs={3}>
-      <Form.Control size="sm" type="text" placeholder="Course Number" id = 'CourseNum2' onChange = {CourseNum2} />
+      <input size="sm" type="text" placeholder="Class Name" id = 'CourseName1' onChange = {CourseName1}/>
       </Col>
       <Col>
-      <Form.Control size="sm" type="text" placeholder="Class Name" id = 'CourseName2' onChange = {CourseName2} />
+      <input size="sm" type="text" placeholder="Credits" id = 'CourseCred1' onChange = {CourseCred1} />
       </Col>
-      <Col xs={2}>
-      <Form.Control size="sm" type="text" placeholder="Credits" id = 'CourseCred2' onChange = {CourseCred2}/>
+    </Form.Row>
+    <Form.Row>
+      <Col>
+      <input size="sm" type="text" placeholder="Course Number" id = 'CourseNum2' onChange = {CourseNum2} />
       </Col>
-    </Row>
+      <Col>
+      <input size="sm" type="text" placeholder="Class Name" id = 'CourseName2' onChange = {CourseName2} />
+      </Col>
+      <Col>
+      <input size="sm" type="text" placeholder="Credits" id = 'CourseCred2' onChange = {CourseCred2}/>
+      </Col>
+    </Form.Row>
     <Row>
-      <Col xs={3}>
+      <Col>
       <Form.Control size="sm" type="text" placeholder="Course Number" id = 'CourseNum3' onChange = {CourseNum3} />
       </Col>
       <Col>
       <Form.Control size="sm" type="text" placeholder="Class Name" id = 'CourseName3' onChange = {CourseName3}/>
       </Col>
-      <Col xs={2}>
+      <Col>
       <Form.Control size="sm" type="text" placeholder="Credits" id = 'CourseCred3' onChange = {CourseCred3}/>
       </Col>
     </Row>
     <Row>
-      <Col xs={3}>
+      <Col>
       <Form.Control size="sm" type="text" placeholder="Course Number" id = 'CourseNum4' onChange = {CourseNum4} />
       </Col>
       <Col>
       <Form.Control size="sm" type="text" placeholder="Class Name" id = 'CourseName4' onChange = {CourseName4}/>
       </Col>
-      <Col xs={2}>
+      <Col>
       <Form.Control size="sm" type="text" placeholder="Credits" id = 'CourseCred4' onChange = {CourseCred4} />
       </Col>
     </Row>
     <Row>
-      <Col xs={3}>
+      <Col>
       <Form.Control size="sm" type="text" placeholder="Course Number" id = 'CourseNum5' onChange = {CourseNum5} />
       </Col>
       <Col>
       <Form.Control size="sm" type="text" placeholder="Class Name" id = 'CourseName5' onChange = {CourseName5}/>
       </Col>
-      <Col xs={2}>
+      <Col>
       <Form.Control size="sm" type="text" placeholder="Credits" id = 'CourseCred5' onChange = {CourseCred5} />
       </Col>
     </Row>
     <Row>
-      <Col xs={3}>
+      <Col >
       <Form.Control size="sm" type="text" placeholder="Course Number" id = 'CourseNum6' onChange = {CourseNum6}/>
       </Col>
       <Col>
       <Form.Control size="sm" type="text" placeholder="Class Name" id = 'CourseName6' onChange = {CourseName6}/>
       </Col>
-      <Col xs={2}>
+      <Col>
       <Form.Control size="sm" type="text" placeholder="Credits" id = 'CourseCred6' onChange = {CourseCred6}/>
       </Col>
     </Row>
-  </Form.Group>
+    </table>
   </div>
   </div>
   <Row>
@@ -239,14 +240,12 @@ const Four_Year = props => {
     <button class="btn btn-primary" type="submit" onClick = {SubmitClicked}>Save Semester</button>
     </Col>
     <Col>
-    <button class="btn btn-primary" type=""  onClick = {LoadClicked}>Load Semester</button>
-    </Col>
-    <Col>
     <input class="btn btn-primary" type="reset" value="Reset"  onClick = {ResetClicked}></input>
     </Col>
   </Row>
 </Form>  
     </Card>
+  </div>
   </div>
   );
 };

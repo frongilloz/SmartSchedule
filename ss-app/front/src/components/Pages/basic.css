@@ -10,6 +10,10 @@
     padding-top: 10px;
   }
   
+  .h_c2 {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
   
   .video_p {
     padding-left: 20px;
@@ -81,7 +85,6 @@
 
 
   .table_custom{
-    
     border: 1px #737d96;
   }
 

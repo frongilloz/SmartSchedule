@@ -384,6 +384,8 @@ export const Four_Year = props => {
   var [CCred4, setCCred4] = useState('');
   var [CCred5, setCCred5] = useState('');
   var [CCred6, setCCred6] = useState('');
+  
+  const [displayMsg, setDisplayMsg] = useState(false);
 
   const SemChoice = value => {
     setSemC(value);
@@ -606,6 +608,7 @@ export const Four_Year = props => {
       if (s.status == 200) {
         setReload(true);
       }*/
+      setDisplayMsg(true);
     } catch (err) {
       return false;
     }
@@ -647,6 +650,7 @@ export const Four_Year = props => {
           addCCRED4Update = {addCCRED4Update}
           addCCRED5Update = {addCCRED5Update}
           addCCRED6Update = {addCCRED6Update}
+          displayMsg={displayMsg}
       />
   );
 
